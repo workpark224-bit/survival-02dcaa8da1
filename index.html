@@ -1,0 +1,1058 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="theme-color" content="#0F141A">
+<title>주3회 생존전</title>
+
+<style>
+  :root{
+    --bg:#E5E9ED;
+    --surface:#F7F9FA;
+    --surface-2:#D6DCE3;
+    --line:#BCC5CF;
+    --line-soft:#D2D9E0;
+    --ink:#141A21;
+    --ink-2:#4E5A68;
+    --ink-3:#7A8794;
+    --ember:#B8401A;
+    --ember-soft:#F0D9D0;
+    --pulse:#25705C;
+    --pulse-soft:#D2E5DE;
+    --brass:#8A6B0E;
+    --brass-soft:#EDE3C6;
+    --dead:#8A929B;
+    --shadow:0 1px 2px rgba(20,26,33,.10), 0 8px 24px -12px rgba(20,26,33,.25);
+    --f-body:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","맑은 고딕",system-ui,sans-serif;
+    --f-mono:ui-monospace,"SFMono-Regular","Cascadia Mono",Consolas,"D2Coding",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F141A; --surface:#171E26; --surface-2:#212B35;
+      --line:#2F3B47; --line-soft:#28323D;
+      --ink:#E7ECF1; --ink-2:#98A5B2; --ink-3:#6E7C8A;
+      --ember:#F4744A; --ember-soft:#3A211A;
+      --pulse:#54C6A4; --pulse-soft:#16302A;
+      --brass:#DEBA4B; --brass-soft:#33290F;
+      --dead:#5A646E;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F141A; --surface:#171E26; --surface-2:#212B35;
+    --line:#2F3B47; --line-soft:#28323D;
+    --ink:#E7ECF1; --ink-2:#98A5B2; --ink-3:#6E7C8A;
+    --ember:#F4744A; --ember-soft:#3A211A;
+    --pulse:#54C6A4; --pulse-soft:#16302A;
+    --brass:#DEBA4B; --brass-soft:#33290F;
+    --dead:#5A646E;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:var(--f-body);font-size:15px;line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
+  :focus-visible{outline:2px solid var(--ember);outline-offset:2px;border-radius:3px}
+  .hidden{display:none !important}
+
+  .wrap{max-width:1000px;margin:0 auto;padding:26px 18px 72px;display:flex;flex-direction:column;gap:20px}
+
+  /* ── 참가 게이트 ─────────────────────── */
+  .gate{
+    max-width:520px;margin:0 auto;padding:34px 18px 60px;
+    display:flex;flex-direction:column;gap:18px;
+  }
+  .gate-card{
+    background:var(--surface);border:1px solid var(--line);border-radius:5px;
+    box-shadow:var(--shadow);overflow:hidden;
+  }
+  .gate-canvas{display:block;width:100%;height:74px;background:var(--surface-2)}
+  .gate-body{padding:22px 22px 24px;display:flex;flex-direction:column;gap:16px}
+  .gate h1{margin:0;font-size:clamp(30px,8vw,42px);line-height:1.03;letter-spacing:-.035em;font-weight:800}
+  .gate h1 em{font-style:normal;color:var(--ember)}
+  .gate .terms{
+    margin:0;display:flex;flex-direction:column;gap:5px;padding:13px 14px;
+    background:var(--bg);border:1px solid var(--line-soft);border-radius:4px;font-size:13px;color:var(--ink-2);
+  }
+  .gate .terms b{color:var(--ink)}
+  .gate .terms .li{display:flex;gap:9px;align-items:baseline}
+  .gate .terms .li span:first-child{
+    font-size:11px;font-weight:700;color:var(--ember);letter-spacing:.02em;flex:0 0 34px;
+  }
+  .who-list{display:flex;flex-wrap:wrap;gap:6px}
+  .who-chip{
+    appearance:none;border:1px solid var(--line);background:var(--bg);border-radius:99px;
+    padding:6px 13px;font-size:13px;font-weight:600;cursor:pointer;
+  }
+  .who-chip:hover{border-color:var(--ember);color:var(--ember)}
+
+  /* ── 헤드 ────────────────────────────── */
+  .masthead{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap}
+  .mast-l{display:flex;flex-direction:column;gap:5px;min-width:0}
+  .eyebrow{
+    font-size:11px;color:var(--ink-3);display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .eyebrow b{
+    font-family:var(--f-mono);color:var(--ember);font-weight:600;
+    letter-spacing:.16em;text-transform:uppercase;
+  }
+  h1.title{margin:0;font-size:clamp(26px,6vw,38px);line-height:1.04;letter-spacing:-.035em;font-weight:800}
+  h1.title em{font-style:normal;color:var(--ember)}
+  .me-chip{
+    display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);
+    border-radius:99px;padding:6px 8px 6px 14px;box-shadow:var(--shadow);white-space:nowrap;
+  }
+  .me-chip .lbl{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;color:var(--ink-3)}
+  .me-chip .nm{font-weight:700;font-size:14px}
+
+  /* ── 모니터 ──────────────────────────── */
+  .monitor{
+    background:var(--surface);border:1px solid var(--line);border-radius:4px;
+    box-shadow:var(--shadow);overflow:hidden;
+  }
+  .monitor-canvas{display:block;width:100%;height:52px;background:var(--surface-2)}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line-soft)}
+  .stat{padding:12px 14px 13px;display:flex;flex-direction:column;gap:2px;border-left:1px solid var(--line-soft)}
+  .stat:first-child{border-left:0}
+  .stat .k{font-size:11px;font-weight:600;letter-spacing:.01em;color:var(--ink-3)}
+  .stat .v{
+    font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-weight:700;
+    font-size:clamp(17px,3.6vw,25px);letter-spacing:-.02em;line-height:1.15;
+  }
+  .stat .sub{font-size:11px;color:var(--ink-3)}
+  .stat.pot .v{color:var(--brass)}
+  .stat.dday .v{color:var(--ember)}
+  @media (max-width:620px){
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .stat:nth-child(3){border-left:0}
+    .stat:nth-child(n+3){border-top:1px solid var(--line-soft)}
+  }
+
+  /* ── 명단 ────────────────────────────── */
+  .section-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:-4px}
+  .section-head h2{margin:0;font-size:13px;font-weight:700}
+  .section-head .hint{font-size:12px;color:var(--ink-3)}
+
+  .roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:12px}
+
+  .card{
+    position:relative;background:var(--surface);border:1px solid var(--line);border-radius:4px;
+    box-shadow:var(--shadow);padding:13px 14px 11px 17px;display:flex;flex-direction:column;gap:9px;overflow:hidden;
+  }
+  .card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--dead)}
+  .card.s-safe::before{background:var(--pulse)}
+  .card.s-open::before{background:var(--ink-3)}
+  .card.s-edge::before,.card.s-doomed::before{background:var(--ember)}
+  .card.s-out{opacity:.72}
+  .card.mine{border-color:var(--ink-2)}
+
+  .card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+  .who{display:flex;align-items:center;gap:7px;min-width:0;flex-wrap:wrap}
+  .face{font-size:19px;line-height:1}
+  .name{font-weight:700;font-size:16px;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tag-me{
+    font-size:10px;padding:2px 6px;border-radius:2px;
+    background:var(--ink);color:var(--surface);font-weight:700;
+  }
+  .lives{font-size:11px;letter-spacing:.12em;color:var(--ember);white-space:nowrap;flex-basis:100%}
+  .lives .gone{color:var(--dead)}
+
+  .badge{
+    font-size:11px;font-weight:700;letter-spacing:.02em;
+    padding:3px 8px;border-radius:2px;white-space:nowrap;border:1px solid transparent;
+  }
+  .badge.en{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em}
+  .b-safe{background:var(--pulse-soft);color:var(--pulse);border-color:var(--pulse)}
+  .b-open{background:var(--surface-2);color:var(--ink-2);border-color:var(--line)}
+  .b-edge{background:var(--ember-soft);color:var(--ember);border-color:var(--ember)}
+  .b-doomed{background:var(--ember);color:#fff;border-color:var(--ember)}
+  .b-out{background:var(--surface-2);color:var(--dead);border-color:var(--line)}
+
+  .ecg{display:block;width:100%;height:36px}
+
+  .days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+  .day{
+    appearance:none;border:1px solid var(--line);background:var(--surface-2);color:var(--ink-3);
+    border-radius:3px;padding:5px 0 6px;display:flex;flex-direction:column;align-items:center;gap:3px;
+    font-size:10px;line-height:1;cursor:default;transition:background .12s,border-color .12s,color .12s;
+  }
+  .day .dot{width:7px;height:7px;border-radius:50%;background:var(--line);transition:background .12s,transform .12s}
+  .day.on{background:var(--pulse-soft);border-color:var(--pulse);color:var(--pulse);font-weight:700}
+  .day.on .dot{background:var(--pulse);transform:scale(1.15)}
+  .day.today{border-color:var(--ember);color:var(--ember)}
+  .day.today.on{border-color:var(--pulse)}
+  .day.future{opacity:.45}
+  .day.tap{cursor:pointer}
+  .day.tap:hover{border-color:var(--ink-3)}
+  .day.tap.on:hover{border-color:var(--pulse)}
+  .days.big .day{padding:9px 0 10px;font-size:11px;gap:5px}
+  .days.big .day .dot{width:9px;height:9px}
+
+  .card-foot{
+    display:flex;align-items:center;justify-content:space-between;gap:8px;
+    padding-top:8px;border-top:1px solid var(--line-soft);font-size:12px;color:var(--ink-2);
+  }
+  .count{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-weight:700;color:var(--ink)}
+  .money{font-family:var(--f-mono);font-variant-numeric:tabular-nums;color:var(--ink-3)}
+  .money.hit{color:var(--ember);font-weight:700}
+  .top-r{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex:0 0 auto}
+  .crown{
+    background:var(--brass-soft);color:var(--brass);font-size:10px;font-weight:700;
+    padding:2px 7px;border-radius:2px;border:1px solid var(--brass);white-space:nowrap;
+  }
+
+  /* ── 패널 ────────────────────────────── */
+  .panels{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media (max-width:760px){.panels{grid-template-columns:1fr}}
+  .panel{
+    background:var(--surface);border:1px solid var(--line);border-radius:4px;box-shadow:var(--shadow);
+    padding:15px 16px 16px;display:flex;flex-direction:column;gap:11px;
+  }
+  .panel h3{
+    margin:0;font-size:12px;letter-spacing:.02em;color:var(--ink-3);font-weight:700;
+    display:flex;align-items:center;gap:8px;
+  }
+  .panel h3::before{content:"";width:14px;height:2px;background:var(--ember);flex:0 0 auto}
+  .panel p.lede{margin:0;font-size:13px;color:var(--ink-2)}
+  .panel p.lede b{color:var(--ink)}
+
+  .field{display:flex;flex-direction:column;gap:5px}
+  .field label{font-size:11px;color:var(--ink-3)}
+  input[type="text"],input[type="number"],input[type="date"],select,textarea{
+    background:var(--bg);border:1px solid var(--line);border-radius:3px;padding:9px 11px;width:100%;min-width:0;
+  }
+  textarea{resize:vertical;min-height:74px;font-family:var(--f-mono);font-size:12px;line-height:1.6}
+  .codebox{
+    background:var(--surface-2);border:1px dashed var(--line);border-radius:3px;padding:11px 12px;
+    font-family:var(--f-mono);font-size:13px;word-break:break-all;line-height:1.5;
+    min-height:44px;display:flex;align-items:center;
+  }
+  .codebox.muted{color:var(--ink-3)}
+  .codebox.long{font-size:11px;max-height:110px;overflow:auto;display:block}
+
+  .btn{
+    appearance:none;border:1px solid var(--ink);background:var(--ink);color:var(--surface);
+    border-radius:3px;padding:10px 15px;font-weight:700;font-size:13px;cursor:pointer;
+    transition:opacity .12s,transform .06s;white-space:nowrap;
+  }
+  .btn:hover{opacity:.86}
+  .btn:active{transform:translateY(1px)}
+  .btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+  .btn.ember{background:var(--ember);border-color:var(--ember);color:#fff}
+  .btn.sm{padding:7px 11px;font-size:12px;font-weight:600}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end}
+  .row > .field{flex:1 1 130px}
+  .grow{flex:1 1 0%;min-width:0}
+
+  .toast{font-size:12px;padding:8px 10px;border-radius:3px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink-2)}
+  .toast.ok{border-color:var(--pulse);background:var(--pulse-soft);color:var(--pulse)}
+  .toast.bad{border-color:var(--ember);background:var(--ember-soft);color:var(--ember)}
+  .toast:empty{display:none}
+  .checkline{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;color:var(--ink-2)}
+  .checkline input{width:auto;margin:0}
+
+  /* ── 설정 ────────────────────────────── */
+  details.settings{background:var(--surface);border:1px solid var(--line);border-radius:4px;box-shadow:var(--shadow)}
+  details.settings > summary{
+    cursor:pointer;padding:13px 16px;font-size:12px;letter-spacing:.02em;
+    color:var(--ink-3);font-weight:700;list-style:none;
+    display:flex;align-items:center;justify-content:space-between;gap:8px;
+  }
+  details.settings > summary::-webkit-details-marker{display:none}
+  details.settings > summary::after{content:"＋";font-size:15px}
+  details.settings[open] > summary::after{content:"－"}
+  .settings-body{padding:15px 16px 16px;display:flex;flex-direction:column;gap:16px;border-top:1px solid var(--line-soft)}
+
+  .memlist{display:flex;flex-direction:column;gap:6px}
+  .memrow{display:flex;align-items:center;gap:9px;padding:7px 10px;background:var(--bg);border:1px solid var(--line-soft);border-radius:3px}
+  .memrow .nm{flex:1;font-weight:600;font-size:14px}
+  .memrow .tag{font-family:var(--f-mono);font-size:10px;color:var(--ink-3);letter-spacing:.08em}
+  .link-btn{appearance:none;background:none;border:0;color:var(--ink-3);font-size:12px;cursor:pointer;text-decoration:underline;text-underline-offset:2px;padding:2px 4px}
+  .link-btn:hover{color:var(--ember)}
+
+  .foot{font-size:11px;color:var(--ink-3);text-align:center;line-height:1.8;border-top:1px solid var(--line-soft);padding-top:16px}
+  .foot code{font-family:var(--f-mono);background:var(--surface-2);padding:1px 5px;border-radius:2px;color:var(--ink-2)}
+
+  @media (prefers-reduced-motion: reduce){ *{transition:none !important} }
+</style>
+</head>
+<body>
+<!-- ══ 참가 게이트 ══ -->
+<div class="gate" id="gate">
+  <div class="gate-card">
+    <canvas class="gate-canvas" id="gateEcg" aria-hidden="true"></canvas>
+    <div class="gate-body">
+      <h1>주3회 <em>생존전</em></h1>
+      <div class="terms">
+        <div class="li"><span>기간</span><span>한 주는 <b>월요일~일요일</b>. 일요일 자정에 판정한다.</span></div>
+        <div class="li"><span>목표</span><span>주 <b id="gTarget">3회</b> 운동. 못 채우면 <b id="gFine">50,000원</b>.</span></div>
+        <div class="li"><span>목숨</span><span>실패할 때마다 목숨 하나. <b id="gLives">3개</b> 다 잃으면 탈락.</span></div>
+      </div>
+
+      <div class="field">
+        <label for="nick">닉네임을 정하고 들어오세요</label>
+        <div class="row">
+          <input type="text" id="nick" class="grow" placeholder="예: 박대표" maxlength="12" autocomplete="off">
+          <button class="btn ember" id="joinBtn">참가하기</button>
+        </div>
+      </div>
+      <div class="toast" id="gateToast"></div>
+
+      <div id="gateExisting" class="field hidden">
+        <label>이미 참가한 사람이면 여기서 고르세요</label>
+        <div class="who-list" id="whoList"></div>
+      </div>
+    </div>
+  </div>
+
+  <details class="settings">
+    <summary>모임 코드를 받았다면</summary>
+    <div class="settings-body">
+      <p class="lede" style="margin:0;font-size:13px;color:var(--ink-2)">총무가 단톡방에 올린 <b>[운동모임]</b> 로 시작하는 코드를 붙여넣으면 규칙과 전원 현황을 그대로 받아온다.</p>
+      <textarea id="gateInbox" placeholder="[운동모임] ..."></textarea>
+      <button class="btn" id="gateLoad">불러오기</button>
+    </div>
+  </details>
+</div>
+
+
+<!-- ══ 메인 ══ -->
+<div class="wrap hidden" id="app">
+
+  <header class="masthead">
+    <div class="mast-l">
+      <div class="eyebrow"><b>WEEKLY SURVIVAL</b> <span id="ebRule">주 3회 · 미달성 시 50,000원</span></div>
+      <h1 class="title">주3회 <em>생존전</em></h1>
+    </div>
+    <div class="me-chip">
+      <span class="lbl">나</span>
+      <span class="nm" id="meName">–</span>
+      <button class="link-btn" id="switchMe">바꾸기</button>
+    </div>
+  </header>
+
+  <section class="panel" id="mePanel" style="gap:12px">
+    <h3>이번 주 내 기록</h3>
+    <p class="lede">운동한 날을 누르세요. 아래 코드를 <b>단톡방에 복사</b>하면 총무가 합칩니다.</p>
+    <div class="days big" id="meDays"></div>
+    <div class="codebox" id="meCode">–</div>
+    <div class="row">
+      <button class="btn grow" id="copyCode">내 코드 복사</button>
+      <button class="btn ghost sm" id="clearMine">이번 주 비우기</button>
+    </div>
+    <div class="toast" id="meToast"></div>
+  </section>
+
+  <section class="monitor" aria-label="이번 주 현황">
+    <canvas class="monitor-canvas" id="mainEcg" aria-hidden="true"></canvas>
+    <div class="stats">
+      <div class="stat">
+        <span class="k">Week</span><span class="v" id="stWeek">–</span><span class="sub" id="stRange">–</span>
+      </div>
+      <div class="stat dday">
+        <span class="k">마감까지</span><span class="v" id="stDday">–</span><span class="sub" id="stDeadline">–</span>
+      </div>
+      <div class="stat">
+        <span class="k">생존자</span><span class="v" id="stAlive">–</span><span class="sub" id="stAliveSub">–</span>
+      </div>
+      <div class="stat pot">
+        <span class="k">누적 벌금 POT</span><span class="v" id="stPot">0원</span><span class="sub" id="stPotSub">–</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-head">
+    <h2 id="rosterTitle">생존 현황</h2>
+    <span class="hint" id="rosterHint"></span>
+  </div>
+  <section class="roster" id="roster"></section>
+
+  <section class="panels">
+    <div class="panel">
+      <h3>받은 코드 합치기</h3>
+      <p class="lede">단톡방에 올라온 코드를 통째로 붙여넣으세요. <b>개인 코드</b>든 총무의 <b>모임 코드</b>든 알아서 구분합니다. 여러 줄 한꺼번에 넣어도 됩니다.</p>
+      <textarea id="inbox" placeholder="[운동체크] 3주차 박대표 월·수·금 #a7f2&#10;[운동체크] 3주차 김과장 월·수 #b31c"></textarea>
+      <button class="btn ember" id="applyCodes">코드 반영</button>
+      <div class="toast" id="hostToast"></div>
+      <label class="checkline">
+        <input type="checkbox" id="hostMode">
+        <span>총무 모드 — 카드에서 남의 날짜도 직접 눌러 고친다</span>
+      </label>
+    </div>
+
+    <div class="panel">
+      <h3>단톡방에 뿌리기</h3>
+      <p class="lede">현황은 <b>읽는 용</b>, 모임 코드는 <b>동기화 용</b>입니다. 총무가 코드를 반영한 뒤 둘 다 올려주면 모두의 화면이 맞춰집니다.</p>
+      <div class="row">
+        <button class="btn grow" id="copyReport">현황 복사</button>
+        <button class="btn ghost grow" id="makeSync">모임 코드 발행</button>
+      </div>
+      <div class="codebox muted long" id="syncBox">아직 발행 안 함</div>
+      <div class="toast" id="syncToast"></div>
+    </div>
+  </section>
+
+  <details class="settings">
+    <summary>모임 설정</summary>
+    <div class="settings-body">
+      <div>
+        <div class="field" style="margin-bottom:10px">
+          <label for="newName">멤버 직접 추가</label>
+          <div class="row">
+            <input type="text" id="newName" class="grow" placeholder="이름 (예: 김과장)" maxlength="12" autocomplete="off">
+            <button class="btn" id="addMem">추가</button>
+          </div>
+        </div>
+        <div class="memlist" id="memList"></div>
+      </div>
+
+      <div class="row">
+        <div class="field"><label for="setStart">모임 시작일</label><input type="date" id="setStart"></div>
+        <div class="field"><label for="setTarget">주당 목표 횟수</label><input type="number" id="setTarget" min="1" max="7" step="1"></div>
+        <div class="field"><label for="setFine">1회 벌금 (원)</label><input type="number" id="setFine" min="0" step="1000"></div>
+        <div class="field"><label for="setLives">시작 목숨</label><input type="number" id="setLives" min="1" max="9" step="1"></div>
+      </div>
+
+      <div class="row">
+        <button class="btn ghost sm" id="resetAll">전체 초기화</button>
+        <span style="font-size:11px;color:var(--ink-3)">기록은 이 기기의 브라우저에만 저장된다. 지우면 못 되돌린다.</span>
+      </div>
+    </div>
+  </details>
+
+  <div class="foot">
+    각자 자기 폰에서 체크하고 <code>내 코드 복사</code> → 단톡방. 총무가 <code>코드 반영</code> 후 <code>모임 코드 발행</code>.<br>
+    지난 주 판정은 자동이다 — 주가 넘어가면 미달성한 사람의 벌금과 목숨이 알아서 깎인다.
+  </div>
+
+</div>
+
+
+<script>
+(function(){
+  "use strict";
+
+  var DOW = ["월","화","수","목","금","토","일"];
+  var KEY = "workout-survival-v1";
+  var DAY = 86400000;
+  var $ = function(id){ return document.getElementById(id); };
+
+  /* ── 상태 ───────────────────────────── */
+  function defaults(){
+    var t = new Date(); t.setHours(0,0,0,0);
+    return { start: ymd(mondayOf(t)), target:3, fine:50000, lives:3,
+             members:[], log:{}, me:"", host:false, seq:1 };
+  }
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(!raw) return defaults();
+      var d = JSON.parse(raw), base = defaults();
+      for(var k in base){ if(!(k in d)) d[k] = base[k]; }
+      return d;
+    }catch(e){ return defaults(); }
+  }
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+  var S = load();
+
+  /* ── 날짜 ───────────────────────────── */
+  function ymd(d){
+    return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+  }
+  function parseYmd(s){ var p = String(s).split("-"); return new Date(+p[0], +p[1]-1, +p[2]); }
+  function mondayOf(d){
+    var x = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    x.setDate(x.getDate() - ((x.getDay()+6)%7));
+    return x;
+  }
+  function today(){ var t = new Date(); return new Date(t.getFullYear(), t.getMonth(), t.getDate()); }
+  function anchor(){ return mondayOf(parseYmd(S.start)); }
+  function weekIndexOf(d){ return Math.round((mondayOf(d) - anchor()) / (7*DAY)) + 1; }
+  function weekStart(wi){ var a = anchor(); return new Date(a.getFullYear(), a.getMonth(), a.getDate() + (wi-1)*7); }
+  function weekDates(wi){
+    var s = weekStart(wi), out = [];
+    for(var i=0;i<7;i++) out.push(new Date(s.getFullYear(), s.getMonth(), s.getDate()+i));
+    return out;
+  }
+  function md(d){ return (d.getMonth()+1)+"/"+d.getDate(); }
+  function dayNo(d){ return Math.round((new Date(d.getFullYear(),d.getMonth(),d.getDate()) - anchor()) / DAY); }
+  function dateOfNo(n){ var a = anchor(); return new Date(a.getFullYear(), a.getMonth(), a.getDate()+n); }
+  function curWeek(){ return Math.max(1, weekIndexOf(today())); }
+  function daysLeft(){ return 7 - ((today().getDay()+6)%7); }
+
+  /* ── 판정 ───────────────────────────── */
+  function doneIn(mid, wi){
+    var lg = S.log[mid] || {}, n = 0, ds = weekDates(wi);
+    for(var i=0;i<7;i++){ if(lg[ymd(ds[i])]) n++; }
+    return n;
+  }
+  function dowFlags(mid, wi){
+    var lg = S.log[mid] || {}, ds = weekDates(wi), out = [];
+    for(var i=0;i<7;i++) out.push(!!lg[ymd(ds[i])]);
+    return out;
+  }
+  function failedWeeks(mid){
+    var cw = curWeek(), n = 0;
+    for(var w=1; w<cw; w++){ if(doneIn(mid,w) < S.target) n++; }
+    return n;
+  }
+  function stateOf(mid){
+    var cw = curWeek(), fails = failedWeeks(mid), lives = S.lives - fails;
+    var done = doneIn(mid, cw), left = daysLeft(), need = Math.max(0, S.target - done);
+    var st;
+    if(done >= S.target) st = "safe";
+    else if(need > left) st = "doomed";
+    else if(need === left) st = "edge";
+    else st = "open";
+    var knocked = (lives <= 0);
+    return {
+      id:mid, fails:fails, lives:lives, done:done, need:need, left:left,
+      state: (knocked && st !== "safe") ? "out" : st,
+      knocked: knocked,
+      confirmed: fails * S.fine,
+      fine: fails * S.fine + (st === "doomed" ? S.fine : 0)
+    };
+  }
+  var LABEL = {
+    safe:{t:"SAFE",cls:"b-safe en"}, open:{t:"진행중",cls:"b-open"},
+    edge:{t:"벼랑끝",cls:"b-edge"}, doomed:{t:"벌금확정",cls:"b-doomed"}, out:{t:"탈락",cls:"b-out"}
+  };
+  var FACE = { safe:"😎", open:"🙂", edge:"😰", doomed:"💸", out:"💀" };
+  function won(n){ return n.toLocaleString("ko-KR"); }
+  function nameOf(mid){
+    var m = S.members.filter(function(x){ return x.id === mid; })[0];
+    return m ? m.name : "";
+  }
+  function addMember(name){
+    var m = { id:"m"+(S.seq++)+"-"+Math.abs(hashInt(name)).toString(36).slice(0,4), name:name };
+    S.members.push(m);
+    return m;
+  }
+  function byName(name){ return S.members.filter(function(x){ return x.name === name; })[0]; }
+
+  /* ── 코드 ───────────────────────────── */
+  function hashInt(s){
+    var h = 2166136261;
+    for(var i=0;i<s.length;i++){ h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+    return h>>>0;
+  }
+  function hash4(s){ return ("000" + hashInt(s).toString(36)).slice(-4); }
+
+  function makeCode(mid, wi){
+    var flags = dowFlags(mid, wi);
+    var picked = DOW.filter(function(_,i){ return flags[i]; });
+    var name = nameOf(mid);
+    return "[운동체크] " + wi + "주차 " + name + " " + (picked.length ? picked.join("·") : "없음") +
+           " #" + hash4(wi + "|" + name + "|" + picked.join(""));
+  }
+
+  function b64e(str){
+    var bytes = new TextEncoder().encode(str), bin = "";
+    for(var i=0;i<bytes.length;i++) bin += String.fromCharCode(bytes[i]);
+    return btoa(bin).replace(/=+$/,"");
+  }
+  function b64d(b){
+    var pad = b.length % 4 ? "====".slice(b.length % 4) : "";
+    var bin = atob(b + pad), arr = new Uint8Array(bin.length);
+    for(var i=0;i<bin.length;i++) arr[i] = bin.charCodeAt(i);
+    return new TextDecoder().decode(arr);
+  }
+  function makeSync(){
+    var g = S.members.map(function(m){
+      var lg = S.log[m.id] || {}, arr = [];
+      for(var k in lg){ if(lg[k]) arr.push(dayNo(parseYmd(k))); }
+      return arr.sort(function(a,b){ return a-b; });
+    });
+    var payload = { v:1, s:S.start, t:S.target, f:S.fine, l:S.lives,
+                    m:S.members.map(function(m){ return m.name; }), g:g };
+    var enc = b64e(JSON.stringify(payload));
+    return "[운동모임] " + enc + "#" + hash4(enc);
+  }
+  function loadSync(enc, sig){
+    if(hash4(enc) !== sig) return null;
+    var p;
+    try{ p = JSON.parse(b64d(enc)); }catch(e){ return null; }
+    if(!p || p.v !== 1 || !Array.isArray(p.m) || !Array.isArray(p.g)) return null;
+
+    var myName = S.me ? nameOf(S.me) : "";
+    S.start = p.s; S.target = p.t; S.fine = p.f; S.lives = p.l;
+    S.members = []; S.log = {}; S.seq = 1;
+    p.m.forEach(function(nm, i){
+      var mem = addMember(String(nm));
+      S.log[mem.id] = {};
+      (p.g[i] || []).forEach(function(n){ S.log[mem.id][ymd(dateOfNo(n))] = true; });
+    });
+    var mine = myName ? byName(myName) : null;
+    S.me = mine ? mine.id : "";
+    return { count: S.members.length, kept: !!mine };
+  }
+
+  var RE_CHECK = /\[운동체크\]\s*(\d+)\s*주차\s+([^\s#]+)\s+([월화수목금토일·,]*|없음)\s*#\s*([0-9a-z]{1,8})/g;
+  var RE_SYNC  = /\[운동모임\]\s*([A-Za-z0-9+/=]{20,})\s*#\s*([0-9a-z]{1,8})/;
+
+  function applyText(text){
+    var sm = text.match(RE_SYNC);
+    if(sm){
+      var r = loadSync(sm[1], sm[2]);
+      return r ? { kind:"sync", ok:true, count:r.count, kept:r.kept } : { kind:"sync", ok:false };
+    }
+    RE_CHECK.lastIndex = 0;
+    var m, ok = 0, bad = 0, added = [], names = [];
+    while((m = RE_CHECK.exec(text)) !== null){
+      var wi = parseInt(m[1],10);
+      var name = m[2];
+      var raw = (m[3] === "없음") ? "" : m[3].replace(/[·,\s]/g, "");
+      if(wi < 1 || hash4(wi + "|" + name + "|" + raw) !== m[4]){ bad++; continue; }
+      var mem = byName(name);
+      if(!mem){ mem = addMember(name); added.push(name); }
+      var ds = weekDates(wi);
+      if(!S.log[mem.id]) S.log[mem.id] = {};
+      for(var i=0;i<7;i++){
+        var k = ymd(ds[i]);
+        if(raw.indexOf(DOW[i]) >= 0) S.log[mem.id][k] = true;
+        else delete S.log[mem.id][k];
+      }
+      ok++; names.push(name);
+    }
+    return { kind:"check", ok:ok, bad:bad, added:added, names:names };
+  }
+
+  function reportText(){
+    var cw = curWeek(), ds = weekDates(cw), left = daysLeft(), lines = [];
+    lines.push("🔥 [주3회 생존전] " + cw + "주차 · " + (left <= 1 ? "오늘까지" : "D-" + (left-1)));
+    lines.push("");
+    if(!S.members.length){
+      lines.push("(참가자 없음)");
+    }else{
+      S.members.map(function(m){ return {m:m, s:stateOf(m.id)}; })
+        .sort(function(a,b){ return (b.s.done - a.s.done) || (b.s.lives - a.s.lives); })
+        .forEach(function(r){
+          var flags = dowFlags(r.m.id, cw);
+          var picked = DOW.filter(function(_,i){ return flags[i]; }).join("") || "-";
+          var lv = "";
+          for(var j=0;j<S.lives;j++) lv += (j < Math.max(0,r.s.lives) ? "♥" : "♡");
+          var tail = r.s.state === "safe" ? "통과"
+                   : r.s.state === "doomed" ? "벌금 확정"
+                   : r.s.state === "edge" ? ("남은 " + r.s.left + "일 전부!")
+                   : r.s.state === "out" ? "탈락"
+                   : (r.s.need + "회 더");
+          lines.push(FACE[r.s.state] + " " + r.m.name + "  " + picked + " " + r.s.done + "/" + S.target + " · " + tail + " " + lv);
+        });
+    }
+    lines.push("");
+    lines.push("누적 벌금 POT " + won(S.members.reduce(function(a,m){ return a + stateOf(m.id).confirmed; }, 0)) + "원");
+    lines.push("이번 주 마감: " + md(ds[6]) + "(일) 자정");
+    return lines.join("\n");
+  }
+
+  /* ── 복사 ───────────────────────────── */
+  function legacy(text){
+    try{
+      var ta = document.createElement("textarea");
+      ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      var ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+      return ok;
+    }catch(e){ return false; }
+  }
+  function copy(text, el, okMsg){
+    var done = function(){ flash(el, okMsg, "ok"); };
+    var fail = function(){ flash(el, "복사가 막혔어요. 위 글자를 길게 눌러 직접 복사하세요.", "bad"); };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done, function(){ legacy(text) ? done() : fail(); });
+    }else{ legacy(text) ? done() : fail(); }
+  }
+  var timers = {};
+  function flash(el, msg, kind){
+    el.textContent = msg;
+    el.className = "toast " + (kind || "");
+    clearTimeout(timers[el.id]);
+    timers[el.id] = setTimeout(function(){ el.textContent = ""; el.className = "toast"; }, 5000);
+  }
+
+  /* ── 파형 ───────────────────────────── */
+  function beat(p){
+    if(p < 0.10) return 0.10 * Math.sin(p / 0.10 * Math.PI);
+    if(p < 0.16) return 0;
+    if(p < 0.20) return -0.18 * ((p - 0.16) / 0.04);
+    if(p < 0.24) return -0.18 + 1.18 * ((p - 0.20) / 0.04);
+    if(p < 0.29) return 1.0 - 1.30 * ((p - 0.24) / 0.05);
+    if(p < 0.34) return -0.30 + 0.30 * ((p - 0.29) / 0.05);
+    if(p < 0.55) return 0;
+    if(p < 0.70) return 0.22 * Math.sin((p - 0.55) / 0.15 * Math.PI);
+    return 0;
+  }
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var CS = getComputedStyle(document.documentElement);
+  function css(v){ return CS.getPropertyValue(v).trim() || "#888"; }
+
+  function drawWave(cv, opt, t){
+    var w = cv.clientWidth, h = cv.clientHeight;
+    if(!w || !h) return;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    if(cv.width !== Math.round(w*dpr) || cv.height !== Math.round(h*dpr)){
+      cv.width = Math.round(w*dpr); cv.height = Math.round(h*dpr);
+    }
+    var g = cv.getContext("2d");
+    g.setTransform(dpr,0,0,dpr,0,0);
+    g.clearRect(0,0,w,h);
+
+    var mid = h*0.56, amp = h*0.42;
+    g.strokeStyle = css("--line-soft"); g.lineWidth = 1;
+    g.beginPath(); g.moveTo(0, Math.round(mid)+0.5); g.lineTo(w, Math.round(mid)+0.5); g.stroke();
+
+    var off = reduce ? 0 : (t * opt.speed) % 1e7;
+    g.strokeStyle = opt.color; g.lineWidth = opt.weight;
+    g.lineJoin = "round"; g.lineCap = "round";
+    g.beginPath();
+    for(var x=0; x<=w; x++){
+      var y = mid;
+      if(!opt.flat){
+        var p = ((((x + off) / opt.period) % 1) + 1) % 1;
+        y = mid - beat(p)*amp;
+      }
+      if(x === 0) g.moveTo(x,y); else g.lineTo(x,y);
+    }
+    g.stroke();
+
+    if(!opt.flat){
+      var pe = ((((w + off) / opt.period) % 1) + 1) % 1;
+      g.fillStyle = opt.color;
+      g.beginPath(); g.arc(w-1.5, mid - beat(pe)*amp, opt.weight*1.4, 0, Math.PI*2); g.fill();
+    }
+  }
+  var WAVE = {
+    safe:   function(){ return {color:css("--pulse"), period:96,  speed:0.055, weight:1.7, flat:false}; },
+    open:   function(){ return {color:css("--ink-3"), period:108, speed:0.045, weight:1.5, flat:false}; },
+    edge:   function(){ return {color:css("--ember"), period:62,  speed:0.110, weight:1.8, flat:false}; },
+    doomed: function(){ return {color:css("--ember"), period:62,  speed:0,     weight:1.6, flat:true}; },
+    out:    function(){ return {color:css("--dead"),  period:62,  speed:0,     weight:1.4, flat:true}; }
+  };
+
+  function tick(t){
+    if(!S.me){
+      drawWave($("gateEcg"), WAVE.edge(), t);
+    }else{
+      var stats = S.members.map(function(m){ return stateOf(m.id); });
+      var worst = "open";
+      if(stats.length){
+        if(stats.some(function(s){ return s.state === "doomed" || s.state === "out" || s.state === "edge"; })) worst = "edge";
+        else if(stats.every(function(s){ return s.state === "safe"; })) worst = "safe";
+      }
+      drawWave($("mainEcg"), WAVE[worst](), t);
+      var list = document.querySelectorAll("canvas.ecg");
+      for(var i=0;i<list.length;i++) drawWave(list[i], WAVE[list[i].dataset.state || "open"](), t + i*400);
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+
+  /* ── 렌더 ───────────────────────────── */
+  function render(){
+    save();
+    if(!S.me){ renderGate(); $("gate").classList.remove("hidden"); $("app").classList.add("hidden"); return; }
+    $("gate").classList.add("hidden"); $("app").classList.remove("hidden");
+
+    var cw = curWeek(), ds = weekDates(cw), left = daysLeft();
+    var stats = S.members.map(function(m){ return stateOf(m.id); });
+
+    $("ebRule").textContent = "주 " + S.target + "회 · 미달성 시 " + won(S.fine) + "원";
+    $("meName").textContent = nameOf(S.me);
+
+    $("stWeek").textContent = cw + "주차";
+    $("stRange").textContent = md(ds[0]) + " ~ " + md(ds[6]);
+    $("stDday").textContent = left <= 1 ? "오늘까지" : "D-" + (left-1);
+    $("stDeadline").textContent = md(ds[6]) + "(일) 자정";
+
+    var alive = stats.filter(function(s){ return !s.knocked; }).length;
+    $("stAlive").textContent = alive + " / " + S.members.length;
+    $("stAliveSub").textContent = "이번 주 " + stats.filter(function(s){ return s.state === "safe"; }).length + "명 통과";
+
+    var pot = stats.reduce(function(a,s){ return a + s.confirmed; }, 0);
+    var pend = stats.reduce(function(a,s){ return a + (s.fine - s.confirmed); }, 0);
+    $("stPot").textContent = won(pot) + "원";
+    $("stPotSub").textContent = pend > 0 ? "이번 주 " + won(pend) + "원 확정 대기" : (pot ? "정산 대상" : "아직 아무도 안 냈다");
+
+    $("rosterTitle").textContent = cw + "주차 생존 현황";
+    $("rosterHint").textContent = S.host ? "총무 모드 — 날짜를 눌러 바로 고친다" : "내 칸만 누를 수 있다";
+
+    renderRoster(stats, cw, ds);
+    renderMeDays(cw, ds);
+    renderMemList();
+    syncSettings();
+  }
+
+  function renderGate(){
+    $("gTarget").textContent = S.target + "회";
+    $("gFine").textContent = won(S.fine) + "원";
+    $("gLives").textContent = S.lives + "개";
+    var box = $("whoList");
+    box.innerHTML = "";
+    if(S.members.length){
+      $("gateExisting").classList.remove("hidden");
+      S.members.forEach(function(m){
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "who-chip"; b.textContent = m.name;
+        b.onclick = function(){ S.me = m.id; render(); };
+        box.appendChild(b);
+      });
+    }else{
+      $("gateExisting").classList.add("hidden");
+    }
+  }
+
+  function renderRoster(stats, cw, ds){
+    var box = $("roster");
+    box.innerHTML = "";
+    var order = stats.slice().sort(function(a,b){
+      return (b.lives - a.lives) || (b.done - a.done) || (a.fine - b.fine);
+    });
+    var topId = (order.length && order[0].lives > 0 && order[0].state === "safe") ? order[0].id : null;
+    var ti = (today().getDay()+6)%7;
+
+    S.members.forEach(function(m){
+      var s = stats.filter(function(x){ return x.id === m.id; })[0];
+      var flags = dowFlags(m.id, cw);
+      var mine = (m.id === S.me);
+
+      var card = document.createElement("div");
+      card.className = "card s-" + s.state + (mine ? " mine" : "");
+
+      var top = document.createElement("div");
+      top.className = "card-top";
+      var who = document.createElement("div");
+      who.className = "who";
+      var fc = document.createElement("span");
+      fc.className = "face"; fc.textContent = FACE[s.state];
+      who.appendChild(fc);
+      var nm = document.createElement("span");
+      nm.className = "name"; nm.textContent = m.name;
+      who.appendChild(nm);
+      if(mine){
+        var tm = document.createElement("span");
+        tm.className = "tag-me"; tm.textContent = "나";
+        who.appendChild(tm);
+      }
+      var lv = "";
+      for(var j=0;j<S.lives;j++) lv += (j < Math.max(0,s.lives) ? "♥" : '<span class="gone">♡</span>');
+      var lvEl = document.createElement("div");
+      lvEl.className = "lives"; lvEl.innerHTML = lv;
+      who.appendChild(lvEl);
+      top.appendChild(who);
+
+      var right = document.createElement("div");
+      right.className = "top-r";
+      var bd = document.createElement("span");
+      bd.className = "badge " + LABEL[s.state].cls;
+      bd.textContent = LABEL[s.state].t;
+      right.appendChild(bd);
+      if(m.id === topId){
+        var cr = document.createElement("span");
+        cr.className = "crown"; cr.textContent = "👑 1위";
+        right.appendChild(cr);
+      }
+      top.appendChild(right);
+      card.appendChild(top);
+
+      var cv = document.createElement("canvas");
+      cv.className = "ecg"; cv.dataset.state = s.state;
+      card.appendChild(cv);
+
+      var days = document.createElement("div");
+      days.className = "days";
+      var editable = S.host || mine;
+      for(var i=0;i<7;i++){
+        (function(i){
+          var d = document.createElement("button");
+          d.type = "button";
+          var future = ds[i] > today();
+          d.className = "day" + (flags[i] ? " on" : "") + (i === ti ? " today" : "") +
+                        ((future && !flags[i]) ? " future" : "") + (editable ? " tap" : "");
+          d.innerHTML = '<span>' + DOW[i] + '</span><span class="dot"></span>';
+          d.setAttribute("aria-label", m.name + " " + DOW[i] + "요일 " + (flags[i] ? "완료" : "미완료"));
+          if(editable) d.onclick = function(){ toggle(m.id, ds[i]); render(); };
+          else d.disabled = true;
+          days.appendChild(d);
+        })(i);
+      }
+      card.appendChild(days);
+
+      var msg = s.state === "safe" ? "이번 주 통과"
+              : s.state === "doomed" ? "산술적으로 불가"
+              : s.state === "edge" ? ("남은 " + s.left + "일 전부 해야 함")
+              : s.state === "out" ? "목숨 소진 · 벌금은 계속"
+              : (s.need + "회 더 · " + s.left + "일 남음");
+      var foot = document.createElement("div");
+      foot.className = "card-foot";
+      foot.innerHTML = '<span><span class="count">' + s.done + "/" + S.target + '</span> · ' + msg + '</span>' +
+                       '<span class="money' + (s.fine ? " hit" : "") + '">' + won(s.fine) + '원</span>';
+      card.appendChild(foot);
+
+      box.appendChild(card);
+    });
+  }
+
+  function toggle(mid, d){
+    var k = ymd(d);
+    if(!S.log[mid]) S.log[mid] = {};
+    if(S.log[mid][k]) delete S.log[mid][k];
+    else S.log[mid][k] = true;
+  }
+
+  function renderMeDays(cw, ds){
+    var box = $("meDays");
+    box.innerHTML = "";
+    var flags = dowFlags(S.me, cw);
+    var ti = (today().getDay()+6)%7;
+    for(var i=0;i<7;i++){
+      (function(i){
+        var b = document.createElement("button");
+        b.type = "button";
+        b.className = "day tap" + (flags[i] ? " on" : "") + (i === ti ? " today" : "") +
+                      ((ds[i] > today() && !flags[i]) ? " future" : "");
+        b.innerHTML = '<span>' + DOW[i] + '</span><span class="dot"></span>';
+        b.setAttribute("aria-label", DOW[i] + "요일 " + md(ds[i]));
+        b.onclick = function(){ toggle(S.me, ds[i]); render(); };
+        box.appendChild(b);
+      })(i);
+    }
+    $("meCode").textContent = makeCode(S.me, cw);
+  }
+
+  function renderMemList(){
+    var box = $("memList");
+    box.innerHTML = "";
+    S.members.forEach(function(m){
+      var s = stateOf(m.id);
+      var row = document.createElement("div");
+      row.className = "memrow";
+      var nm = document.createElement("span");
+      nm.className = "nm"; nm.textContent = m.name + (m.id === S.me ? " (나)" : "");
+      var tg = document.createElement("span");
+      tg.className = "tag"; tg.textContent = "실패 " + s.fails + "주 · " + won(s.confirmed) + "원";
+      var del = document.createElement("button");
+      del.className = "link-btn"; del.type = "button"; del.textContent = "삭제";
+      del.onclick = function(){
+        if(!confirm(m.name + " 님을 명단에서 뺄까요? 기록도 같이 지워집니다.")) return;
+        S.members = S.members.filter(function(x){ return x.id !== m.id; });
+        delete S.log[m.id];
+        if(S.me === m.id) S.me = "";
+        render();
+      };
+      row.appendChild(nm); row.appendChild(tg); row.appendChild(del);
+      box.appendChild(row);
+    });
+  }
+
+  function syncSettings(){
+    $("setStart").value = S.start;
+    $("setTarget").value = S.target;
+    $("setFine").value = S.fine;
+    $("setLives").value = S.lives;
+    $("hostMode").checked = !!S.host;
+  }
+
+  /* ── 이벤트 ─────────────────────────── */
+  function join(){
+    var v = $("nick").value.trim();
+    if(!v){ flash($("gateToast"), "닉네임을 적어주세요.", "bad"); return; }
+    var dup = byName(v);
+    if(dup){ flash($("gateToast"), "같은 닉네임이 이미 있어요. 그 사람이면 아래에서 고르세요.", "bad"); return; }
+    S.me = addMember(v).id;
+    $("nick").value = "";
+    render();
+  }
+  $("joinBtn").onclick = join;
+  $("nick").onkeydown = function(e){ if(e.key === "Enter"){ e.preventDefault(); join(); } };
+
+  $("gateLoad").onclick = function(){
+    var t = $("gateInbox").value;
+    var r = applyText(t);
+    if(r.kind === "sync" && r.ok){
+      $("gateInbox").value = "";
+      flash($("gateToast"), "모임을 불러왔어요. 닉네임을 고르거나 새로 만드세요.", "ok");
+      render();
+    }else{
+      flash($("gateToast"), "모임 코드를 못 읽었어요. [운동모임] 로 시작하는 줄을 통째로 복사했는지 확인하세요.", "bad");
+    }
+  };
+
+  $("switchMe").onclick = function(){ S.me = ""; render(); };
+
+  $("copyCode").onclick = function(){ copy(makeCode(S.me, curWeek()), $("meToast"), "복사됐어요. 단톡방에 붙여넣으세요."); };
+  $("clearMine").onclick = function(){
+    var ds = weekDates(curWeek());
+    if(!S.log[S.me]) S.log[S.me] = {};
+    for(var i=0;i<7;i++) delete S.log[S.me][ymd(ds[i])];
+    render();
+    flash($("meToast"), "이번 주 기록을 비웠어요.", "");
+  };
+
+  $("applyCodes").onclick = function(){
+    var txt = $("inbox").value;
+    if(!txt.trim()){ flash($("hostToast"), "붙여넣은 코드가 없어요.", "bad"); return; }
+    var r = applyText(txt);
+    render();
+    if(r.kind === "sync"){
+      if(r.ok){
+        $("inbox").value = "";
+        flash($("hostToast"), "모임 코드 반영 — 멤버 " + r.count + "명 현황을 받아왔어요." + (r.kept ? "" : " (내 닉네임이 명단에 없어 다시 골라야 합니다)"), "ok");
+      }else{
+        flash($("hostToast"), "모임 코드가 깨졌어요. 총무에게 다시 발행해 달라고 하세요.", "bad");
+      }
+      return;
+    }
+    if(r.ok === 0){
+      flash($("hostToast"), "반영된 코드가 없어요. 코드가 잘렸거나 손으로 고쳐진 것 같습니다 — 다시 복사해 달라고 하세요.", "bad");
+      return;
+    }
+    var msg = r.ok + "명 반영 (" + r.names.join(", ") + ")";
+    if(r.added.length) msg += " · 새 멤버 " + r.added.join(", ") + " 자동 등록";
+    if(r.bad) msg += " · " + r.bad + "건은 코드가 깨져서 무시";
+    flash($("hostToast"), msg, r.bad ? "bad" : "ok");
+    $("inbox").value = "";
+  };
+
+  $("copyReport").onclick = function(){ copy(reportText(), $("syncToast"), "현황을 복사했어요. 단톡방에 붙여넣으세요."); };
+  $("makeSync").onclick = function(){
+    var code = makeSync();
+    $("syncBox").className = "codebox long";
+    $("syncBox").textContent = code;
+    copy(code, $("syncToast"), "모임 코드를 복사했어요. 단톡방에 올리면 모두 같은 현황을 봅니다.");
+  };
+
+  $("hostMode").onchange = function(){ S.host = this.checked; render(); };
+
+  $("addMem").onclick = function(){
+    var v = $("newName").value.trim();
+    if(!v) return;
+    if(byName(v)){ alert("같은 이름이 이미 있어요."); return; }
+    addMember(v);
+    $("newName").value = "";
+    render();
+  };
+  $("newName").onkeydown = function(e){ if(e.key === "Enter"){ e.preventDefault(); $("addMem").click(); } };
+
+  $("setStart").onchange = function(){ if(this.value){ S.start = this.value; render(); } };
+  $("setTarget").onchange = function(){ S.target = Math.min(7, Math.max(1, parseInt(this.value,10) || 3)); render(); };
+  $("setFine").onchange   = function(){ S.fine   = Math.max(0, parseInt(this.value,10) || 0); render(); };
+  $("setLives").onchange  = function(){ S.lives  = Math.min(9, Math.max(1, parseInt(this.value,10) || 3)); render(); };
+
+  $("resetAll").onclick = function(){
+    if(!confirm("모든 멤버와 기록을 지웁니다. 되돌릴 수 없어요. 진행할까요?")) return;
+    S = defaults();
+    render();
+  };
+
+  render();
+})();
+</script>
+</body>
+</html>
