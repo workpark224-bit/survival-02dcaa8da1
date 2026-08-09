@@ -199,6 +199,37 @@
   .chip.gold{border-color:var(--brass);color:var(--brass);background:var(--brass-soft)}
   .chip.green{border-color:var(--pulse);color:var(--pulse);background:var(--pulse-soft)}
 
+  /* ── 캐릭터 ─────────────────────────── */
+  .face{line-height:0}
+  .av-sp{line-height:0;display:inline-flex}
+  .who-chip{display:inline-flex;align-items:center;gap:6px}
+  .av-build{display:flex;gap:12px;align-items:flex-start}
+  .av-prev{flex:0 0 auto;background:var(--bg);border:1px solid var(--line-soft);border-radius:4px;padding:4px;line-height:0}
+  .av-ed{display:flex;flex-direction:column;gap:5px;flex:1 1 0%;min-width:0}
+  .av-row{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+  .av-row .t{font-size:10px;color:var(--ink-3);flex:0 0 32px}
+  .avchip{appearance:none;border:1px solid var(--line);background:var(--bg);border-radius:99px;padding:3px 9px;font-size:11px;cursor:pointer;color:var(--ink-2)}
+  .avchip.sel{border-color:var(--ember);color:var(--ember);font-weight:700}
+  .swatch{appearance:none;width:19px;height:19px;border-radius:50%;border:2px solid var(--line);cursor:pointer;padding:0}
+  .swatch.sel{border-color:var(--ink);box-shadow:0 0 0 2px var(--surface),0 0 0 3px var(--ink)}
+
+  /* ── 게임 방법 ───────────────────────── */
+  .guide .g-li{font-size:13px;color:var(--ink-2);line-height:1.65}
+  .guide .g-li b{color:var(--ember);margin-right:5px}
+  .guide code{font-family:var(--f-mono);background:var(--surface-2);padding:1px 5px;border-radius:2px;font-size:11px;color:var(--ink-2)}
+
+  /* ── 주차 장부 ───────────────────────── */
+  .wk-sum{margin:0 0 2px;font-size:12px;color:var(--ink-2)}
+  .wk-sum b{color:var(--ember)}
+  .ledger{display:flex;flex-direction:column;gap:8px}
+  .wkrow{background:var(--bg);border:1px solid var(--line-soft);border-radius:3px;padding:9px 11px;display:flex;flex-direction:column;gap:4px}
+  .wk-head{display:flex;gap:9px;align-items:baseline;flex-wrap:wrap;font-size:12px;color:var(--ink-3)}
+  .wk-head b{color:var(--ink);font-size:13px}
+  .wk-amt{margin-left:auto;font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:11px;color:var(--ember);font-weight:700}
+  .wk-amt.zero{color:var(--pulse)}
+  .wk-body{font-size:12px;color:var(--ink-2);display:flex;flex-direction:column;gap:2px}
+  .wk-empty{font-size:12px;color:var(--ink-3);padding:4px 2px}
+
   .hist{display:flex;gap:3px;align-items:center;flex-wrap:wrap;font-size:10px;color:var(--ink-3)}
   .hist .st{
     width:15px;height:15px;border-radius:3px;display:grid;place-items:center;
@@ -383,6 +414,14 @@
       </div>
 
       <div class="field">
+        <label>내 캐릭터 만들기</label>
+        <div class="av-build">
+          <span class="av-prev" id="gateAvPrev"></span>
+          <div class="av-ed" id="gateAvEd"></div>
+        </div>
+      </div>
+
+      <div class="field">
         <label for="nick">닉네임을 정하고 들어오세요</label>
         <div class="row">
           <input type="text" id="nick" class="grow" placeholder="예: 박대표" maxlength="12" autocomplete="off">
@@ -420,17 +459,34 @@
     <div class="mast-r">
       <button class="icon-btn" id="sfxBtn" type="button" title="효과음 켜기/끄기" aria-label="효과음">🔊</button>
       <div class="me-chip">
-        <span class="lbl">나</span>
+        <span class="av-sp" id="meAv"></span>
         <span class="nm" id="meName">–</span>
         <button class="link-btn" id="switchMe">바꾸기</button>
       </div>
     </div>
   </header>
 
+  <details class="settings">
+    <summary>게임 방법 — 처음이면 여길 펼치세요</summary>
+    <div class="settings-body guide">
+      <div class="g-li"><b>①</b> 운동한 날 <code>오늘 운동 완료</code>를 누른다. 지나간 날은 요일 칸을 눌러 채운다.</div>
+      <div class="g-li"><b>②</b> <code>내 코드 복사</code> → 단톡방에 붙여넣는다. 이게 제출이다.</div>
+      <div class="g-li"><b>③</b> 총무는 올라온 코드를 몽땅 <code>코드 반영</code>에 붙여넣고, <code>초대글 복사</code>로 다시 뿌린다.</div>
+      <div class="g-li"><b>④</b> 일요일 자정 자동 판정 — 목표를 못 채우면 벌금과 목숨 하나. 목숨을 다 잃으면 탈락. 결과는 아래 <code>주차 장부</code>에 쌓인다.</div>
+      <div class="g-li"><b>⑤</b> 목표를 넘겨도 계속 기록된다(⭐ 초과). 누적 횟수로 레벨이 오른다 — 🐣 입문 → 🌱 → 💪 → 🔩 → 🔥 → 🏆 전설.</div>
+    </div>
+  </details>
+
   <section class="panel" id="mePanel" style="gap:12px">
     <div class="me-head">
       <h3 style="margin:0">이번 주 내 기록</h3>
+      <button class="link-btn" id="editAv" type="button">🎨 캐릭터 꾸미기</button>
       <span class="me-prog"><b id="meDone">0</b> / <span id="meTarget">3</span>회 · <span id="meLeft">–</span></span>
+    </div>
+
+    <div class="av-build hidden" id="meAvBuild">
+      <span class="av-prev" id="meAvPrev"></span>
+      <div class="av-ed" id="meAvEd"></div>
     </div>
 
     <button class="today-btn" id="todayBtn" type="button">오늘 운동 완료</button>
@@ -475,6 +531,14 @@
     <span class="hint" id="rosterHint"></span>
   </div>
   <section class="roster" id="roster"></section>
+
+  <details class="settings">
+    <summary>주차 장부 — 지난 주 기록 · 모인 벌금</summary>
+    <div class="settings-body">
+      <p class="wk-sum" id="ledgerSum"></p>
+      <div class="ledger" id="ledger"></div>
+    </div>
+  </details>
 
   <section class="panels">
     <div class="panel">
@@ -645,6 +709,7 @@
       knocked: knocked,
       streak: streakOf(mid),
       total: totalDone(mid),
+      over: Math.max(0, done - S.target),
       confirmed: fails * S.fine,
       fine: fails * S.fine + (st === "doomed" ? S.fine : 0)
     };
@@ -654,6 +719,118 @@
     edge:{t:"벼랑끝",cls:"b-edge"}, doomed:{t:"벌금확정",cls:"b-doomed"}, out:{t:"탈락",cls:"b-out"}
   };
   var FACE = { safe:"😎", open:"🙂", edge:"😰", doomed:"💸", out:"💀" };
+
+  /* ── 캐릭터 ─────────────────────────── */
+  var GENDERS = ["남","여"];
+  var SKIN  = ["#F5D6BB","#E8B98C","#B97F52"];
+  var HAIRS = ["짧은","스포츠","단발","긴머리","묶음","파마","민머리"];
+  var HAIRC = ["#26202A","#4E3421","#8A5A2B","#A9AEB8","#B8402A"];
+  var ACCS  = ["기본","안경","수염","볼터치"];
+
+  // 이름에서 결정되는 기본 캐릭터 — 동기화 없이도 모든 기기에서 같은 모습이 나온다.
+  function randomAv(seed){
+    var h = hashInt(String(seed));
+    return [h % 2, (h >>> 2) % SKIN.length, (h >>> 4) % 6, (h >>> 8) % HAIRC.length, 0];
+  }
+  function avOf(m){ return (m && m.av && m.av.length >= 5) ? m.av : randomAv(m ? m.name : "?"); }
+  function avEnc(av){ return (av || [0,0,0,0,0]).slice(0,5).map(function(d){ return (+d || 0) % 10; }).join(""); }
+  function avDec(s){
+    var a = String(s).split("").map(Number).slice(0,5);
+    while(a.length < 5) a.push(0);
+    return a.map(function(d){ return isNaN(d) ? 0 : d; });
+  }
+
+  // 표정은 고르는 게 아니라 생존 상태가 정한다 — safe면 웃고, edge면 식은땀, doomed면 넋이 나간다.
+  function avatarSvg(av, state, size){
+    av = (av && av.length >= 5) ? av : [0,0,0,0,0];
+    var g = +av[0] % 2, sk = SKIN[+av[1] % SKIN.length], hs = +av[2] % HAIRS.length,
+        hc = HAIRC[+av[3] % HAIRC.length], ac = +av[4] % ACCS.length;
+    var F = "#262029", p = [];
+    // 뒷머리
+    if(hs === 3) p.push('<path d="M11,18 a13,13 0 0 1 26,0 l1.5,20 q0,3 -3,3 h-23 q-3,0 -3,-3 z" fill="' + hc + '"/>');
+    if(hs === 4) p.push('<circle cx="24" cy="7.5" r="4.6" fill="' + hc + '"/>');
+    // 어깨
+    p.push('<path d="M7,48 C9,39 17,36 24,36 C31,36 39,39 41,48 Z" fill="var(--surface-2)" stroke="var(--line)"/>');
+    // 얼굴
+    p.push('<circle cx="24" cy="22" r="13" fill="' + sk + '" stroke="rgba(0,0,0,.15)"/>');
+    // 앞머리
+    if(hs === 0 || hs === 2) p.push('<path d="M12,17.5 A13,13 0 0 1 36,17.5" stroke="' + hc + '" stroke-width="7" fill="none" stroke-linecap="round"/>');
+    if(hs === 1) p.push('<path d="M13,15.5 A13,13 0 0 1 35,15.5" stroke="' + hc + '" stroke-width="4" fill="none" stroke-linecap="round"/>');
+    if(hs === 2){
+      p.push('<path d="M11.8,19 v10.5" stroke="' + hc + '" stroke-width="4.6" stroke-linecap="round" fill="none"/>');
+      p.push('<path d="M36.2,19 v10.5" stroke="' + hc + '" stroke-width="4.6" stroke-linecap="round" fill="none"/>');
+    }
+    if(hs === 3 || hs === 4) p.push('<path d="M12,17.5 A13,13 0 0 1 36,17.5" stroke="' + hc + '" stroke-width="6.4" fill="none" stroke-linecap="round"/>');
+    if(hs === 5) p.push('<circle cx="13.5" cy="17" r="4.4" fill="' + hc + '"/><circle cx="18" cy="12.6" r="4.6" fill="' + hc + '"/><circle cx="24" cy="10.8" r="4.8" fill="' + hc + '"/><circle cx="30" cy="12.6" r="4.6" fill="' + hc + '"/><circle cx="34.5" cy="17" r="4.4" fill="' + hc + '"/>');
+    // 눈
+    if(state === "doomed" || state === "out"){
+      p.push('<path d="M17.6,19 l3.8,3.4 M21.4,19 l-3.8,3.4 M26.6,19 l3.8,3.4 M30.4,19 l-3.8,3.4" stroke="' + F + '" stroke-width="1.5" stroke-linecap="round" fill="none"/>');
+    }else if(state === "safe"){
+      p.push('<path d="M17.4,21 Q19.5,18.4 21.6,21 M26.4,21 Q28.5,18.4 30.6,21" stroke="' + F + '" stroke-width="1.6" stroke-linecap="round" fill="none"/>');
+    }else{
+      p.push('<circle cx="19.5" cy="20.7" r="1.55" fill="' + F + '"/><circle cx="28.5" cy="20.7" r="1.55" fill="' + F + '"/>');
+    }
+    if(g === 1) p.push('<path d="M16.6,18.9 l-1.7,-0.9 M31.4,18.9 l1.7,-0.9" stroke="' + F + '" stroke-width="1.1" stroke-linecap="round" fill="none"/>');
+    if(state === "edge"){
+      p.push('<path d="M16.6,17.2 l4,1.4 M31.4,17.2 l-4,1.4" stroke="' + F + '" stroke-width="1.3" stroke-linecap="round" fill="none"/>');
+      p.push('<path d="M38.5,15.5 q2.6,3.6 0,5.1 q-2.6,-1.5 0,-5.1" fill="#6FB4E4"/>');
+    }
+    // 입
+    if(state === "safe") p.push('<path d="M19.8,26.4 Q24,30.6 28.2,26.4" stroke="' + F + '" stroke-width="1.6" stroke-linecap="round" fill="none"/>');
+    else if(state === "edge") p.push('<path d="M19.8,28 q2.1,-1.9 4.2,0 q2.1,1.9 4.2,0" stroke="' + F + '" stroke-width="1.4" stroke-linecap="round" fill="none"/>');
+    else if(state === "doomed") p.push('<ellipse cx="24" cy="28.4" rx="2.5" ry="3" fill="' + F + '"/>');
+    else if(state === "out") p.push('<path d="M20.5,28.2 h7" stroke="' + F + '" stroke-width="1.5" stroke-linecap="round"/>');
+    else p.push('<path d="M20.8,27 Q24,29.4 27.2,27" stroke="' + F + '" stroke-width="1.5" stroke-linecap="round" fill="none"/>');
+    // 포인트
+    if(ac === 1) p.push('<circle cx="19.5" cy="20.7" r="4.1" fill="none" stroke="' + F + '" stroke-width="1.2"/><circle cx="28.5" cy="20.7" r="4.1" fill="none" stroke="' + F + '" stroke-width="1.2"/><path d="M23.6,20.4 h0.8 M15.4,20.2 h-3 M32.6,20.2 h3" stroke="' + F + '" stroke-width="1.2" fill="none"/>');
+    if(ac === 2) p.push('<path d="M14.5,25.5 Q17,33.6 24,33.8 Q31,33.6 33.5,25.5" stroke="' + hc + '" stroke-width="4.2" fill="none" stroke-linecap="round"/>');
+    if(ac === 3) p.push('<ellipse cx="16.3" cy="24.6" rx="2.2" ry="1.3" fill="#EF9DA0" opacity=".7"/><ellipse cx="31.7" cy="24.6" rx="2.2" ry="1.3" fill="#EF9DA0" opacity=".7"/>');
+    return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 48 48" aria-hidden="true"' +
+           (state === "out" ? ' style="filter:grayscale(1);opacity:.72"' : '') + '>' + p.join("") + '</svg>';
+  }
+
+  function mountAvatarEditor(edBox, prevBox, get, set){
+    var CFG = [
+      ["성별", GENDERS, false],
+      ["피부", SKIN,  true ],
+      ["머리", HAIRS, false],
+      ["염색", HAIRC, true ],
+      ["포인트", ACCS, false]
+    ];
+    function draw(){
+      var av = get().slice();
+      prevBox.innerHTML = avatarSvg(av, "safe", 76);
+      edBox.innerHTML = "";
+      CFG.forEach(function(cfg, k){
+        var row = document.createElement("div"); row.className = "av-row";
+        var t = document.createElement("span"); t.className = "t"; t.textContent = cfg[0];
+        row.appendChild(t);
+        cfg[1].forEach(function(it, i){
+          var b = document.createElement("button"); b.type = "button";
+          var sel = (i === (+av[k] || 0) % cfg[1].length);
+          if(cfg[2]){
+            b.className = "swatch" + (sel ? " sel" : "");
+            b.style.background = it;
+            b.setAttribute("aria-label", cfg[0] + " " + (i + 1));
+          }else{
+            b.className = "avchip" + (sel ? " sel" : "");
+            b.textContent = it;
+          }
+          b.onclick = function(){ av[k] = i; set(av.slice()); draw(); };
+          row.appendChild(b);
+        });
+        edBox.appendChild(row);
+      });
+      var dr = document.createElement("div"); dr.className = "av-row";
+      var sp = document.createElement("span"); sp.className = "t"; sp.textContent = "";
+      var dice = document.createElement("button");
+      dice.type = "button"; dice.className = "avchip"; dice.textContent = "🎲 랜덤";
+      dice.onclick = function(){ set(randomAv((Math.random() * 1e9) | 0)); draw(); };
+      dr.appendChild(sp); dr.appendChild(dice);
+      edBox.appendChild(dr);
+    }
+    draw();
+  }
 
   /* ── 레벨 ───────────────────────────── */
   var TIERS = [
@@ -681,11 +858,12 @@
   function addMember(name, wk){
     var w = Math.max(1, wk || curWeek());
     var m = { id:"m"+(S.seq++)+"-"+Math.abs(hashInt(name)).toString(36).slice(0,4),
-              name:name, jd: ymd(weekStart(w)) };
+              name:name, jd: ymd(weekStart(w)), av: randomAv(name) };
     S.members.push(m);
     return m;
   }
   function byName(name){ return S.members.filter(function(x){ return x.name === name; })[0]; }
+  function byId(mid){ return S.members.filter(function(x){ return x.id === mid; })[0]; }
 
   /* ── 코드 ───────────────────────────── */
   function hashInt(s){
@@ -699,8 +877,11 @@
     var flags = dowFlags(mid, wi);
     var picked = DOW.filter(function(_,i){ return flags[i]; });
     var name = nameOf(mid);
+    // 캐릭터를 꾸민 사람만 +토큰이 붙는다 — 기본 캐릭터면 코드가 짧게 유지된다.
+    var cur = avEnc(avOf(byId(mid))), tok = (cur !== randomAv(name).join("")) ? cur : "";
     return "[운동체크] " + wi + "주차 " + name + " " + (picked.length ? picked.join("·") : "없음") +
-           " #" + hash4(wi + "|" + name + "|" + picked.join(""));
+           (tok ? " +" + tok : "") +
+           " #" + hash4(wi + "|" + name + "|" + picked.join("") + (tok ? "|" + tok : ""));
   }
 
   function b64e(str){
@@ -726,7 +907,8 @@
     });
     return b64e(JSON.stringify({ v:1, s:S.start, t:S.target, f:S.fine, l:S.lives,
                                  m:S.members.map(function(m){ return m.name; }),
-                                 j:S.members.map(function(m){ return joinWeek(m.id); }), g:g }));
+                                 j:S.members.map(function(m){ return joinWeek(m.id); }),
+                                 a:S.members.map(function(m){ return avEnc(avOf(m)); }), g:g }));
   }
   function makeSync(){
     var enc = syncPayload();
@@ -769,6 +951,7 @@
     S.members = []; S.log = {}; S.seq = 1;
     p.m.forEach(function(nm, i){
       var mem = addMember(String(nm), (p.j && p.j[i]) || 1);
+      if(p.a && p.a[i]) mem.av = avDec(p.a[i]);
       S.log[mem.id] = {};
       (p.g[i] || []).forEach(function(n){ S.log[mem.id][ymd(dateOfNo(n))] = true; });
     });
@@ -790,13 +973,15 @@
       var mem = byName(String(nm)) || addMember(String(nm), jw);
       // 더 이른 참가 시점을 인정한다 — 늦게 잡히면 남의 벌금이 사라진다.
       if(joinWeek(mem.id) > jw) mem.jd = ymd(weekStart(jw));
+      // 내 캐릭터는 내가 꾸민 게 우선 — 링크가 내 꾸미기를 되돌리지 않게
+      if(p.a && p.a[i] && mem.id !== S.me) mem.av = avDec(p.a[i]);
       if(!S.log[mem.id]) S.log[mem.id] = {};
       (p.g[i] || []).forEach(function(n){ S.log[mem.id][ymd(dateOfNo(n))] = true; });
     });
     return { count: p.m.length };
   }
 
-  var RE_CHECK = /\[운동체크\]\s*(\d+)\s*주차\s+([^\s#]+)\s+([월화수목금토일·,]*|없음)\s*#\s*([0-9a-z]{1,8})/g;
+  var RE_CHECK = /\[운동체크\]\s*(\d+)\s*주차\s+([^\s#+]+)\s+([월화수목금토일·,]*|없음)(?:\s*\+(\d{3,8}))?\s*#\s*([0-9a-z]{1,8})/g;
   var RE_SYNC  = /\[운동모임\]\s*([A-Za-z0-9+/=]{20,})\s*#\s*([0-9a-z]{1,8})/;
   var RE_LINK  = /#g=([A-Za-z0-9\-_]{20,})\.([0-9a-z]{1,8})/;
 
@@ -818,9 +1003,11 @@
       var wi = parseInt(m[1],10);
       var name = m[2];
       var raw = (m[3] === "없음") ? "" : m[3].replace(/[·,\s]/g, "");
-      if(wi < 1 || hash4(wi + "|" + name + "|" + raw) !== m[4]){ bad++; continue; }
+      var tok = m[4] || "";
+      if(wi < 1 || hash4(wi + "|" + name + "|" + raw + (tok ? "|" + tok : "")) !== m[5]){ bad++; continue; }
       var mem = byName(name);
       if(!mem){ mem = addMember(name, wi); added.push(name); }
+      if(tok) mem.av = avDec(tok);
       var ds = weekDates(wi);
       if(!S.log[mem.id]) S.log[mem.id] = {};
       for(var i=0;i<7;i++){
@@ -847,7 +1034,7 @@
           var picked = DOW.filter(function(_,i){ return flags[i]; }).join("") || "-";
           var lv = "";
           for(var j=0;j<S.lives;j++) lv += (j < Math.max(0,r.s.lives) ? "♥" : "♡");
-          var tail = r.s.state === "safe" ? "통과"
+          var tail = r.s.state === "safe" ? ("통과" + (r.s.over ? " ⭐+" + r.s.over : ""))
                    : r.s.state === "doomed" ? "벌금 확정"
                    : r.s.state === "edge" ? ("남은 " + r.s.left + "일 전부!")
                    : r.s.state === "out" ? "탈락"
@@ -1066,6 +1253,7 @@
 
     $("ebRule").textContent = "주 " + S.target + "회 · 미달성 시 " + won(S.fine) + "원";
     $("meName").textContent = nameOf(S.me);
+    $("meAv").innerHTML = avatarSvg(avOf(byId(S.me)), stateOf(S.me).state, 24);
     $("sfxBtn").textContent = S.sfx ? "🔊" : "🔇";
     $("sfxBtn").className = "icon-btn" + (S.sfx ? "" : " off");
 
@@ -1088,6 +1276,7 @@
 
     renderMePanel(cw, ds, left);
     renderRoster(stats, cw, ds);
+    renderLedger();
     renderMemList();
     syncSettings();
   }
@@ -1102,7 +1291,9 @@
       $("gateExisting").classList.remove("hidden");
       S.members.forEach(function(m){
         var b = document.createElement("button");
-        b.type = "button"; b.className = "who-chip"; b.textContent = m.name;
+        b.type = "button"; b.className = "who-chip";
+        b.innerHTML = avatarSvg(avOf(m), "open", 18);
+        b.appendChild(document.createTextNode(m.name));
         b.onclick = function(){ S.me = m.id; render(); };
         box.appendChild(b);
       });
@@ -1119,7 +1310,7 @@
 
     $("meDone").textContent = s.done;
     $("meTarget").textContent = S.target;
-    $("meLeft").textContent = s.state === "safe" ? "이번 주 통과 🎉"
+    $("meLeft").textContent = s.state === "safe" ? (s.over > 0 ? "통과 · ⭐+" + s.over + " 초과" : "이번 주 통과 🎉")
                             : s.state === "doomed" ? "벌금 확정 💸"
                             : (s.need + "회 남음 · " + left + "일 남음");
 
@@ -1168,6 +1359,7 @@
   function badgesOf(s, cw){
     var out = [];
     if(s.state === "safe") out.push({t:"✅ 이번 주 통과", c:"green"});
+    if(s.over > 0) out.push({t:"⭐ +" + s.over + " 초과", c:"gold"});
     if(s.streak >= 2) out.push({t:"🔥 " + s.streak + "주 연속", c:"hot"});
     if(s.done >= 7) out.push({t:"💯 퍼펙트 주간", c:"gold"});
     if(cw > joinWeek(s.id) && s.fails === 0) out.push({t:"🛡️ 무패", c:"green"});
@@ -1210,7 +1402,7 @@
       who.appendChild(rk);
 
       var fc = document.createElement("span");
-      fc.className = "face"; fc.textContent = FACE[s.state];
+      fc.className = "face"; fc.innerHTML = avatarSvg(avOf(m), s.state, 34);
       who.appendChild(fc);
       var nm = document.createElement("span");
       nm.className = "name"; nm.textContent = m.name;
@@ -1289,7 +1481,7 @@
         card.appendChild(hist);
       }
 
-      var msg = s.state === "safe" ? "이번 주 통과"
+      var msg = s.state === "safe" ? ("이번 주 통과" + (s.over ? " · ⭐+" + s.over : ""))
               : s.state === "doomed" ? "산술적으로 불가"
               : s.state === "edge" ? ("남은 " + s.left + "일 전부 해야 함")
               : s.state === "out" ? "목숨 소진 · 벌금은 계속"
@@ -1327,6 +1519,57 @@
       sfxOff();
     }
     render();
+  }
+
+  // 주차 장부 — 지난 주가 도장처럼 쌓이고, 모인 벌금이 여기 남는다.
+  function renderLedger(){
+    var box = $("ledger"), sum = $("ledgerSum");
+    var cw = curWeek();
+    box.innerHTML = "";
+    var rows = [], cum = 0, failsTotal = 0;
+    for(var w = 1; w < cw; w++){
+      var ds = weekDates(w), pass = [], fail = [];
+      S.members.forEach(function(m){
+        if(joinWeek(m.id) > w) return;
+        var d = doneIn(m.id, w);
+        (d >= S.target ? pass : fail).push({ m:m, d:d });
+      });
+      if(!pass.length && !fail.length) continue;
+      var add = fail.length * S.fine;
+      cum += add; failsTotal += fail.length;
+      rows.push({ w:w, ds:ds, pass:pass, fail:fail, add:add, cum:cum });
+    }
+    if(!rows.length){
+      sum.textContent = "";
+      box.innerHTML = '<div class="wk-empty">아직 지난 주가 없어요. 첫 판정은 이번 주 일요일 자정 — 그 결과가 여기 도장처럼 쌓입니다.</div>';
+      return;
+    }
+    sum.textContent = "지금까지 모인 벌금 " + won(cum) + "원 · 실패 " + failsTotal + "건. 일요일 자정마다 자동으로 쌓입니다.";
+    rows.slice().reverse().forEach(function(r){
+      var el = document.createElement("div");
+      el.className = "wkrow";
+      var head = document.createElement("div");
+      head.className = "wk-head";
+      head.innerHTML = '<b>' + r.w + '주차</b><span>' + md(r.ds[0]) + ' ~ ' + md(r.ds[6]) + '</span>' +
+        '<span class="wk-amt' + (r.add ? '' : ' zero') + '">' +
+        (r.add ? '+' + won(r.add) + '원' : '벌금 없음') + ' · 누적 ' + won(r.cum) + '원</span>';
+      el.appendChild(head);
+      var body = document.createElement("div");
+      body.className = "wk-body";
+      var pl = document.createElement("div");
+      pl.textContent = "✅ 통과 — " + (r.pass.length
+        ? r.pass.map(function(x){ return x.m.name + " " + x.d + "회" + (x.d > S.target ? "⭐" : ""); }).join(", ")
+        : "없음");
+      body.appendChild(pl);
+      if(r.fail.length){
+        var fl = document.createElement("div");
+        fl.textContent = "❌ 실패 — " + r.fail.map(function(x){ return x.m.name + " " + x.d + "회"; }).join(", ") +
+                         " (1인 −" + won(S.fine) + "원)";
+        body.appendChild(fl);
+      }
+      el.appendChild(body);
+      box.appendChild(el);
+    });
   }
 
   function renderMemList(){
@@ -1368,7 +1611,9 @@
     if(!v){ flash($("gateToast"), "닉네임을 적어주세요.", "bad"); shake($("nick")); return; }
     var dup = byName(v);
     if(dup){ flash($("gateToast"), "같은 닉네임이 이미 있어요. 그 사람이면 아래에서 고르세요.", "bad"); return; }
-    S.me = addMember(v).id;
+    var mem = addMember(v);
+    mem.av = gateAv.slice();      // 게이트에서 만든 캐릭터를 그대로 입고 들어간다
+    S.me = mem.id;
     $("nick").value = "";
     sfxOn();
     render();
@@ -1390,6 +1635,24 @@
 
   $("switchMe").onclick = function(){ S.me = ""; render(); };
   $("sfxBtn").onclick = function(){ S.sfx = !S.sfx; if(S.sfx) sfxOn(); render(); };
+
+  /* ── 캐릭터 편집 ─────────────────────── */
+  var gateAv = randomAv((Math.random() * 1e9) | 0);
+  mountAvatarEditor($("gateAvEd"), $("gateAvPrev"),
+    function(){ return gateAv; }, function(av){ gateAv = av; });
+
+  $("editAv").onclick = function(){
+    var box = $("meAvBuild");
+    var opened = !box.classList.toggle("hidden");
+    if(opened){
+      var m = byId(S.me);
+      if(!m) return;
+      if(!m.av) m.av = randomAv(m.name);
+      mountAvatarEditor($("meAvEd"), $("meAvPrev"),
+        function(){ return byId(S.me).av; },
+        function(av){ var mm = byId(S.me); if(mm){ mm.av = av; render(); } });
+    }
+  };
 
   $("todayBtn").onclick = function(){
     var ds = weekDates(curWeek());
