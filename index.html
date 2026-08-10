@@ -2,27 +2,29 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="description" content="뛰거나, 내거나. 카톡 운동모임을 벌금 서바이벌 게임으로.">
 <meta name="theme-color" content="#0F141A">
+<meta property="og:type" content="website">
+<meta property="og:title" content="주3회 생존전">
+<meta property="og:description" content="뛰거나, 내거나. 카톡 운동모임을 벌금 서바이벌 게임으로.">
+<meta property="og:image" content="https://workpark224-bit.github.io/survival-02dcaa8da1/og.png">
+<meta property="og:url" content="https://workpark224-bit.github.io/survival-02dcaa8da1/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%230F141A%22%2F%3E%3Cpath%20d%3D%22M6%2C36%20h14%20l5%2C-16%20l8%2C28%20l6%2C-20%20l4%2C8%20h15%22%20stroke%3D%22%23F4744A%22%20stroke-width%3D%225%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E">
 <title>주3회 생존전</title>
 
 <style>
   :root{
-    --bg:#E5E9ED;
-    --surface:#F7F9FA;
-    --surface-2:#D6DCE3;
-    --line:#BCC5CF;
-    --line-soft:#D2D9E0;
-    --ink:#141A21;
-    --ink-2:#4E5A68;
-    --ink-3:#7A8794;
-    --ember:#B8401A;
-    --ember-soft:#F0D9D0;
-    --pulse:#25705C;
-    --pulse-soft:#D2E5DE;
-    --brass:#8A6B0E;
-    --brass-soft:#EDE3C6;
+    --bg:#E5E9ED; --surface:#F7F9FA; --surface-2:#D6DCE3;
+    --line:#BCC5CF; --line-soft:#D2D9E0;
+    --ink:#141A21; --ink-2:#4E5A68; --ink-3:#7A8794;
+    --ember:#B8401A; --ember-soft:#F0D9D0;
+    --pulse:#25705C; --pulse-soft:#D2E5DE;
+    --brass:#8A6B0E; --brass-soft:#EDE3C6;
     --dead:#8A929B;
     --shadow:0 1px 2px rgba(20,26,33,.10), 0 8px 24px -12px rgba(20,26,33,.25);
     --f-body:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","맑은 고딕",system-ui,sans-serif;
@@ -56,60 +58,146 @@
     margin:0;background:var(--bg);color:var(--ink);
     font-family:var(--f-body);font-size:15px;line-height:1.55;
     -webkit-font-smoothing:antialiased;
+    padding-bottom:env(safe-area-inset-bottom);
   }
   button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
   :focus-visible{outline:2px solid var(--ember);outline-offset:2px;border-radius:3px}
   .hidden{display:none !important}
 
-  .wrap{max-width:1000px;margin:0 auto;padding:26px 18px 72px;display:flex;flex-direction:column;gap:20px}
+  .wrap{max-width:1000px;margin:0 auto;padding:22px 18px 72px;display:flex;flex-direction:column;gap:18px}
 
-  /* ── 참가 게이트 ─────────────────────── */
-  .gate{
-    max-width:520px;margin:0 auto;padding:34px 18px 60px;
-    display:flex;flex-direction:column;gap:18px;
+  /* ── 공용 부품 ───────────────────────── */
+  .panel{
+    background:var(--surface);border:1px solid var(--line);border-radius:5px;box-shadow:var(--shadow);
+    padding:15px 16px 16px;display:flex;flex-direction:column;gap:11px;
   }
-  .gate-card{
-    background:var(--surface);border:1px solid var(--line);border-radius:5px;
+  .panel h3{
+    margin:0;font-size:12px;letter-spacing:.02em;color:var(--ink-3);font-weight:700;
+    display:flex;align-items:center;gap:8px;
+  }
+  .panel h3::before{content:"";width:14px;height:2px;background:var(--ember);flex:0 0 auto}
+  .panel p.lede{margin:0;font-size:13px;color:var(--ink-2)}
+  .panel p.lede b{color:var(--ink)}
+
+  .field{display:flex;flex-direction:column;gap:5px}
+  .field label{font-size:11px;color:var(--ink-3)}
+  input[type="text"],input[type="number"],input[type="date"],select,textarea{
+    background:var(--bg);border:1px solid var(--line);border-radius:3px;padding:9px 11px;width:100%;min-width:0;
+  }
+  textarea{resize:vertical;min-height:74px;font-family:var(--f-mono);font-size:12px;line-height:1.6}
+  .codebox{
+    background:var(--surface-2);border:1px dashed var(--line);border-radius:3px;padding:11px 12px;
+    font-family:var(--f-mono);font-size:11px;word-break:break-all;line-height:1.5;
+    max-height:110px;overflow:auto;
+  }
+  .codebox.muted{color:var(--ink-3)}
+
+  .btn{
+    appearance:none;border:1px solid var(--ink);background:var(--ink);color:var(--surface);
+    border-radius:3px;padding:10px 15px;font-weight:700;font-size:13px;cursor:pointer;
+    transition:opacity .12s,transform .06s;white-space:nowrap;
+  }
+  .btn:hover{opacity:.86}
+  .btn:active{transform:translateY(1px)}
+  .btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+  .btn.ember{background:var(--ember);border-color:var(--ember);color:#fff}
+  .btn.big{padding:14px 20px;font-size:15px;border-radius:4px}
+  .btn.sm{padding:7px 11px;font-size:12px;font-weight:600}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end}
+  .row > .field{flex:1 1 130px}
+  .grow{flex:1 1 0%;min-width:0}
+  .link-btn{appearance:none;background:none;border:0;color:var(--ink-3);font-size:12px;cursor:pointer;text-decoration:underline;text-underline-offset:2px;padding:2px 4px}
+  .link-btn:hover{color:var(--ember)}
+
+  .toast{font-size:12px;padding:8px 10px;border-radius:3px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink-2)}
+  .toast.ok{border-color:var(--pulse);background:var(--pulse-soft);color:var(--pulse)}
+  .toast.bad{border-color:var(--ember);background:var(--ember-soft);color:var(--ember)}
+  .toast:empty{display:none}
+  .checkline{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;color:var(--ink-2)}
+  .checkline input{width:auto;margin:0}
+
+  details.settings{background:var(--surface);border:1px solid var(--line);border-radius:5px;box-shadow:var(--shadow)}
+  details.settings > summary{
+    cursor:pointer;padding:13px 16px;font-size:12px;letter-spacing:.02em;
+    color:var(--ink-3);font-weight:700;list-style:none;
+    display:flex;align-items:center;justify-content:space-between;gap:8px;
+  }
+  details.settings > summary::-webkit-details-marker{display:none}
+  details.settings > summary::after{content:"＋";font-size:15px}
+  details.settings[open] > summary::after{content:"－"}
+  .settings-body{padding:15px 16px 16px;display:flex;flex-direction:column;gap:16px;border-top:1px solid var(--line-soft)}
+
+  /* ── 랜딩 ────────────────────────────── */
+  .landing{max-width:640px;margin:0 auto;padding:30px 18px 70px;display:flex;flex-direction:column;gap:16px}
+  .hero{
+    background:var(--surface);border:1px solid var(--line);border-radius:6px;
     box-shadow:var(--shadow);overflow:hidden;
   }
+  .hero-canvas{display:block;width:100%;height:88px;background:var(--surface-2)}
+  .hero-body{padding:26px 24px 26px;display:flex;flex-direction:column;gap:14px}
+  .hero .kicker{font-family:var(--f-mono);font-size:11px;letter-spacing:.2em;color:var(--ember);font-weight:600}
+  .hero h1{margin:0;font-size:clamp(34px,9.5vw,54px);line-height:1.02;letter-spacing:-.04em;font-weight:800}
+  .hero h1 em{font-style:normal;color:var(--ember)}
+  .hero .tag{font-size:16px;color:var(--ink-2);font-weight:600}
+  .hero .tag b{color:var(--ink)}
+  .hero-cta{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+  .mini-chips{display:flex;gap:6px;flex-wrap:wrap}
+  .mini-chips span{
+    font-size:11px;padding:3px 9px;border-radius:99px;border:1px solid var(--line-soft);
+    background:var(--bg);color:var(--ink-3);
+  }
+  .rules3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  @media (max-width:520px){.rules3{grid-template-columns:1fr 1fr}}
+  .rule-card{
+    background:var(--surface);border:1px solid var(--line);border-radius:5px;box-shadow:var(--shadow);
+    padding:13px 14px;display:flex;flex-direction:column;gap:4px;
+  }
+  .rule-card .rc-k{font-size:11px;font-weight:700;color:var(--ember)}
+  .rule-card .rc-v{font-size:14px;font-weight:700}
+  .rule-card .rc-s{font-size:11px;color:var(--ink-3);line-height:1.5}
+  .how{display:flex;flex-direction:column;gap:7px;font-size:13px;color:var(--ink-2)}
+  .how .step{display:flex;gap:9px;align-items:baseline}
+  .how .step b{color:var(--ember);flex:0 0 auto;font-family:var(--f-mono);font-size:12px}
+  .landing .foot-note{font-size:11px;color:var(--ink-3);text-align:center;line-height:1.8}
+
+  /* ── 게이트 ──────────────────────────── */
+  .gate{max-width:520px;margin:0 auto;padding:30px 18px 60px;display:flex;flex-direction:column;gap:16px}
+  .gate-card{background:var(--surface);border:1px solid var(--line);border-radius:5px;box-shadow:var(--shadow);overflow:hidden}
   .gate-canvas{display:block;width:100%;height:74px;background:var(--surface-2)}
   .gate-body{padding:22px 22px 24px;display:flex;flex-direction:column;gap:16px}
-  .gate h1{margin:0;font-size:clamp(30px,8vw,42px);line-height:1.03;letter-spacing:-.035em;font-weight:800}
+  .gate h1{margin:0;font-size:clamp(28px,7.5vw,40px);line-height:1.05;letter-spacing:-.035em;font-weight:800}
   .gate h1 em{font-style:normal;color:var(--ember)}
-  .gate .terms{
+  .terms{
     margin:0;display:flex;flex-direction:column;gap:5px;padding:13px 14px;
     background:var(--bg);border:1px solid var(--line-soft);border-radius:4px;font-size:13px;color:var(--ink-2);
   }
-  .gate .terms b{color:var(--ink)}
-  .gate .terms .li{display:flex;gap:9px;align-items:baseline}
-  .gate .terms .li span:first-child{
-    font-size:11px;font-weight:700;color:var(--ember);letter-spacing:.02em;flex:0 0 34px;
-  }
+  .terms b{color:var(--ink)}
+  .terms .li{display:flex;gap:9px;align-items:baseline}
+  .terms .li span:first-child{font-size:11px;font-weight:700;color:var(--ember);letter-spacing:.02em;flex:0 0 34px}
   .who-list{display:flex;flex-wrap:wrap;gap:6px}
   .who-chip{
     appearance:none;border:1px solid var(--line);background:var(--bg);border-radius:99px;
-    padding:6px 13px;font-size:13px;font-weight:600;cursor:pointer;
+    padding:5px 13px 5px 7px;font-size:13px;font-weight:600;cursor:pointer;
+    display:inline-flex;align-items:center;gap:6px;
   }
   .who-chip:hover{border-color:var(--ember);color:var(--ember)}
 
-  /* ── 헤드 ────────────────────────────── */
+  /* ── 헤더 ────────────────────────────── */
   .masthead{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap}
   .mast-l{display:flex;flex-direction:column;gap:5px;min-width:0}
-  .mast-r{display:flex;align-items:center;gap:8px}
-  .eyebrow{
-    font-size:11px;color:var(--ink-3);display:flex;align-items:center;gap:10px;flex-wrap:wrap;
-  }
-  .eyebrow b{
-    font-family:var(--f-mono);color:var(--ember);font-weight:600;
-    letter-spacing:.16em;text-transform:uppercase;
-  }
-  h1.title{margin:0;font-size:clamp(26px,6vw,38px);line-height:1.04;letter-spacing:-.035em;font-weight:800}
+  .mast-r{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .eyebrow{font-size:11px;color:var(--ink-3);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .eyebrow b{font-family:var(--f-mono);color:var(--ember);font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+  h1.title{margin:0;font-size:clamp(24px,5.6vw,36px);line-height:1.06;letter-spacing:-.035em;font-weight:800;word-break:keep-all}
   h1.title em{font-style:normal;color:var(--ember)}
+  .season-chip{
+    font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px;
+    border:1px solid var(--brass);background:var(--brass-soft);color:var(--brass);white-space:nowrap;
+  }
   .me-chip{
     display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);
-    border-radius:99px;padding:6px 8px 6px 14px;box-shadow:var(--shadow);white-space:nowrap;
+    border-radius:99px;padding:5px 8px 5px 7px;box-shadow:var(--shadow);white-space:nowrap;
   }
-  .me-chip .lbl{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;color:var(--ink-3)}
   .me-chip .nm{font-weight:700;font-size:14px}
   .icon-btn{
     appearance:none;width:34px;height:34px;border-radius:99px;border:1px solid var(--line);
@@ -117,17 +205,19 @@
     display:grid;place-items:center;flex:0 0 auto;
   }
   .icon-btn.off{opacity:.5}
+  select.room-sel{
+    width:auto;max-width:180px;padding:6px 9px;border-radius:99px;font-size:12px;font-weight:700;
+    background:var(--surface);box-shadow:var(--shadow);
+  }
+  .av-sp{line-height:0;display:inline-flex}
 
   /* ── 모니터 ──────────────────────────── */
-  .monitor{
-    background:var(--surface);border:1px solid var(--line);border-radius:4px;
-    box-shadow:var(--shadow);overflow:hidden;
-  }
+  .monitor{background:var(--surface);border:1px solid var(--line);border-radius:5px;box-shadow:var(--shadow);overflow:hidden}
   .monitor-canvas{display:block;width:100%;height:52px;background:var(--surface-2)}
   .stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line-soft)}
   .stat{padding:12px 14px 13px;display:flex;flex-direction:column;gap:2px;border-left:1px solid var(--line-soft)}
   .stat:first-child{border-left:0}
-  .stat .k{font-size:11px;font-weight:600;letter-spacing:.01em;color:var(--ink-3)}
+  .stat .k{font-size:11px;font-weight:600;color:var(--ink-3)}
   .stat .v{
     font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-weight:700;
     font-size:clamp(17px,3.6vw,25px);letter-spacing:-.02em;line-height:1.15;
@@ -141,105 +231,19 @@
     .stat:nth-child(n+3){border-top:1px solid var(--line-soft)}
   }
 
-  /* ── 명단 ────────────────────────────── */
-  .section-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:-4px}
-  .section-head h2{margin:0;font-size:13px;font-weight:700}
-  .section-head .hint{font-size:12px;color:var(--ink-3)}
-
-  .roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:12px}
-
-  .card{
-    position:relative;background:var(--surface);border:1px solid var(--line);border-radius:4px;
-    box-shadow:var(--shadow);padding:13px 14px 11px 17px;display:flex;flex-direction:column;gap:9px;overflow:hidden;
+  /* ── 내 기록 ─────────────────────────── */
+  .me-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .me-prog{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:13px;color:var(--ink-2)}
+  .me-prog b{color:var(--ink);font-size:16px}
+  .today-btn{
+    appearance:none;width:100%;border:1px solid var(--ember);background:var(--ember);color:#fff;
+    border-radius:4px;padding:17px 16px;font-size:17px;font-weight:800;letter-spacing:-.015em;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;
+    transition:transform .07s,background .15s,color .15s,border-color .15s;
   }
-  .card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--dead)}
-  .card.s-safe::before{background:var(--pulse)}
-  .card.s-open::before{background:var(--ink-3)}
-  .card.s-edge::before,.card.s-doomed::before{background:var(--ember)}
-  .card.s-out{opacity:.72}
-  .card.mine{border-color:var(--ink-2)}
-
-  .card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
-  .who{display:flex;align-items:center;gap:7px;min-width:0;flex-wrap:wrap}
-  .face{font-size:19px;line-height:1}
-  .name{font-weight:700;font-size:16px;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .tag-me{
-    font-size:10px;padding:2px 6px;border-radius:2px;
-    background:var(--ink);color:var(--surface);font-weight:700;
-  }
-  .rank{font-family:var(--f-mono);font-size:12px;font-weight:700;color:var(--ink-3);letter-spacing:.02em;flex:0 0 auto}
-  .lives{font-size:11px;letter-spacing:.12em;color:var(--ember);white-space:nowrap;flex-basis:100%}
-  .lives .gone{color:var(--dead)}
-
-  .badge{
-    font-size:11px;font-weight:700;letter-spacing:.02em;
-    padding:3px 8px;border-radius:2px;white-space:nowrap;border:1px solid transparent;
-  }
-  .badge.en{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em}
-  .b-safe{background:var(--pulse-soft);color:var(--pulse);border-color:var(--pulse)}
-  .b-open{background:var(--surface-2);color:var(--ink-2);border-color:var(--line)}
-  .b-edge{background:var(--ember-soft);color:var(--ember);border-color:var(--ember)}
-  .b-doomed{background:var(--ember);color:#fff;border-color:var(--ember)}
-  .b-out{background:var(--surface-2);color:var(--dead);border-color:var(--line)}
-
-  /* ── 레벨 · 배지 ─────────────────────── */
-  .lv{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--ink-3)}
-  .lv .tier{font-weight:700;color:var(--ink-2);white-space:nowrap}
-  .lv .tier i{font-style:normal}
-  .xp{flex:1 1 auto;height:5px;min-width:40px;background:var(--surface-2);border-radius:99px;overflow:hidden;border:1px solid var(--line-soft)}
-  .xp b{display:block;height:100%;background:linear-gradient(90deg,var(--pulse),var(--brass));border-radius:99px;transition:width .45s ease}
-  .lv .tot{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
-
-  .chips{display:flex;flex-wrap:wrap;gap:4px}
-  .chip{
-    font-size:10px;font-weight:700;padding:2px 7px;border-radius:2px;white-space:nowrap;
-    border:1px solid var(--line);background:var(--bg);color:var(--ink-2);
-  }
-  .chip.hot{border-color:var(--ember);color:var(--ember);background:var(--ember-soft)}
-  .chip.gold{border-color:var(--brass);color:var(--brass);background:var(--brass-soft)}
-  .chip.green{border-color:var(--pulse);color:var(--pulse);background:var(--pulse-soft)}
-
-  /* ── 캐릭터 ─────────────────────────── */
-  .face{line-height:0}
-  .av-sp{line-height:0;display:inline-flex}
-  .who-chip{display:inline-flex;align-items:center;gap:6px}
-  .av-build{display:flex;gap:12px;align-items:flex-start}
-  .av-prev{flex:0 0 auto;background:var(--bg);border:1px solid var(--line-soft);border-radius:4px;padding:4px;line-height:0}
-  .av-ed{display:flex;flex-direction:column;gap:5px;flex:1 1 0%;min-width:0}
-  .av-row{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
-  .av-row .t{font-size:10px;color:var(--ink-3);flex:0 0 32px}
-  .avchip{appearance:none;border:1px solid var(--line);background:var(--bg);border-radius:99px;padding:3px 9px;font-size:11px;cursor:pointer;color:var(--ink-2)}
-  .avchip.sel{border-color:var(--ember);color:var(--ember);font-weight:700}
-  .swatch{appearance:none;width:19px;height:19px;border-radius:50%;border:2px solid var(--line);cursor:pointer;padding:0}
-  .swatch.sel{border-color:var(--ink);box-shadow:0 0 0 2px var(--surface),0 0 0 3px var(--ink)}
-
-  /* ── 게임 방법 ───────────────────────── */
-  .guide .g-li{font-size:13px;color:var(--ink-2);line-height:1.65}
-  .guide .g-li b{color:var(--ember);margin-right:5px}
-  .guide code{font-family:var(--f-mono);background:var(--surface-2);padding:1px 5px;border-radius:2px;font-size:11px;color:var(--ink-2)}
-
-  /* ── 주차 장부 ───────────────────────── */
-  .wk-sum{margin:0 0 2px;font-size:12px;color:var(--ink-2)}
-  .wk-sum b{color:var(--ember)}
-  .ledger{display:flex;flex-direction:column;gap:8px}
-  .wkrow{background:var(--bg);border:1px solid var(--line-soft);border-radius:3px;padding:9px 11px;display:flex;flex-direction:column;gap:4px}
-  .wk-head{display:flex;gap:9px;align-items:baseline;flex-wrap:wrap;font-size:12px;color:var(--ink-3)}
-  .wk-head b{color:var(--ink);font-size:13px}
-  .wk-amt{margin-left:auto;font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:11px;color:var(--ember);font-weight:700}
-  .wk-amt.zero{color:var(--pulse)}
-  .wk-body{font-size:12px;color:var(--ink-2);display:flex;flex-direction:column;gap:2px}
-  .wk-empty{font-size:12px;color:var(--ink-3);padding:4px 2px}
-
-  .hist{display:flex;gap:3px;align-items:center;flex-wrap:wrap;font-size:10px;color:var(--ink-3)}
-  .hist .st{
-    width:15px;height:15px;border-radius:3px;display:grid;place-items:center;
-    font-size:9px;font-weight:700;border:1px solid var(--line);background:var(--surface-2);color:var(--ink-3);
-  }
-  .hist .st.pass{background:var(--pulse-soft);border-color:var(--pulse);color:var(--pulse)}
-  .hist .st.fail{background:var(--ember-soft);border-color:var(--ember);color:var(--ember)}
-  .hist .st.now{border-color:var(--ink-2);color:var(--ink);background:var(--bg)}
-
-  .ecg{display:block;width:100%;height:36px}
+  .today-btn:active{transform:translateY(1px) scale(.994)}
+  .today-btn.done{background:var(--pulse-soft);color:var(--pulse);border-color:var(--pulse)}
+  .today-btn small{font-size:12px;font-weight:600;opacity:.85}
 
   .days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
   .day{
@@ -259,6 +263,74 @@
   .days.big .day{padding:9px 0 10px;font-size:11px;gap:5px}
   .days.big .day .dot{width:9px;height:9px}
 
+  .lv{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--ink-3)}
+  .lv .tier{font-weight:700;color:var(--ink-2);white-space:nowrap}
+  .xp{flex:1 1 auto;height:5px;min-width:40px;background:var(--surface-2);border-radius:99px;overflow:hidden;border:1px solid var(--line-soft)}
+  .xp b{display:block;height:100%;background:linear-gradient(90deg,var(--pulse),var(--brass));border-radius:99px;transition:width .45s ease}
+  .lv .tot{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .chips{display:flex;flex-wrap:wrap;gap:4px}
+  .chip{
+    font-size:10px;font-weight:700;padding:2px 7px;border-radius:2px;white-space:nowrap;
+    border:1px solid var(--line);background:var(--bg);color:var(--ink-2);
+  }
+  .chip.hot{border-color:var(--ember);color:var(--ember);background:var(--ember-soft)}
+  .chip.gold{border-color:var(--brass);color:var(--brass);background:var(--brass-soft)}
+  .chip.green{border-color:var(--pulse);color:var(--pulse);background:var(--pulse-soft)}
+
+  /* ── 캐릭터 편집 ─────────────────────── */
+  .av-build{display:flex;gap:12px;align-items:flex-start}
+  .av-prev{flex:0 0 auto;background:var(--bg);border:1px solid var(--line-soft);border-radius:4px;padding:4px;line-height:0}
+  .av-ed{display:flex;flex-direction:column;gap:5px;flex:1 1 0%;min-width:0}
+  .av-row{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+  .av-row .t{font-size:10px;color:var(--ink-3);flex:0 0 32px}
+  .avchip{appearance:none;border:1px solid var(--line);background:var(--bg);border-radius:99px;padding:3px 9px;font-size:11px;cursor:pointer;color:var(--ink-2)}
+  .avchip.sel{border-color:var(--ember);color:var(--ember);font-weight:700}
+  .swatch{appearance:none;width:19px;height:19px;border-radius:50%;border:2px solid var(--line);cursor:pointer;padding:0}
+  .swatch.sel{border-color:var(--ink);box-shadow:0 0 0 2px var(--surface),0 0 0 3px var(--ink)}
+
+  /* ── 명단 카드 ───────────────────────── */
+  .section-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:-4px}
+  .section-head h2{margin:0;font-size:13px;font-weight:700}
+  .section-head .hint{font-size:12px;color:var(--ink-3)}
+  .roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:12px}
+  .card{
+    position:relative;background:var(--surface);border:1px solid var(--line);border-radius:5px;
+    box-shadow:var(--shadow);padding:13px 14px 11px 17px;display:flex;flex-direction:column;gap:9px;overflow:hidden;
+  }
+  .card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--dead)}
+  .card.s-safe::before{background:var(--pulse)}
+  .card.s-open::before{background:var(--ink-3)}
+  .card.s-edge::before,.card.s-doomed::before{background:var(--ember)}
+  .card.s-out{opacity:.72}
+  .card.mine{border-color:var(--ink-2)}
+  .card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+  .who{display:flex;align-items:center;gap:7px;min-width:0;flex-wrap:wrap}
+  .face{line-height:0}
+  .name{font-weight:700;font-size:16px;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tag-me{font-size:10px;padding:2px 6px;border-radius:2px;background:var(--ink);color:var(--surface);font-weight:700}
+  .rank{font-family:var(--f-mono);font-size:12px;font-weight:700;color:var(--ink-3);flex:0 0 auto}
+  .lives{font-size:11px;letter-spacing:.12em;color:var(--ember);white-space:nowrap;flex-basis:100%}
+  .lives .gone{color:var(--dead)}
+  .badge{
+    font-size:11px;font-weight:700;letter-spacing:.02em;
+    padding:3px 8px;border-radius:2px;white-space:nowrap;border:1px solid transparent;
+  }
+  .badge.en{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em}
+  .b-safe{background:var(--pulse-soft);color:var(--pulse);border-color:var(--pulse)}
+  .b-open{background:var(--surface-2);color:var(--ink-2);border-color:var(--line)}
+  .b-edge{background:var(--ember-soft);color:var(--ember);border-color:var(--ember)}
+  .b-doomed{background:var(--ember);color:#fff;border-color:var(--ember)}
+  .b-out{background:var(--surface-2);color:var(--dead);border-color:var(--line)}
+  .top-r{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex:0 0 auto}
+  .ecg{display:block;width:100%;height:36px}
+  .hist{display:flex;gap:3px;align-items:center;flex-wrap:wrap;font-size:10px;color:var(--ink-3)}
+  .hist .st{
+    width:15px;height:15px;border-radius:3px;display:grid;place-items:center;
+    font-size:9px;font-weight:700;border:1px solid var(--line);background:var(--surface-2);color:var(--ink-3);
+  }
+  .hist .st.pass{background:var(--pulse-soft);border-color:var(--pulse);color:var(--pulse)}
+  .hist .st.fail{background:var(--ember-soft);border-color:var(--ember);color:var(--ember)}
+  .hist .st.now{border-color:var(--ink-2);color:var(--ink);background:var(--bg)}
   .card-foot{
     display:flex;align-items:center;justify-content:space-between;gap:8px;
     padding-top:8px;border-top:1px solid var(--line-soft);font-size:12px;color:var(--ink-2);
@@ -266,90 +338,58 @@
   .count{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-weight:700;color:var(--ink)}
   .money{font-family:var(--f-mono);font-variant-numeric:tabular-nums;color:var(--ink-3)}
   .money.hit{color:var(--ember);font-weight:700}
-  .top-r{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex:0 0 auto}
 
-  /* ── 오늘 버튼 ───────────────────────── */
-  .today-btn{
-    appearance:none;width:100%;border:1px solid var(--ember);background:var(--ember);color:#fff;
-    border-radius:4px;padding:17px 16px;font-size:17px;font-weight:800;letter-spacing:-.015em;
-    cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;
-    transition:transform .07s,background .15s,color .15s,border-color .15s;
+  /* ── 시즌 결산 ───────────────────────── */
+  .season-final{
+    background:var(--surface);border:1px solid var(--brass);border-radius:6px;box-shadow:var(--shadow);
+    overflow:hidden;
   }
-  .today-btn:active{transform:translateY(1px) scale(.994)}
-  .today-btn.done{background:var(--pulse-soft);color:var(--pulse);border-color:var(--pulse)}
-  .today-btn small{font-size:12px;font-weight:600;opacity:.85}
-  .me-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
-  .me-prog{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:13px;color:var(--ink-2)}
-  .me-prog b{color:var(--ink);font-size:16px}
+  .sf-head{
+    padding:20px 20px 16px;display:flex;flex-direction:column;gap:6px;align-items:center;text-align:center;
+    background:linear-gradient(180deg,var(--brass-soft),transparent);
+  }
+  .sf-head .sf-k{font-family:var(--f-mono);font-size:11px;letter-spacing:.22em;color:var(--brass);font-weight:700}
+  .sf-head h2{margin:0;font-size:clamp(24px,6vw,34px);letter-spacing:-.03em;font-weight:800}
+  .sf-champ{display:flex;flex-direction:column;align-items:center;gap:4px;padding:4px 0 2px}
+  .sf-champ .cn{font-size:19px;font-weight:800}
+  .sf-champ .cs{font-size:12px;color:var(--ink-2)}
+  .sf-body{padding:14px 16px 18px;display:flex;flex-direction:column;gap:10px}
+  .sf-row{
+    display:flex;align-items:center;gap:10px;padding:8px 11px;border-radius:4px;
+    background:var(--bg);border:1px solid var(--line-soft);font-size:13px;
+  }
+  .sf-row .rk{font-family:var(--f-mono);font-weight:700;font-size:13px;flex:0 0 30px}
+  .sf-row .nm{font-weight:700;flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .sf-row .st{font-size:11px;color:var(--ink-3);white-space:nowrap}
+  .sf-row .mn{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-3);white-space:nowrap}
+  .sf-row .mn.hit{color:var(--ember);font-weight:700}
+  .sf-row.win{border-color:var(--brass);background:var(--brass-soft)}
+  .sf-pot{
+    display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+    padding:11px 13px;border-radius:4px;background:var(--surface-2);border:1px solid var(--line);
+  }
+  .sf-pot .k{font-size:12px;font-weight:700;color:var(--ink-2)}
+  .sf-pot .v{font-family:var(--f-mono);font-size:20px;font-weight:800;color:var(--brass)}
 
-  /* ── 패널 ────────────────────────────── */
-  .panels{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  @media (max-width:760px){.panels{grid-template-columns:1fr}}
-  .panel{
-    background:var(--surface);border:1px solid var(--line);border-radius:4px;box-shadow:var(--shadow);
-    padding:15px 16px 16px;display:flex;flex-direction:column;gap:11px;
-  }
-  .panel h3{
-    margin:0;font-size:12px;letter-spacing:.02em;color:var(--ink-3);font-weight:700;
-    display:flex;align-items:center;gap:8px;
-  }
-  .panel h3::before{content:"";width:14px;height:2px;background:var(--ember);flex:0 0 auto}
-  .panel p.lede{margin:0;font-size:13px;color:var(--ink-2)}
-  .panel p.lede b{color:var(--ink)}
-
-  .field{display:flex;flex-direction:column;gap:5px}
-  .field label{font-size:11px;color:var(--ink-3)}
-  input[type="text"],input[type="number"],input[type="date"],select,textarea{
-    background:var(--bg);border:1px solid var(--line);border-radius:3px;padding:9px 11px;width:100%;min-width:0;
-  }
-  textarea{resize:vertical;min-height:74px;font-family:var(--f-mono);font-size:12px;line-height:1.6}
-  .codebox{
-    background:var(--surface-2);border:1px dashed var(--line);border-radius:3px;padding:11px 12px;
-    font-family:var(--f-mono);font-size:13px;word-break:break-all;line-height:1.5;
-    min-height:44px;display:flex;align-items:center;
-  }
-  .codebox.muted{color:var(--ink-3)}
-  .codebox.long{font-size:11px;max-height:110px;overflow:auto;display:block}
-
-  .btn{
-    appearance:none;border:1px solid var(--ink);background:var(--ink);color:var(--surface);
-    border-radius:3px;padding:10px 15px;font-weight:700;font-size:13px;cursor:pointer;
-    transition:opacity .12s,transform .06s;white-space:nowrap;
-  }
-  .btn:hover{opacity:.86}
-  .btn:active{transform:translateY(1px)}
-  .btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
-  .btn.ember{background:var(--ember);border-color:var(--ember);color:#fff}
-  .btn.sm{padding:7px 11px;font-size:12px;font-weight:600}
-  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end}
-  .row > .field{flex:1 1 130px}
-  .grow{flex:1 1 0%;min-width:0}
-
-  .toast{font-size:12px;padding:8px 10px;border-radius:3px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink-2)}
-  .toast.ok{border-color:var(--pulse);background:var(--pulse-soft);color:var(--pulse)}
-  .toast.bad{border-color:var(--ember);background:var(--ember-soft);color:var(--ember)}
-  .toast:empty{display:none}
-  .checkline{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;color:var(--ink-2)}
-  .checkline input{width:auto;margin:0}
-
-  /* ── 설정 ────────────────────────────── */
-  details.settings{background:var(--surface);border:1px solid var(--line);border-radius:4px;box-shadow:var(--shadow)}
-  details.settings > summary{
-    cursor:pointer;padding:13px 16px;font-size:12px;letter-spacing:.02em;
-    color:var(--ink-3);font-weight:700;list-style:none;
-    display:flex;align-items:center;justify-content:space-between;gap:8px;
-  }
-  details.settings > summary::-webkit-details-marker{display:none}
-  details.settings > summary::after{content:"＋";font-size:15px}
-  details.settings[open] > summary::after{content:"－"}
-  .settings-body{padding:15px 16px 16px;display:flex;flex-direction:column;gap:16px;border-top:1px solid var(--line-soft)}
+  /* ── 가이드 · 장부 ───────────────────── */
+  .guide .g-li{font-size:13px;color:var(--ink-2);line-height:1.65}
+  .guide .g-li b{color:var(--ember);margin-right:5px}
+  .guide code{font-family:var(--f-mono);background:var(--surface-2);padding:1px 5px;border-radius:2px;font-size:11px;color:var(--ink-2)}
+  .wk-sum{margin:0 0 2px;font-size:12px;color:var(--ink-2)}
+  .wk-sum b{color:var(--ember)}
+  .ledger{display:flex;flex-direction:column;gap:8px}
+  .wkrow{background:var(--bg);border:1px solid var(--line-soft);border-radius:3px;padding:9px 11px;display:flex;flex-direction:column;gap:4px}
+  .wk-head{display:flex;gap:9px;align-items:baseline;flex-wrap:wrap;font-size:12px;color:var(--ink-3)}
+  .wk-head b{color:var(--ink);font-size:13px}
+  .wk-amt{margin-left:auto;font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:11px;color:var(--ember);font-weight:700}
+  .wk-amt.zero{color:var(--pulse)}
+  .wk-body{font-size:12px;color:var(--ink-2);display:flex;flex-direction:column;gap:2px}
+  .wk-empty{font-size:12px;color:var(--ink-3);padding:4px 2px}
 
   .memlist{display:flex;flex-direction:column;gap:6px}
   .memrow{display:flex;align-items:center;gap:9px;padding:7px 10px;background:var(--bg);border:1px solid var(--line-soft);border-radius:3px}
   .memrow .nm{flex:1;font-weight:600;font-size:14px}
   .memrow .tag{font-family:var(--f-mono);font-size:10px;color:var(--ink-3);letter-spacing:.08em}
-  .link-btn{appearance:none;background:none;border:0;color:var(--ink-3);font-size:12px;cursor:pointer;text-decoration:underline;text-underline-offset:2px;padding:2px 4px}
-  .link-btn:hover{color:var(--ember)}
 
   .foot{font-size:11px;color:var(--ink-3);text-align:center;line-height:1.8;border-top:1px solid var(--line-soft);padding-top:16px}
   .foot code{font-family:var(--f-mono);background:var(--surface-2);padding:1px 5px;border-radius:2px;color:var(--ink-2)}
@@ -364,10 +404,7 @@
     18%{opacity:1;transform:translate(-50%,-8px) scale(1.15)}
     100%{opacity:0;transform:translate(-50%,-52px) scale(1)}
   }
-  .spark{
-    position:fixed;z-index:59;pointer-events:none;display:block;
-    width:6px;height:6px;border-radius:50%;animation:spark .72s ease-out forwards;
-  }
+  .spark{position:fixed;z-index:59;pointer-events:none;display:block;width:6px;height:6px;border-radius:50%;animation:spark .72s ease-out forwards}
   @keyframes spark{
     0%{opacity:1;transform:translate(0,0) scale(1)}
     100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.25)}
@@ -401,26 +438,100 @@
 </style>
 </head>
 <body>
+<!-- ══ 랜딩 ══ -->
+<div class="landing hidden" id="landing">
+  <div class="hero">
+    <canvas class="hero-canvas" id="heroEcg" aria-hidden="true"></canvas>
+    <div class="hero-body">
+      <span class="kicker">WEEKLY SURVIVAL GAME</span>
+      <h1>주3회 <em>생존전</em></h1>
+      <p class="tag" style="margin:0"><b>뛰거나, 내거나.</b> 카톡 운동모임을 벌금 서바이벌 게임으로.</p>
+      <div class="mini-chips">
+        <span>설치 불필요</span><span>가입 없음</span><span>카톡 링크로 끝</span><span>인원 제한 없음</span>
+      </div>
+      <div class="hero-cta">
+        <button class="btn ember big grow" id="goCreate">🔥 우리 모임 만들기</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="rules3">
+    <div class="rule-card"><span class="rc-k">목표</span><span class="rc-v">주 N회 운동</span><span class="rc-s">한 주는 월~일. 일요일 자정에 자동 판정.</span></div>
+    <div class="rule-card"><span class="rc-k">벌금</span><span class="rc-v">미달 시 벌금</span><span class="rc-s">못 채운 주마다 벌금이 POT에 쌓인다.</span></div>
+    <div class="rule-card"><span class="rc-k">목숨</span><span class="rc-v">다 잃으면 탈락</span><span class="rc-s">실패할 때마다 목숨 하나. 시즌 끝까지 살아남아라.</span></div>
+  </div>
+
+  <div class="panel">
+    <h3>어떻게 돌아가나</h3>
+    <div class="how">
+      <div class="step"><b>01</b><span>모임을 만들고 <b>초대 링크</b>를 단톡방에 올린다. 누르는 사람마다 자동 참가.</span></div>
+      <div class="step"><b>02</b><span>운동한 날 <b>버튼 한 번</b>. 기록 링크를 방에 올리면 모두의 화면에 합쳐진다.</span></div>
+      <div class="step"><b>03</b><span>일요일 자정 자동 판정 — 벌금·목숨 차감. 시즌이 끝나면 <b>생존자가 POT의 주인</b>.</span></div>
+    </div>
+  </div>
+
+  <div class="panel hidden" id="createBox">
+    <h3>모임 만들기</h3>
+    <div class="row">
+      <div class="field" style="flex:2 1 180px"><label for="cName">모임 이름</label><input type="text" id="cName" maxlength="16" placeholder="예: 목동헬스팟 생존전"></div>
+      <div class="field"><label for="cStart">시작일 (그 주 월요일부터)</label><input type="date" id="cStart"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label for="cTarget">주당 목표</label><select id="cTarget"><option value="2">주 2회</option><option value="3" selected>주 3회</option><option value="4">주 4회</option><option value="5">주 5회</option></select></div>
+      <div class="field"><label for="cFine">1회 벌금</label><select id="cFine"><option value="10000">1만원</option><option value="30000">3만원</option><option value="50000" selected>5만원</option><option value="100000">10만원</option></select></div>
+      <div class="field"><label for="cLives">목숨</label><select id="cLives"><option value="2">2개</option><option value="3" selected>3개</option><option value="5">5개</option></select></div>
+      <div class="field"><label for="cSeason">시즌</label><select id="cSeason"><option value="4">4주</option><option value="6">6주</option><option value="8" selected>8주</option><option value="12">12주</option><option value="0">끝없이</option></select></div>
+    </div>
+    <div class="field">
+      <label>내 캐릭터</label>
+      <div class="av-build">
+        <span class="av-prev" id="cAvPrev"></span>
+        <div class="av-ed" id="cAvEd"></div>
+      </div>
+    </div>
+    <div class="field">
+      <label for="cNick">내 닉네임</label>
+      <div class="row">
+        <input type="text" id="cNick" class="grow" maxlength="12" placeholder="예: 박대표" autocomplete="off">
+        <button class="btn ember" id="cGo">모임 시작!</button>
+      </div>
+    </div>
+    <div class="toast" id="cToast"></div>
+  </div>
+
+  <details class="settings">
+    <summary>초대 링크·코드를 받았다면</summary>
+    <div class="settings-body">
+      <p class="lede" style="margin:0">단톡방의 <b>링크를 누르는 게 제일 빠르다.</b> 링크가 안 열릴 때만 링크 주소나 코드를 여기 붙여넣으면 된다.</p>
+      <textarea id="lJoin" placeholder="초대 링크, 기록 링크, [운동모임] 코드 — 뭐든 통째로"></textarea>
+      <button class="btn" id="lJoinBtn">불러오기</button>
+      <div class="toast" id="lToast"></div>
+    </div>
+  </details>
+
+  <p class="foot-note">링크를 아는 사람만 들어올 수 있어요 · 검색에 안 잡혀요 · 기록은 내 폰 브라우저에 저장돼요</p>
+</div>
+
+
 <!-- ══ 참가 게이트 ══ -->
-<div class="gate" id="gate">
+<div class="gate hidden" id="gate">
   <div class="gate-card">
     <canvas class="gate-canvas" id="gateEcg" aria-hidden="true"></canvas>
     <div class="gate-body">
-      <h1>주3회 <em>생존전</em></h1>
+      <h1 id="gateTitle">생존전</h1>
       <div class="terms">
         <div class="li"><span>기간</span><span>한 주는 <b>월요일~일요일</b>. 일요일 자정에 판정한다.</span></div>
         <div class="li"><span>목표</span><span>주 <b id="gTarget">3회</b> 운동. 못 채우면 <b id="gFine">50,000원</b>.</span></div>
-        <div class="li"><span>목숨</span><span>실패할 때마다 목숨 하나. <b id="gLives">3개</b> 다 잃으면 탈락.</span></div>
+        <div class="li"><span>목숨</span><span>실패할 때마다 하나. <b id="gLives">3개</b> 다 잃으면 탈락.</span></div>
+        <div class="li" id="gSeasonLi"><span>시즌</span><span id="gSeason">–</span></div>
       </div>
-
       <div class="field">
         <label>내 캐릭터 만들기</label>
         <div class="av-build">
-          <span class="av-prev" id="gateAvPrev"></span>
-          <div class="av-ed" id="gateAvEd"></div>
+          <span class="av-prev" id="gAvPrev"></span>
+          <div class="av-ed" id="gAvEd"></div>
         </div>
       </div>
-
       <div class="field">
         <label for="nick">닉네임을 정하고 들어오세요</label>
         <div class="row">
@@ -429,22 +540,13 @@
         </div>
       </div>
       <div class="toast" id="gateToast"></div>
-
       <div id="gateExisting" class="field hidden">
         <label>이미 참가한 사람이면 여기서 고르세요</label>
         <div class="who-list" id="whoList"></div>
       </div>
     </div>
   </div>
-
-  <details class="settings">
-    <summary>모임 코드를 받았다면</summary>
-    <div class="settings-body">
-      <p class="lede" style="margin:0;font-size:13px;color:var(--ink-2)">평소엔 쓸 일 없다 — <b>링크를 누르면 전부 자동</b>이다. 링크가 안 열려서 <b>[운동모임]</b> 코드를 따로 받았을 때만 붙여넣으면 된다.</p>
-      <textarea id="gateInbox" placeholder="[운동모임] ..."></textarea>
-      <button class="btn" id="gateLoad">불러오기</button>
-    </div>
-  </details>
+  <div style="text-align:center"><button class="link-btn" id="gateBack">← 다른 모임 보기</button></div>
 </div>
 
 
@@ -453,10 +555,11 @@
 
   <header class="masthead">
     <div class="mast-l">
-      <div class="eyebrow"><b>WEEKLY SURVIVAL</b> <span id="ebRule">주 3회 · 미달성 시 50,000원</span></div>
-      <h1 class="title">주3회 <em>생존전</em></h1>
+      <div class="eyebrow"><b>WEEKLY SURVIVAL</b> <span id="ebRule">–</span> <span class="season-chip" id="seasonChip"></span></div>
+      <h1 class="title" id="roomTitle">생존전</h1>
     </div>
     <div class="mast-r">
+      <select class="room-sel hidden" id="roomSel" aria-label="모임 선택"></select>
       <button class="icon-btn" id="sfxBtn" type="button" title="효과음 켜기/끄기" aria-label="효과음">🔊</button>
       <div class="me-chip">
         <span class="av-sp" id="meAv"></span>
@@ -466,14 +569,33 @@
     </div>
   </header>
 
+  <!-- 시즌 결산 (시즌 종료 시에만) -->
+  <section class="season-final hidden" id="seasonFinal">
+    <div class="sf-head">
+      <span class="sf-k">SEASON RESULT</span>
+      <h2>시즌 종료 🏁</h2>
+      <div class="sf-champ" id="sfChamp"></div>
+    </div>
+    <div class="sf-body">
+      <div id="sfRows"></div>
+      <div class="sf-pot"><span class="k">최종 벌금 POT — 생존자의 것</span><span class="v" id="sfPot">0원</span></div>
+      <div class="row">
+        <button class="btn ember grow" id="sfShare">🏆 결산 단톡방에 올리기</button>
+        <button class="btn ghost" id="sfNew">새 시즌 시작</button>
+      </div>
+      <div class="toast" id="sfToast"></div>
+    </div>
+  </section>
+
   <details class="settings">
     <summary>게임 방법 — 처음이면 여길 펼치세요</summary>
     <div class="settings-body guide">
       <div class="g-li"><b>①</b> 운동한 날 <code>오늘 운동 완료</code>를 누른다. 지나간 날은 요일 칸을 눌러 채운다.</div>
-      <div class="g-li"><b>②</b> <code>단톡방에 기록 올리기</code>를 누르면 공유창이 뜬다 — 카톡방을 고르면 끝. 복사·붙여넣기는 없다.</div>
-      <div class="g-li"><b>③</b> 단톡방에 올라온 다른 사람의 기록 링크를 <b>누르기만 하면</b> 그 기록이 내 화면에 저절로 합쳐진다.</div>
-      <div class="g-li"><b>④</b> 일요일 자정 자동 판정 — 목표를 못 채우면 벌금과 목숨 하나. 목숨을 다 잃으면 탈락. 결과는 아래 <code>주차 장부</code>에 쌓인다.</div>
+      <div class="g-li"><b>②</b> <code>단톡방에 기록 올리기</code> → 공유창에서 카톡방을 고르면 끝. 복사·붙여넣기는 없다.</div>
+      <div class="g-li"><b>③</b> 단톡방에 올라온 다른 사람의 링크는 <b>누르기만 하면</b> 내 화면에 저절로 합쳐진다.</div>
+      <div class="g-li"><b>④</b> 일요일 자정 자동 판정 — 목표 미달이면 벌금과 목숨 하나. 결과는 <code>주차 장부</code>에 쌓인다.</div>
       <div class="g-li"><b>⑤</b> 목표를 넘겨도 계속 기록된다(⭐ 초과). 누적 횟수로 레벨이 오른다 — 🐣 입문 → 🌱 → 💪 → 🔩 → 🔥 → 🏆 전설.</div>
+      <div class="g-li"><b>⑥</b> 시즌이 끝나면 <b>결산</b>이 뜬다 — 우승자 발표, 그리고 모인 POT은 <b>생존자들의 것</b>. 탈락자는 회식에 못 온다.</div>
     </div>
   </details>
 
@@ -483,23 +605,18 @@
       <button class="link-btn" id="editAv" type="button">🎨 캐릭터 꾸미기</button>
       <span class="me-prog"><b id="meDone">0</b> / <span id="meTarget">3</span>회 · <span id="meLeft">–</span></span>
     </div>
-
     <div class="av-build hidden" id="meAvBuild">
       <span class="av-prev" id="meAvPrev"></span>
       <div class="av-ed" id="meAvEd"></div>
     </div>
-
     <button class="today-btn" id="todayBtn" type="button">오늘 운동 완료</button>
-
     <div class="days big" id="meDays"></div>
-
     <div class="lv">
       <span class="tier" id="meTier">LV.1 입문</span>
       <span class="xp"><b id="meXp" style="width:0%"></b></span>
       <span class="tot" id="meTot">0회</span>
     </div>
     <div class="chips" id="meChips"></div>
-
     <div class="row">
       <button class="btn ember grow" id="shareMine">📤 단톡방에 기록 올리기</button>
       <button class="btn ghost sm" id="clearMine">이번 주 비우기</button>
@@ -510,18 +627,10 @@
   <section class="monitor" aria-label="이번 주 현황">
     <canvas class="monitor-canvas" id="mainEcg" aria-hidden="true"></canvas>
     <div class="stats">
-      <div class="stat">
-        <span class="k">Week</span><span class="v" id="stWeek">–</span><span class="sub" id="stRange">–</span>
-      </div>
-      <div class="stat dday">
-        <span class="k">마감까지</span><span class="v" id="stDday">–</span><span class="sub" id="stDeadline">–</span>
-      </div>
-      <div class="stat">
-        <span class="k">생존자</span><span class="v" id="stAlive">–</span><span class="sub" id="stAliveSub">–</span>
-      </div>
-      <div class="stat pot">
-        <span class="k">누적 벌금 POT</span><span class="v" id="stPot">0원</span><span class="sub" id="stPotSub">–</span>
-      </div>
+      <div class="stat"><span class="k">Week</span><span class="v" id="stWeek">–</span><span class="sub" id="stRange">–</span></div>
+      <div class="stat dday"><span class="k">마감까지</span><span class="v" id="stDday">–</span><span class="sub" id="stDeadline">–</span></div>
+      <div class="stat"><span class="k">생존자</span><span class="v" id="stAlive">–</span><span class="sub" id="stAliveSub">–</span></div>
+      <div class="stat pot"><span class="k">누적 벌금 POT</span><span class="v" id="stPot">0원</span><span class="sub" id="stPotSub">–</span></div>
     </div>
   </section>
 
@@ -541,12 +650,12 @@
 
   <section class="panel">
     <h3>단톡방에 뿌리기</h3>
-    <p class="lede">버튼을 누르면 <b>공유창이 바로 뜹니다</b> — 카톡방을 고르면 끝. 복사·붙여넣기가 없습니다. 방에 올라온 다른 사람의 링크는 <b>누르기만 하면</b> 내 화면에 합쳐집니다.</p>
+    <p class="lede">버튼을 누르면 <b>공유창이 바로 뜹니다</b> — 카톡방을 고르면 끝. 방에 올라온 링크는 <b>누르기만 하면</b> 합쳐집니다.</p>
     <div class="row">
       <button class="btn ember grow" id="copyInvite">📣 초대글 올리기</button>
       <button class="btn ghost grow" id="copyReport">📊 현황 올리기</button>
     </div>
-    <div class="codebox muted long" id="syncBox">초대글을 올리면 여기에 링크가 보입니다</div>
+    <div class="codebox muted" id="syncBox">초대글을 올리면 여기에 링크가 보입니다</div>
     <div class="toast" id="syncToast"></div>
   </section>
 
@@ -565,7 +674,11 @@
       </div>
 
       <div class="row">
-        <div class="field"><label for="setStart">모임 시작일</label><input type="date" id="setStart"></div>
+        <div class="field" style="flex:2 1 160px"><label for="setName">모임 이름</label><input type="text" id="setName" maxlength="16"></div>
+        <div class="field"><label for="setStart">시작일</label><input type="date" id="setStart"></div>
+        <div class="field"><label for="setSeason">시즌</label><select id="setSeason"><option value="4">4주</option><option value="6">6주</option><option value="8">8주</option><option value="12">12주</option><option value="0">끝없이</option></select></div>
+      </div>
+      <div class="row">
         <div class="field"><label for="setTarget">주당 목표 횟수</label><input type="number" id="setTarget" min="1" max="7" step="1"></div>
         <div class="field"><label for="setFine">1회 벌금 (원)</label><input type="number" id="setFine" min="0" step="1000"></div>
         <div class="field"><label for="setLives">시작 목숨</label><input type="number" id="setLives" min="1" max="9" step="1"></div>
@@ -580,8 +693,8 @@
       </div>
 
       <div class="field">
-        <label for="inbox">예비 수단 — 링크가 안 먹힐 때 코드·링크를 붙여넣기</label>
-        <textarea id="inbox" placeholder="[운동체크] 코드, [운동모임] 코드, 기록 링크 전체 — 뭐든 붙여넣으면 알아서 구분한다"></textarea>
+        <label for="inbox">예비 수단 — 링크가 안 먹힐 때 코드·링크 붙여넣기</label>
+        <textarea id="inbox" placeholder="링크 주소, [운동모임]·[운동체크] 코드 — 뭐든 붙여넣으면 알아서 구분한다"></textarea>
         <div class="row">
           <button class="btn sm" id="applyCodes">반영</button>
           <button class="btn ghost sm" id="makeSync">모임 코드 발행</button>
@@ -590,50 +703,86 @@
       </div>
 
       <div class="row">
-        <button class="btn ghost sm" id="resetAll">전체 초기화</button>
-        <span style="font-size:11px;color:var(--ink-3)">기록은 이 기기의 브라우저에만 저장된다. 지우면 못 되돌린다.</span>
+        <button class="btn ghost sm" id="newRoom">➕ 새 모임 만들기</button>
+        <button class="btn ghost sm" id="delRoom">🗑 이 모임 삭제</button>
+        <span style="font-size:11px;color:var(--ink-3)">기록은 이 기기의 브라우저에만 저장된다.</span>
       </div>
     </div>
   </details>
 
   <div class="foot">
-    운동한 날 <code>오늘 운동 완료</code> → <code>기록 올리기</code>로 카톡방에. 방에 올라온 링크는 누르기만 하면 자동 반영.<br>
-    지난 주 판정은 자동이다 — 주가 넘어가면 미달성한 사람의 벌금과 목숨이 알아서 깎인다.
+    운동한 날 <code>오늘 운동 완료</code> → <code>기록 올리기</code>로 카톡방에. 방의 링크는 누르기만 하면 자동 반영.<br>
+    판정은 자동 — 주가 넘어가면 미달성한 사람의 벌금과 목숨이 알아서 깎인다. 링크 아는 사람만 · 검색 미노출.
   </div>
 
 </div>
-
 
 <script>
 (function(){
   "use strict";
 
   var DOW = ["월","화","수","목","금","토","일"];
-  var KEY = "workout-survival-v1";
+  var KEY2 = "survival-db-v2";
+  var KEY1 = "workout-survival-v1";
   var DAY = 86400000;
-  // 배포 주소 — 아티팩트처럼 주소가 다른 데서 열려도 초대 링크는 항상 이쪽을 가리킨다.
+  // 배포 주소 — 아티팩트 등 다른 주소에서 열려도 링크는 항상 이쪽을 가리킨다.
   var HOME = "https://workpark224-bit.github.io/survival-02dcaa8da1/";
   var $ = function(id){ return document.getElementById(id); };
 
-  /* ── 상태 ───────────────────────────── */
-  function defaults(){
-    var t = new Date(); t.setHours(0,0,0,0);
-    return { start: ymd(mondayOf(t)), target:3, fine:50000, lives:3,
-             members:[], log:{}, me:"", host:false, seq:1, sfx:true, seenSync:"" };
-  }
-  function load(){
+  /* ══ 저장소 (멀티룸) ══════════════════ */
+  function defaultsDB(){ return { v:2, sfx:true, cur:"", rooms:{}, migrated:false }; }
+  function loadDB(){
     try{
-      var raw = localStorage.getItem(KEY);
-      if(!raw) return defaults();
-      var d = JSON.parse(raw), base = defaults();
+      var raw = localStorage.getItem(KEY2);
+      if(!raw) return defaultsDB();
+      var d = JSON.parse(raw), base = defaultsDB();
       for(var k in base){ if(!(k in d)) d[k] = base[k]; }
       return d;
-    }catch(e){ return defaults(); }
+    }catch(e){ return defaultsDB(); }
   }
-  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
-  var S = load();
+  function save(){ try{ localStorage.setItem(KEY2, JSON.stringify(DB)); }catch(e){} }
+  var DB = loadDB();
+  var R = null;   // 현재 모임 — render()가 매번 갱신한다
 
-  /* ── 날짜 ───────────────────────────── */
+  function makeRoom(id, name, start, target, fine, lives, season){
+    return { id:id, name:name, start:start, target:target, fine:fine, lives:lives,
+             season:season||0, members:[], log:{}, me:"", host:false, seen:"" };
+  }
+  function newRoomId(){
+    var s = "", chars = "abcdefghjkmnpqrstuvwxyz23456789";
+    for(var i=0;i<6;i++) s += chars[(Math.random()*chars.length)|0];
+    return "r" + s;
+  }
+  function setCur(id){ DB.cur = id; R = DB.rooms[id] || null; }
+  function roomCount(){ return Object.keys(DB.rooms).length; }
+
+  // v1(단일 모임) 데이터를 방 하나로 옮긴다 — 방 id는 규칙에서 결정되므로 모든 기기에서 같다.
+  function legacyId(s, t, f, l){ return "L" + hash4(s + "|" + t + "|" + f + "|" + l); }
+  function migrateV1(){
+    if(DB.migrated) return;
+    DB.migrated = true;
+    try{
+      var old = JSON.parse(localStorage.getItem(KEY1) || "null");
+      if(old && old.members && old.members.length){
+        var id = legacyId(old.start, old.target, old.fine, old.lives);
+        if(!DB.rooms[id]){
+          var room = makeRoom(id, "주3회 생존전", old.start, old.target, old.fine, old.lives, 0);
+          room.members = old.members.map(function(m){
+            return { id:m.id, name:m.name, jd:m.jd || old.start, av:m.av || null, ts:m.ts || 0, w:m.w };
+          });
+          room.log = old.log || {};
+          room.me = old.me || "";
+          room.host = !!old.host;
+          DB.rooms[id] = room;
+        }
+        if(!DB.cur) DB.cur = id;
+        if(typeof old.sfx === "boolean") DB.sfx = old.sfx;
+      }
+    }catch(e){}
+    save();
+  }
+
+  /* ══ 날짜 ═════════════════════════════ */
   function ymd(d){
     return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
   }
@@ -644,7 +793,7 @@
     return x;
   }
   function today(){ var t = new Date(); return new Date(t.getFullYear(), t.getMonth(), t.getDate()); }
-  function anchor(){ return mondayOf(parseYmd(S.start)); }
+  function anchor(){ return mondayOf(parseYmd(R.start)); }
   function weekIndexOf(d){ return Math.round((mondayOf(d) - anchor()) / (7*DAY)) + 1; }
   function weekStart(wi){ var a = anchor(); return new Date(a.getFullYear(), a.getMonth(), a.getDate() + (wi-1)*7); }
   function weekDates(wi){
@@ -655,55 +804,79 @@
   function md(d){ return (d.getMonth()+1)+"/"+d.getDate(); }
   function dayNo(d){ return Math.round((new Date(d.getFullYear(),d.getMonth(),d.getDate()) - anchor()) / DAY); }
   function dateOfNo(n){ var a = anchor(); return new Date(a.getFullYear(), a.getMonth(), a.getDate()+n); }
-  function curWeek(){ return Math.max(1, weekIndexOf(today())); }
-  function daysLeft(){ return 7 - ((today().getDay()+6)%7); }
+  function rawWeek(){ return Math.max(1, weekIndexOf(today())); }
+  function seasonOver(){ return R.season > 0 && rawWeek() > R.season; }
+  function curWeek(){ return R.season > 0 ? Math.min(rawWeek(), R.season) : rawWeek(); }
+  function daysLeft(){ return seasonOver() ? 0 : 7 - ((today().getDay()+6)%7); }
   function todayIdx(){ return (today().getDay()+6)%7; }
+  function judgedUpto(){ return seasonOver() ? R.season : curWeek() - 1; }
 
-  /* ── 판정 ───────────────────────────── */
+  /* ══ 멤버 · 판정 ══════════════════════ */
+  function byId(mid){ return R.members.filter(function(x){ return x.id === mid; })[0]; }
+  function byName(name){ return R.members.filter(function(x){ return x.name === name; })[0]; }
+  function nameOf(mid){ var m = byId(mid); return m ? m.name : ""; }
+  function addMember(name, wk){
+    var w = Math.max(1, wk || curWeek());
+    // ts=0: 이 기기에서 직접 만진 적 없음 — 링크로 들어오는 기록이 언제나 이긴다.
+    var m = { id:"m"+Math.abs(hashInt(name + ":" + R.id)).toString(36).slice(0,6),
+              name:name, jd: ymd(weekStart(w)), av: randomAv(name), ts:0 };
+    R.members.push(m);
+    return m;
+  }
+  function touch(mid){ var m = byId(mid); if(m) m.ts = Date.now(); }
+
   function doneIn(mid, wi){
-    var lg = S.log[mid] || {}, n = 0, ds = weekDates(wi);
+    var lg = R.log[mid] || {}, n = 0, ds = weekDates(wi);
     for(var i=0;i<7;i++){ if(lg[ymd(ds[i])]) n++; }
     return n;
   }
   function dowFlags(mid, wi){
-    var lg = S.log[mid] || {}, ds = weekDates(wi), out = [];
+    var lg = R.log[mid] || {}, ds = weekDates(wi), out = [];
     for(var i=0;i<7;i++) out.push(!!lg[ymd(ds[i])]);
     return out;
   }
-  // 중간에 들어온 사람에게 들어오기 전 주의 벌금을 물리지 않는다.
-  // 참가 시점은 주차 번호가 아니라 날짜로 들고 있어야, 나중에 시작일을 고쳐도 안 밀린다.
+  // 중간 참가자에게 들어오기 전 주의 벌금을 물리지 않는다. 참가 시점은 날짜로 저장 — 시작일을 고쳐도 안 밀린다.
   function joinWeek(mid){
-    var m = S.members.filter(function(x){ return x.id === mid; })[0];
+    var m = byId(mid);
     if(!m) return 1;
     if(m.jd) return Math.max(1, weekIndexOf(parseYmd(m.jd)));
     return Math.max(1, m.w || 1);
   }
   function failedWeeks(mid){
-    var cw = curWeek(), n = 0;
-    for(var w=joinWeek(mid); w<cw; w++){ if(doneIn(mid,w) < S.target) n++; }
+    var upto = judgedUpto(), n = 0;
+    for(var w = joinWeek(mid); w <= upto; w++){ if(doneIn(mid, w) < R.target) n++; }
+    return n;
+  }
+  function passedWeeks(mid){
+    var upto = judgedUpto(), n = 0;
+    for(var w = joinWeek(mid); w <= upto; w++){ if(doneIn(mid, w) >= R.target) n++; }
     return n;
   }
   function totalDone(mid){
-    var lg = S.log[mid] || {}, n = 0;
+    var lg = R.log[mid] || {}, n = 0;
     for(var k in lg){ if(lg[k]) n++; }
     return n;
   }
-  // 연속 통과 주 — 이번 주는 이미 목표를 채웠을 때만 센다.
   function streakOf(mid){
-    var cw = curWeek(), from = (doneIn(mid,cw) >= S.target) ? cw : cw - 1, n = 0, jw = joinWeek(mid);
-    for(var w=from; w>=jw; w--){
-      if(doneIn(mid,w) >= S.target) n++; else break;
+    var cw = curWeek(), from = (doneIn(mid, cw) >= R.target) ? cw : cw - 1, n = 0, jw = joinWeek(mid);
+    for(var w = from; w >= jw; w--){
+      if(doneIn(mid, w) >= R.target) n++; else break;
     }
     return n;
   }
   function stateOf(mid){
-    var cw = curWeek(), fails = failedWeeks(mid), lives = S.lives - fails;
-    var done = doneIn(mid, cw), left = daysLeft(), need = Math.max(0, S.target - done);
+    var over = seasonOver(), cw = curWeek();
+    var fails = failedWeeks(mid), lives = R.lives - fails;
+    var done = doneIn(mid, cw), left = daysLeft(), need = Math.max(0, R.target - done);
     var st;
-    if(done >= S.target) st = "safe";
-    else if(need > left) st = "doomed";
-    else if(need === left) st = "edge";
-    else st = "open";
+    if(over){
+      st = (done >= R.target) ? "safe" : "doomed";
+    }else{
+      if(done >= R.target) st = "safe";
+      else if(need > left) st = "doomed";
+      else if(need === left) st = "edge";
+      else st = "open";
+    }
     var knocked = (lives <= 0);
     return {
       id:mid, fails:fails, lives:lives, done:done, need:need, left:left,
@@ -711,9 +884,10 @@
       knocked: knocked,
       streak: streakOf(mid),
       total: totalDone(mid),
-      over: Math.max(0, done - S.target),
-      confirmed: fails * S.fine,
-      fine: fails * S.fine + (st === "doomed" ? S.fine : 0)
+      passes: passedWeeks(mid),
+      over: Math.max(0, done - R.target),
+      confirmed: fails * R.fine,
+      fine: fails * R.fine + ((!over && st === "doomed") ? R.fine : 0)
     };
   }
   var LABEL = {
@@ -721,8 +895,49 @@
     edge:{t:"벼랑끝",cls:"b-edge"}, doomed:{t:"벌금확정",cls:"b-doomed"}, out:{t:"탈락",cls:"b-out"}
   };
   var FACE = { safe:"😎", open:"🙂", edge:"😰", doomed:"💸", out:"💀" };
+  function won(n){ return n.toLocaleString("ko-KR"); }
 
-  /* ── 캐릭터 ─────────────────────────── */
+  // 리더보드 정렬 — 목숨 > 이번주 달성 > 연속 > 누적
+  function standings(){
+    return R.members.map(function(m){ return { m:m, s:stateOf(m.id) }; })
+      .sort(function(a,b){
+        return (b.s.lives - a.s.lives) || (b.s.done - a.s.done) || (b.s.streak - a.s.streak) ||
+               (b.s.total - a.s.total) || (a.s.fine - b.s.fine);
+      });
+  }
+
+  /* ══ 레벨 ═════════════════════════════ */
+  var TIERS = [
+    {n:0,  t:"입문",      e:"🐣"},
+    {n:3,  t:"생존 지망생", e:"🌱"},
+    {n:9,  t:"근성러",     e:"💪"},
+    {n:18, t:"철인",      e:"🔩"},
+    {n:30, t:"불사신",     e:"🔥"},
+    {n:45, t:"전설",      e:"🏆"}
+  ];
+  function tierOf(total){
+    var i = 0;
+    for(var k=0;k<TIERS.length;k++){ if(total >= TIERS[k].n) i = k; }
+    var cur = TIERS[i], next = TIERS[i+1] || null;
+    var pct = next ? Math.round((total - cur.n) / (next.n - cur.n) * 100) : 100;
+    return { lv:i+1, name:cur.t, emoji:cur.e, pct:Math.max(0,Math.min(100,pct)),
+             next: next ? next.n - total : 0 };
+  }
+  function badgesOf(s, cw){
+    var out = [];
+    if(s.state === "safe") out.push({t:"✅ 이번 주 통과", c:"green"});
+    if(s.over > 0) out.push({t:"⭐ +" + s.over + " 초과", c:"gold"});
+    if(s.streak >= 2) out.push({t:"🔥 " + s.streak + "주 연속", c:"hot"});
+    if(s.done >= 7) out.push({t:"💯 퍼펙트 주간", c:"gold"});
+    if(cw > joinWeek(s.id) && s.fails === 0) out.push({t:"🛡️ 무패", c:"green"});
+    if(s.fails > 0) out.push({t:"💸 실패 " + s.fails + "주", c:""});
+    if(s.state === "edge") out.push({t:"⚡ 벼랑끝", c:"hot"});
+    if(s.knocked) out.push({t:"💀 탈락", c:""});
+    if(!out.length) out.push({t:"🎯 이번 주 " + s.need + "회 남음", c:""});
+    return out;
+  }
+
+  /* ══ 캐릭터 ═══════════════════════════ */
   var GENDERS = ["남","여"];
   var SKIN  = ["#F5D6BB","#E8B98C","#B97F52"];
   var HAIRS = ["짧은","스포츠","단발","긴머리","묶음","파마","민머리"];
@@ -742,20 +957,16 @@
     return a.map(function(d){ return isNaN(d) ? 0 : d; });
   }
 
-  // 표정은 고르는 게 아니라 생존 상태가 정한다 — safe면 웃고, edge면 식은땀, doomed면 넋이 나간다.
+  // 표정은 고르는 게 아니라 생존 상태가 정한다.
   function avatarSvg(av, state, size){
     av = (av && av.length >= 5) ? av : [0,0,0,0,0];
     var g = +av[0] % 2, sk = SKIN[+av[1] % SKIN.length], hs = +av[2] % HAIRS.length,
         hc = HAIRC[+av[3] % HAIRC.length], ac = +av[4] % ACCS.length;
     var F = "#262029", p = [];
-    // 뒷머리
     if(hs === 3) p.push('<path d="M11,18 a13,13 0 0 1 26,0 l1.5,20 q0,3 -3,3 h-23 q-3,0 -3,-3 z" fill="' + hc + '"/>');
     if(hs === 4) p.push('<circle cx="24" cy="7.5" r="4.6" fill="' + hc + '"/>');
-    // 어깨
     p.push('<path d="M7,48 C9,39 17,36 24,36 C31,36 39,39 41,48 Z" fill="var(--surface-2)" stroke="var(--line)"/>');
-    // 얼굴
     p.push('<circle cx="24" cy="22" r="13" fill="' + sk + '" stroke="rgba(0,0,0,.15)"/>');
-    // 앞머리
     if(hs === 0 || hs === 2) p.push('<path d="M12,17.5 A13,13 0 0 1 36,17.5" stroke="' + hc + '" stroke-width="7" fill="none" stroke-linecap="round"/>');
     if(hs === 1) p.push('<path d="M13,15.5 A13,13 0 0 1 35,15.5" stroke="' + hc + '" stroke-width="4" fill="none" stroke-linecap="round"/>');
     if(hs === 2){
@@ -764,7 +975,6 @@
     }
     if(hs === 3 || hs === 4) p.push('<path d="M12,17.5 A13,13 0 0 1 36,17.5" stroke="' + hc + '" stroke-width="6.4" fill="none" stroke-linecap="round"/>');
     if(hs === 5) p.push('<circle cx="13.5" cy="17" r="4.4" fill="' + hc + '"/><circle cx="18" cy="12.6" r="4.6" fill="' + hc + '"/><circle cx="24" cy="10.8" r="4.8" fill="' + hc + '"/><circle cx="30" cy="12.6" r="4.6" fill="' + hc + '"/><circle cx="34.5" cy="17" r="4.4" fill="' + hc + '"/>');
-    // 눈
     if(state === "doomed" || state === "out"){
       p.push('<path d="M17.6,19 l3.8,3.4 M21.4,19 l-3.8,3.4 M26.6,19 l3.8,3.4 M30.4,19 l-3.8,3.4" stroke="' + F + '" stroke-width="1.5" stroke-linecap="round" fill="none"/>');
     }else if(state === "safe"){
@@ -777,13 +987,11 @@
       p.push('<path d="M16.6,17.2 l4,1.4 M31.4,17.2 l-4,1.4" stroke="' + F + '" stroke-width="1.3" stroke-linecap="round" fill="none"/>');
       p.push('<path d="M38.5,15.5 q2.6,3.6 0,5.1 q-2.6,-1.5 0,-5.1" fill="#6FB4E4"/>');
     }
-    // 입
     if(state === "safe") p.push('<path d="M19.8,26.4 Q24,30.6 28.2,26.4" stroke="' + F + '" stroke-width="1.6" stroke-linecap="round" fill="none"/>');
     else if(state === "edge") p.push('<path d="M19.8,28 q2.1,-1.9 4.2,0 q2.1,1.9 4.2,0" stroke="' + F + '" stroke-width="1.4" stroke-linecap="round" fill="none"/>');
     else if(state === "doomed") p.push('<ellipse cx="24" cy="28.4" rx="2.5" ry="3" fill="' + F + '"/>');
     else if(state === "out") p.push('<path d="M20.5,28.2 h7" stroke="' + F + '" stroke-width="1.5" stroke-linecap="round"/>');
     else p.push('<path d="M20.8,27 Q24,29.4 27.2,27" stroke="' + F + '" stroke-width="1.5" stroke-linecap="round" fill="none"/>');
-    // 포인트
     if(ac === 1) p.push('<circle cx="19.5" cy="20.7" r="4.1" fill="none" stroke="' + F + '" stroke-width="1.2"/><circle cx="28.5" cy="20.7" r="4.1" fill="none" stroke="' + F + '" stroke-width="1.2"/><path d="M23.6,20.4 h0.8 M15.4,20.2 h-3 M32.6,20.2 h3" stroke="' + F + '" stroke-width="1.2" fill="none"/>');
     if(ac === 2) p.push('<path d="M14.5,25.5 Q17,33.6 24,33.8 Q31,33.6 33.5,25.5" stroke="' + hc + '" stroke-width="4.2" fill="none" stroke-linecap="round"/>');
     if(ac === 3) p.push('<ellipse cx="16.3" cy="24.6" rx="2.2" ry="1.3" fill="#EF9DA0" opacity=".7"/><ellipse cx="31.7" cy="24.6" rx="2.2" ry="1.3" fill="#EF9DA0" opacity=".7"/>');
@@ -834,60 +1042,13 @@
     draw();
   }
 
-  /* ── 레벨 ───────────────────────────── */
-  var TIERS = [
-    {n:0,  t:"입문",      e:"🐣"},
-    {n:3,  t:"생존 지망생", e:"🌱"},
-    {n:9,  t:"근성러",     e:"💪"},
-    {n:18, t:"철인",      e:"🔩"},
-    {n:30, t:"불사신",     e:"🔥"},
-    {n:45, t:"전설",      e:"🏆"}
-  ];
-  function tierOf(total){
-    var i = 0;
-    for(var k=0;k<TIERS.length;k++){ if(total >= TIERS[k].n) i = k; }
-    var cur = TIERS[i], next = TIERS[i+1] || null;
-    var pct = next ? Math.round((total - cur.n) / (next.n - cur.n) * 100) : 100;
-    return { lv:i+1, name:cur.t, emoji:cur.e, pct:Math.max(0,Math.min(100,pct)),
-             next: next ? next.n - total : 0 };
-  }
-
-  function won(n){ return n.toLocaleString("ko-KR"); }
-  function nameOf(mid){
-    var m = S.members.filter(function(x){ return x.id === mid; })[0];
-    return m ? m.name : "";
-  }
-  function addMember(name, wk){
-    var w = Math.max(1, wk || curWeek());
-    // ts=0: "이 기기에서 직접 만진 적 없음" — 링크로 들어오는 기록이 언제나 이긴다.
-    var m = { id:"m"+(S.seq++)+"-"+Math.abs(hashInt(name)).toString(36).slice(0,4),
-              name:name, jd: ymd(weekStart(w)), av: randomAv(name), ts:0 };
-    S.members.push(m);
-    return m;
-  }
-  function touch(mid){ var m = byId(mid); if(m) m.ts = Date.now(); }
-  function byName(name){ return S.members.filter(function(x){ return x.name === name; })[0]; }
-  function byId(mid){ return S.members.filter(function(x){ return x.id === mid; })[0]; }
-
-  /* ── 코드 ───────────────────────────── */
+  /* ══ 코덱 (링크·코드) ═════════════════ */
   function hashInt(s){
     var h = 2166136261;
     for(var i=0;i<s.length;i++){ h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
     return h>>>0;
   }
   function hash4(s){ return ("000" + hashInt(s).toString(36)).slice(-4); }
-
-  function makeCode(mid, wi){
-    var flags = dowFlags(mid, wi);
-    var picked = DOW.filter(function(_,i){ return flags[i]; });
-    var name = nameOf(mid);
-    // 캐릭터를 꾸민 사람만 +토큰이 붙는다 — 기본 캐릭터면 코드가 짧게 유지된다.
-    var cur = avEnc(avOf(byId(mid))), tok = (cur !== randomAv(name).join("")) ? cur : "";
-    return "[운동체크] " + wi + "주차 " + name + " " + (picked.length ? picked.join("·") : "없음") +
-           (tok ? " +" + tok : "") +
-           " #" + hash4(wi + "|" + name + "|" + picked.join("") + (tok ? "|" + tok : ""));
-  }
-
   function b64e(str){
     var bytes = new TextEncoder().encode(str), bin = "";
     for(var i=0;i<bytes.length;i++) bin += String.fromCharCode(bytes[i]);
@@ -899,83 +1060,44 @@
     for(var i=0;i<bin.length;i++) arr[i] = bin.charCodeAt(i);
     return new TextDecoder().decode(arr);
   }
-  // URL 조각에 넣을 땐 +, / 를 -, _ 로 바꾼다.
   function urlSafe(b){ return b.replace(/\+/g,"-").replace(/\//g,"_"); }
   function urlBack(b){ return b.replace(/-/g,"+").replace(/_/g,"/"); }
-
-  function syncPayload(){
-    var g = S.members.map(function(m){
-      var lg = S.log[m.id] || {}, arr = [];
-      for(var k in lg){ if(lg[k]) arr.push(dayNo(parseYmd(k))); }
-      return arr.sort(function(a,b){ return a-b; });
-    });
-    return b64e(JSON.stringify({ v:1, s:S.start, t:S.target, f:S.fine, l:S.lives,
-                                 m:S.members.map(function(m){ return m.name; }),
-                                 j:S.members.map(function(m){ return joinWeek(m.id); }),
-                                 a:S.members.map(function(m){ return avEnc(avOf(m)); }),
-                                 ts:S.members.map(function(m){ return m.ts || 1; }), g:g }));
-  }
-  function makeSync(){
-    var enc = syncPayload();
-    return "[운동모임] " + enc + "#" + hash4(enc);
-  }
   function baseUrl(){
     var ok = /^https?:$/.test(location.protocol) &&
              location.hostname && !/claude\.ai|usercontent|anthropic/.test(location.hostname);
     return ok ? (location.origin + location.pathname) : HOME;
   }
-  function inviteLink(){
-    var enc = syncPayload();
-    return baseUrl() + "#g=" + urlSafe(enc) + "." + hash4(enc);
+  function packLink(tag, payload){
+    var enc = b64e(JSON.stringify(payload));
+    return baseUrl() + "#" + tag + "=" + urlSafe(enc) + "." + hash4(enc);
   }
-
-  // 내 기록만 담은 링크 — 단톡방에 올리면 누르는 사람 화면에 저절로 합쳐진다.
-  function memberPayload(mid){
-    var m = byId(mid), lg = S.log[mid] || {}, arr = [];
-    for(var k in lg){ if(lg[k]) arr.push(dayNo(parseYmd(k))); }
-    return { v:2, s:S.start, n:m.name, d:m.jd, a:avEnc(avOf(m)),
-             t:m.ts || Date.now(), g:arr.sort(function(a,b){ return a-b; }) };
-  }
-  function myLink(){
-    var enc = b64e(JSON.stringify(memberPayload(S.me)));
-    return baseUrl() + "#m=" + urlSafe(enc) + "." + hash4(enc);
-  }
-  function myShareText(){
-    var cw = curWeek(), s = stateOf(S.me);
-    var flags = dowFlags(S.me, cw);
-    var picked = DOW.filter(function(_,i){ return flags[i]; }).join("·") || "아직 없음";
-    return "🏋️ [주3회 생존전] " + nameOf(S.me) + " — " + cw + "주차 " + picked +
-           " (" + s.done + "/" + S.target + ")" +
-           (s.state === "safe" ? " ✅" : s.state === "edge" ? " 😰" : "") +
-           "\n👇 누르면 자동 반영\n" + myLink();
-  }
-
-  // 남의 기록 링크를 받아서 합친다 — 그 사람 기록은 그 사람 기기가 최신(ts)일 때만 덮는다.
-  function mergeMember(enc, sig){
+  function unpack(enc, sig){
     if(hash4(enc) !== sig) return null;
-    var p;
-    try{ p = JSON.parse(b64d(enc)); }catch(e){ return null; }
-    if(!p || p.v !== 2 || typeof p.n !== "string" || !Array.isArray(p.g)) return null;
-    var tIn = +p.t || 1;
-    var mem = byName(p.n);
-    if(mem && (mem.ts || 0) >= tIn) return { name:p.n, skipped:true };
-    if(!mem) mem = addMember(p.n);
-    if(p.d && parseYmd(p.d) < parseYmd(mem.jd || p.d)) mem.jd = p.d;
-    if(p.a) mem.av = avDec(p.a);
-    mem.ts = tIn;
-    // 날짜는 보낸 쪽의 시작일 기준으로 푼다 — 시작일이 어긋난 기기에서도 안 밀린다.
-    var a0 = mondayOf(parseYmd(p.s || S.start)), lg = {};
-    p.g.forEach(function(n){ lg[ymd(new Date(a0.getFullYear(), a0.getMonth(), a0.getDate() + n))] = true; });
-    S.log[mem.id] = lg;
-    return { name:p.n, skipped:false };
+    try{ return JSON.parse(b64d(enc)); }catch(e){ return null; }
   }
+
+  // 초대(모임 전체) — v3
+  function roomPayload(){
+    var g = R.members.map(function(m){
+      var lg = R.log[m.id] || {}, arr = [];
+      for(var k in lg){ if(lg[k]) arr.push(dayNo(parseYmd(k))); }
+      return arr.sort(function(a,b){ return a-b; });
+    });
+    return { v:3,
+      r:{ i:R.id, n:R.name, s:R.start, t:R.target, f:R.fine, l:R.lives, w:R.season },
+      m:R.members.map(function(m){ return m.name; }),
+      j:R.members.map(function(m){ return joinWeek(m.id); }),
+      a:R.members.map(function(m){ return avEnc(avOf(m)); }),
+      ts:R.members.map(function(m){ return m.ts || 1; }),
+      g:g };
+  }
+  function inviteLink(){ return packLink("r", roomPayload()); }
   function inviteText(){
     var cw = curWeek(), ds = weekDates(cw);
     return [
-      "🔥 주3회 생존전 " + cw + "주차",
-      "· 한 주(월~일) " + S.target + "회 운동",
-      "· 못 채우면 " + won(S.fine) + "원",
-      "· 목숨 " + S.lives + "개, 다 잃으면 탈락",
+      "🔥 「" + R.name + "」 — 주" + R.target + "회 생존전에 초대!",
+      "· 한 주(월~일) " + R.target + "회 운동, 미달 " + won(R.fine) + "원",
+      "· 목숨 " + R.lives + "개, 다 잃으면 탈락" + (R.season ? " · 시즌 " + R.season + "주" : ""),
       "· 이번 주 마감 " + md(ds[6]) + "(일) 자정",
       "",
       "👇 링크 누르면 바로 참가 (닉네임만 정하면 끝)",
@@ -985,80 +1107,183 @@
     ].join("\n");
   }
 
-  // 총무 권한 — 명단·기록을 코드 내용으로 통째로 덮어쓴다.
-  function loadSync(enc, sig){
-    if(hash4(enc) !== sig) return null;
-    var p;
-    try{ p = JSON.parse(b64d(enc)); }catch(e){ return null; }
-    if(!p || p.v !== 1 || !Array.isArray(p.m) || !Array.isArray(p.g)) return null;
-
-    var myName = S.me ? nameOf(S.me) : "";
-    S.start = p.s; S.target = p.t; S.fine = p.f; S.lives = p.l;
-    S.members = []; S.log = {}; S.seq = 1;
-    p.m.forEach(function(nm, i){
-      var mem = addMember(String(nm), (p.j && p.j[i]) || 1);
-      if(p.a && p.a[i]) mem.av = avDec(p.a[i]);
-      if(p.ts && p.ts[i]) mem.ts = p.ts[i];
-      S.log[mem.id] = {};
-      (p.g[i] || []).forEach(function(n){ S.log[mem.id][ymd(dateOfNo(n))] = true; });
-    });
-    var mine = myName ? byName(myName) : null;
-    S.me = mine ? mine.id : "";
-    return { count: S.members.length, kept: !!mine };
+  // 개인 기록 — v3. 방 정보 스냅샷을 함께 담아, 방이 없는 기기에서도 링크 하나로 선다.
+  function personPayload(){
+    var m = byId(R.me), lg = R.log[R.me] || {}, arr = [];
+    for(var k in lg){ if(lg[k]) arr.push(dayNo(parseYmd(k))); }
+    return { v:3, ri:R.id, rn:R.name,
+      ru:{ s:R.start, t:R.target, f:R.fine, l:R.lives, w:R.season },
+      n:m.name, d:m.jd, a:avEnc(avOf(m)), t:m.ts || Date.now(),
+      g:arr.sort(function(a,b){ return a-b; }) };
+  }
+  function myLink(){ return packLink("p", personPayload()); }
+  function myShareText(){
+    var cw = curWeek(), s = stateOf(R.me);
+    var flags = dowFlags(R.me, cw);
+    var picked = DOW.filter(function(_,i){ return flags[i]; }).join("·") || "아직 없음";
+    return "🏋️ [" + R.name + "] " + nameOf(R.me) + " — " + cw + "주차 " + picked +
+           " (" + s.done + "/" + R.target + ")" +
+           (s.state === "safe" ? " ✅" : s.state === "edge" ? " 😰" : "") +
+           "\n👇 누르면 자동 반영\n" + myLink();
   }
 
-  // 초대 링크로 들어왔을 때 — 멤버별 ts를 비교해서, 내 기기에서 더 최근에 만진 기록은 안 건드린다.
-  function mergeSync(enc, sig){
-    if(hash4(enc) !== sig) return null;
-    var p;
-    try{ p = JSON.parse(b64d(enc)); }catch(e){ return null; }
-    if(!p || p.v !== 1 || !Array.isArray(p.m) || !Array.isArray(p.g)) return null;
-
-    S.start = p.s; S.target = p.t; S.fine = p.f; S.lives = p.l;
+  // 모임 병합 — 멤버별 ts 비교. 내 기기에서 더 최근에 만진 기록은 안 건드린다.
+  function mergeRoomPayload(p, sig){
+    var q = p.r;
+    var room = DB.rooms[q.i];
+    if(!room){
+      room = makeRoom(q.i, String(q.n||"생존전"), q.s, q.t, q.f, q.l, q.w||0);
+      DB.rooms[q.i] = room;
+    }else{
+      room.name = String(q.n || room.name);
+      room.start = q.s; room.target = q.t; room.fine = q.f; room.lives = q.l; room.season = q.w||0;
+    }
+    setCur(q.i);
+    if(sig && room.seen === sig) return { count: p.m.length, room: room };
+    if(sig) room.seen = sig;
     p.m.forEach(function(nm, i){
       var jw = (p.j && p.j[i]) || 1;
       var tIn = (p.ts && p.ts[i]) || 1;
       var mem = byName(String(nm));
       var isNew = !mem;
       if(isNew) mem = addMember(String(nm), jw);
-      // 더 이른 참가 시점을 인정한다 — 늦게 잡히면 남의 벌금이 사라진다.
       if(joinWeek(mem.id) > jw) mem.jd = ymd(weekStart(jw));
       if(isNew || (mem.ts || 0) < tIn){
         if(p.a && p.a[i]) mem.av = avDec(p.a[i]);
         mem.ts = tIn;
         var lg = {};
         (p.g[i] || []).forEach(function(n){ lg[ymd(dateOfNo(n))] = true; });
-        S.log[mem.id] = lg;
+        R.log[mem.id] = lg;
+      }
+    });
+    return { count: p.m.length, room: room };
+  }
+
+  // 개인 기록 병합 — 날짜는 보낸 쪽의 시작일 기준으로 푼다.
+  function mergePersonPayload(p){
+    var rid = p.ri;
+    var room = DB.rooms[rid];
+    if(!room && p.ru){
+      room = makeRoom(rid, String(p.rn||"생존전"), p.ru.s, p.ru.t, p.ru.f, p.ru.l, p.ru.w||0);
+      DB.rooms[rid] = room;
+    }
+    if(!room) return null;
+    setCur(rid);
+    var tIn = +p.t || 1;
+    var mem = byName(p.n);
+    if(mem && (mem.ts || 0) >= tIn) return { name:p.n, skipped:true };
+    if(!mem) mem = addMember(p.n);
+    if(p.d && parseYmd(p.d) < parseYmd(mem.jd || p.d)) mem.jd = p.d;
+    if(p.a) mem.av = avDec(p.a);
+    mem.ts = tIn;
+    var srcStart = (p.ru && p.ru.s) || R.start;
+    var a0 = mondayOf(parseYmd(srcStart)), lg = {};
+    p.g.forEach(function(n){ lg[ymd(new Date(a0.getFullYear(), a0.getMonth(), a0.getDate() + n))] = true; });
+    R.log[mem.id] = lg;
+    return { name:p.n, skipped:false };
+  }
+
+  // ── v1 호환 (기존 배포판 링크·코드) ──
+  function mergeV1Sync(p, sig){
+    // v1 sync payload {v:1,s,t,f,l,m,j,a,ts,g} → 규칙에서 결정되는 legacy 방으로
+    var id = legacyId(p.s, p.t, p.f, p.l);
+    var room = DB.rooms[id];
+    if(!room){ room = makeRoom(id, "주3회 생존전", p.s, p.t, p.f, p.l, 0); DB.rooms[id] = room; }
+    else { room.start = p.s; room.target = p.t; room.fine = p.f; room.lives = p.l; }
+    setCur(id);
+    if(sig && room.seen === sig) return { count: p.m.length };
+    if(sig) room.seen = sig;
+    p.m.forEach(function(nm, i){
+      var jw = (p.j && p.j[i]) || 1;
+      var tIn = (p.ts && p.ts[i]) || 1;
+      var mem = byName(String(nm));
+      var isNew = !mem;
+      if(isNew) mem = addMember(String(nm), jw);
+      if(joinWeek(mem.id) > jw) mem.jd = ymd(weekStart(jw));
+      if(isNew || (mem.ts || 0) < tIn){
+        if(p.a && p.a[i]) mem.av = avDec(p.a[i]);
+        mem.ts = tIn;
+        var lg = {};
+        (p.g[i] || []).forEach(function(n){ lg[ymd(dateOfNo(n))] = true; });
+        R.log[mem.id] = lg;
       }
     });
     return { count: p.m.length };
   }
+  function mergeV1Person(p){
+    // v1 개인 payload {v:2,s,n,d,a,t,g} — 방 정보가 없다. 그 이름이 있는 방 → 현재 방 순으로 찾는다.
+    var target = null;
+    if(DB.cur && DB.rooms[DB.cur]){
+      var curRoom = DB.rooms[DB.cur];
+      if(curRoom.members.some(function(m){ return m.name === p.n; })) target = curRoom;
+    }
+    if(!target){
+      for(var id in DB.rooms){
+        if(DB.rooms[id].members.some(function(m){ return m.name === p.n; })){ target = DB.rooms[id]; break; }
+      }
+    }
+    if(!target && DB.cur) target = DB.rooms[DB.cur];
+    if(!target) return null;
+    setCur(target.id);
+    return mergePersonPayload({ v:3, ri:target.id, rn:target.name,
+      ru:{ s:p.s, t:target.target, f:target.fine, l:target.lives, w:target.season },
+      n:p.n, d:p.d, a:p.a, t:p.t, g:p.g });
+  }
 
-  var RE_CHECK = /\[운동체크\]\s*(\d+)\s*주차\s+([^\s#+]+)\s+([월화수목금토일·,]*|없음)(?:\s*\+(\d{3,8}))?\s*#\s*([0-9a-z]{1,8})/g;
+  var RE_R  = /#r=([A-Za-z0-9\-_]{20,})\.([0-9a-z]{1,8})/;
+  var RE_P  = /#p=([A-Za-z0-9\-_]{10,})\.([0-9a-z]{1,8})/;
+  var RE_G1 = /#g=([A-Za-z0-9\-_]{20,})\.([0-9a-z]{1,8})/;
+  var RE_M1 = /#m=([A-Za-z0-9\-_]{10,})\.([0-9a-z]{1,8})/;
   var RE_SYNC  = /\[운동모임\]\s*([A-Za-z0-9+/=]{20,})\s*#\s*([0-9a-z]{1,8})/;
-  var RE_LINK  = /#g=([A-Za-z0-9\-_]{20,})\.([0-9a-z]{1,8})/;
-  var RE_MLINK = /#m=([A-Za-z0-9\-_]{10,})\.([0-9a-z]{1,8})/;
+  var RE_CHECK = /\[운동체크\]\s*(\d+)\s*주차\s+([^\s#+]+)\s+([월화수목금토일·,]*|없음)(?:\s*\+(\d{3,8}))?\s*#\s*([0-9a-z]{1,8})/g;
 
+  // 텍스트 하나로 전부 판독 — 링크든 코드든 뭐가 와도 구분한다.
   function applyText(text){
-    // 개인 기록 링크를 붙여넣은 경우
-    var pm = text.match(RE_MLINK);
-    if(pm){
-      var mr = mergeMember(urlBack(pm[1]), pm[2]);
-      return mr ? { kind:"member", ok:true, name:mr.name, skipped:!!mr.skipped } : { kind:"member", ok:false };
+    var m;
+    if((m = text.match(RE_P))){
+      var pp = unpack(urlBack(m[1]), m[2]);
+      if(pp && pp.v === 3){
+        var pr = mergePersonPayload(pp);
+        return pr ? { kind:"member", ok:true, name:pr.name, skipped:!!pr.skipped } : { kind:"member", ok:false };
+      }
+      return { kind:"member", ok:false };
     }
-    // 링크를 통째로 붙여넣은 경우도 받아준다.
-    var lm = text.match(RE_LINK);
-    if(lm){
-      var lr = loadSync(urlBack(lm[1]), lm[2]);
-      return lr ? { kind:"sync", ok:true, count:lr.count, kept:lr.kept } : { kind:"sync", ok:false };
+    if((m = text.match(RE_R))){
+      var rp = unpack(urlBack(m[1]), m[2]);
+      if(rp && rp.v === 3 && rp.r){
+        var rr = mergeRoomPayload(rp, m[2]);
+        return { kind:"sync", ok:true, count:rr.count };
+      }
+      return { kind:"sync", ok:false };
     }
-    var sm = text.match(RE_SYNC);
-    if(sm){
-      var r = loadSync(sm[1], sm[2]);
-      return r ? { kind:"sync", ok:true, count:r.count, kept:r.kept } : { kind:"sync", ok:false };
+    if((m = text.match(RE_M1))){
+      var mp = unpack(urlBack(m[1]), m[2]);
+      if(mp && mp.v === 2 && typeof mp.n === "string"){
+        var mr = mergeV1Person(mp);
+        return mr ? { kind:"member", ok:true, name:mr.name, skipped:!!mr.skipped } : { kind:"member", ok:false };
+      }
+      return { kind:"member", ok:false };
     }
+    if((m = text.match(RE_G1))){
+      var gp = unpack(urlBack(m[1]), m[2]);
+      if(gp && gp.v === 1 && Array.isArray(gp.m)){
+        var gr = mergeV1Sync(gp, m[2]);
+        return { kind:"sync", ok:true, count:gr.count };
+      }
+      return { kind:"sync", ok:false };
+    }
+    if((m = text.match(RE_SYNC))){
+      var sp = unpack(m[1], m[2]);
+      if(sp && sp.v === 1 && Array.isArray(sp.m)){
+        var sr = mergeV1Sync(sp, m[2]);
+        return { kind:"sync", ok:true, count:sr.count };
+      }
+      return { kind:"sync", ok:false };
+    }
+    // 개인 체크 코드(구버전 텍스트) — 현재 방에 반영
+    if(!R) return { kind:"none" };
     RE_CHECK.lastIndex = 0;
-    var m, ok = 0, bad = 0, added = [], names = [];
+    var ok = 0, bad = 0, added = [], names = [];
     while((m = RE_CHECK.exec(text)) !== null){
       var wi = parseInt(m[1],10);
       var name = m[2];
@@ -1070,50 +1295,79 @@
       if(tok) mem.av = avDec(tok);
       mem.ts = Date.now();
       var ds = weekDates(wi);
-      if(!S.log[mem.id]) S.log[mem.id] = {};
+      if(!R.log[mem.id]) R.log[mem.id] = {};
       for(var i=0;i<7;i++){
         var k = ymd(ds[i]);
-        if(raw.indexOf(DOW[i]) >= 0) S.log[mem.id][k] = true;
-        else delete S.log[mem.id][k];
+        if(raw.indexOf(DOW[i]) >= 0) R.log[mem.id][k] = true;
+        else delete R.log[mem.id][k];
       }
       ok++; names.push(name);
     }
-    return { kind:"check", ok:ok, bad:bad, added:added, names:names };
+    if(ok || bad) return { kind:"check", ok:ok, bad:bad, added:added, names:names };
+    return { kind:"none" };
+  }
+
+  // 예비: 텍스트 모임 코드 발행 (v1 형식 유지 — 구버전 기기도 읽는다)
+  function makeSyncCode(){
+    var g = R.members.map(function(m){
+      var lg = R.log[m.id] || {}, arr = [];
+      for(var k in lg){ if(lg[k]) arr.push(dayNo(parseYmd(k))); }
+      return arr.sort(function(a,b){ return a-b; });
+    });
+    var payload = { v:1, s:R.start, t:R.target, f:R.fine, l:R.lives,
+                    m:R.members.map(function(m){ return m.name; }),
+                    j:R.members.map(function(m){ return joinWeek(m.id); }),
+                    a:R.members.map(function(m){ return avEnc(avOf(m)); }),
+                    ts:R.members.map(function(m){ return m.ts || 1; }), g:g };
+    var enc = b64e(JSON.stringify(payload));
+    return "[운동모임] " + enc + "#" + hash4(enc);
   }
 
   function reportText(){
-    var cw = curWeek(), ds = weekDates(cw), left = daysLeft(), lines = [];
-    lines.push("🔥 [주3회 생존전] " + cw + "주차 · " + (left <= 1 ? "오늘까지" : "D-" + (left-1)));
+    var over = seasonOver(), cw = curWeek(), ds = weekDates(cw), left = daysLeft(), lines = [];
+    lines.push("🔥 [" + R.name + "] " + (over ? "시즌 종료 🏁" : cw + "주차 · " + (left <= 1 ? "오늘까지" : "D-" + (left-1))));
     lines.push("");
-    if(!S.members.length){
+    if(!R.members.length){
       lines.push("(참가자 없음)");
     }else{
-      S.members.map(function(m){ return {m:m, s:stateOf(m.id)}; })
-        .sort(function(a,b){ return (b.s.done - a.s.done) || (b.s.lives - a.s.lives); })
-        .forEach(function(r, idx){
-          var flags = dowFlags(r.m.id, cw);
-          var picked = DOW.filter(function(_,i){ return flags[i]; }).join("") || "-";
-          var lv = "";
-          for(var j=0;j<S.lives;j++) lv += (j < Math.max(0,r.s.lives) ? "♥" : "♡");
-          var tail = r.s.state === "safe" ? ("통과" + (r.s.over ? " ⭐+" + r.s.over : ""))
-                   : r.s.state === "doomed" ? "벌금 확정"
-                   : r.s.state === "edge" ? ("남은 " + r.s.left + "일 전부!")
-                   : r.s.state === "out" ? "탈락"
-                   : (r.s.need + "회 더");
-          var medal = ["🥇","🥈","🥉"][idx] || "　";
-          var hot = r.s.streak >= 2 ? "  🔥" + r.s.streak : "";
-          lines.push(medal + " " + FACE[r.s.state] + " " + r.m.name + "  " + picked + " " +
-                     r.s.done + "/" + S.target + " · " + tail + " " + lv + hot);
-        });
+      standings().forEach(function(r, idx){
+        var flags = dowFlags(r.m.id, cw);
+        var picked = DOW.filter(function(_,i){ return flags[i]; }).join("") || "-";
+        var lv = "";
+        for(var j=0;j<R.lives;j++) lv += (j < Math.max(0,r.s.lives) ? "♥" : "♡");
+        var tail = r.s.state === "safe" ? ("통과" + (r.s.over ? " ⭐+" + r.s.over : ""))
+                 : r.s.state === "doomed" ? "벌금 확정"
+                 : r.s.state === "edge" ? ("남은 " + r.s.left + "일 전부!")
+                 : r.s.state === "out" ? "탈락"
+                 : (r.s.need + "회 더");
+        var medal = ["🥇","🥈","🥉"][idx] || "　";
+        var hot = r.s.streak >= 2 ? "  🔥" + r.s.streak : "";
+        lines.push(medal + " " + FACE[r.s.state] + " " + r.m.name + "  " + picked + " " +
+                   r.s.done + "/" + R.target + " · " + tail + " " + lv + hot);
+      });
     }
     lines.push("");
-    lines.push("누적 벌금 POT " + won(S.members.reduce(function(a,m){ return a + stateOf(m.id).confirmed; }, 0)) + "원");
-    lines.push("이번 주 마감: " + md(ds[6]) + "(일) 자정");
+    lines.push("누적 벌금 POT " + won(R.members.reduce(function(a,m){ return a + stateOf(m.id).confirmed; }, 0)) + "원");
+    if(!over) lines.push("이번 주 마감: " + md(ds[6]) + "(일) 자정");
     return lines.join("\n");
   }
 
-  /* ── 복사 ───────────────────────────── */
-  function legacy(text){
+  function seasonReportText(){
+    var st = standings(), lines = [];
+    lines.push("🏁 [" + R.name + "] 시즌 " + R.season + "주 최종 결산");
+    lines.push("");
+    st.forEach(function(r, idx){
+      var medal = ["🏆","🥈","🥉"][idx] || (" " + (idx+1) + "위");
+      lines.push(medal + " " + r.m.name + " — 통과 " + r.s.passes + "주 · 벌금 " + won(r.s.confirmed) + "원" +
+                 (r.s.knocked ? " 💀탈락" : ""));
+    });
+    lines.push("");
+    lines.push("💰 최종 POT " + won(R.members.reduce(function(a,m){ return a + stateOf(m.id).confirmed; }, 0)) + "원 — 생존자의 것!");
+    return lines.join("\n");
+  }
+
+  /* ══ 복사 · 공유 ══════════════════════ */
+  function legacyCopy(text){
     try{
       var ta = document.createElement("textarea");
       ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
@@ -1125,20 +1379,19 @@
   }
   function copy(text, el, okMsg){
     var done = function(){ flash(el, okMsg, "ok"); };
-    var fail = function(){ flash(el, "복사가 막혔어요. 위 글자를 길게 눌러 직접 복사하세요.", "bad"); };
+    var fail = function(){ flash(el, "복사가 막혔어요. 글자를 길게 눌러 직접 복사하세요.", "bad"); };
     if(navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(text).then(done, function(){ legacy(text) ? done() : fail(); });
-    }else{ legacy(text) ? done() : fail(); }
+      navigator.clipboard.writeText(text).then(done, function(){ legacyCopy(text) ? done() : fail(); });
+    }else{ legacyCopy(text) ? done() : fail(); }
   }
-  // 폰이면 공유창을 바로 띄우고, PC면 복사로 넘어간다.
-  // PC 공유창에는 카톡이 없어서 띄우면 오히려 길을 잃는다.
+  // 폰이면 공유창, PC면 복사 — PC 공유창엔 카톡이 없어서 띄우면 오히려 길을 잃는다.
   var isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
   function shareOrCopy(text, el, okShare, okCopy){
     if(isMobile && navigator.share){
       navigator.share({ text: text }).then(
         function(){ flash(el, okShare, "ok"); },
         function(err){
-          if(err && err.name === "AbortError") return;   // 사용자가 공유창을 닫음
+          if(err && err.name === "AbortError") return;
           copy(text, el, okCopy);
         });
     }else{
@@ -1147,16 +1400,17 @@
   }
   var timers = {};
   function flash(el, msg, kind){
+    if(!el) return;
     el.textContent = msg;
     el.className = "toast " + (kind || "");
     clearTimeout(timers[el.id]);
     timers[el.id] = setTimeout(function(){ el.textContent = ""; el.className = "toast"; }, 5000);
   }
 
-  /* ── 효과음 ─────────────────────────── */
+  /* ══ 효과음 ═══════════════════════════ */
   var AC = null;
   function blip(freq, dur, type, vol){
-    if(!S.sfx) return;
+    if(!DB.sfx) return;
     try{
       var Ctor = window.AudioContext || window.webkitAudioContext;
       if(!Ctor) return;
@@ -1175,9 +1429,8 @@
   function sfxOff(){ blip(320,0.11,"sine",0.07); }
   function sfxClear(){ [523,659,784,1047].forEach(function(f,i){ setTimeout(function(){ blip(f,0.18,"triangle",0.11); }, i*95); }); }
 
-  /* ── 이펙트 ─────────────────────────── */
+  /* ══ 이펙트 ═══════════════════════════ */
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
   function popAt(el, text){
     if(reduce || !el) return;
     var r = el.getBoundingClientRect();
@@ -1220,7 +1473,7 @@
   }
   function celebrate(mid){
     sfxClear();
-    if(mid !== S.me) return;
+    if(mid !== R.me) return;
     var st = streakOf(mid);
     var d = document.createElement("div");
     d.className = "blast";
@@ -1242,7 +1495,7 @@
     setTimeout(function(){ el.classList.remove("shake"); }, 420);
   }
 
-  /* ── 파형 ───────────────────────────── */
+  /* ══ 파형 ═════════════════════════════ */
   function beat(p){
     if(p < 0.10) return 0.10 * Math.sin(p / 0.10 * Math.PI);
     if(p < 0.16) return 0;
@@ -1256,8 +1509,8 @@
   }
   var CS = getComputedStyle(document.documentElement);
   function css(v){ return CS.getPropertyValue(v).trim() || "#888"; }
-
   function drawWave(cv, opt, t){
+    if(!cv) return;
     var w = cv.clientWidth, h = cv.clientHeight;
     if(!w || !h) return;
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -1267,11 +1520,9 @@
     var g = cv.getContext("2d");
     g.setTransform(dpr,0,0,dpr,0,0);
     g.clearRect(0,0,w,h);
-
     var mid = h*0.56, amp = h*0.42;
     g.strokeStyle = css("--line-soft"); g.lineWidth = 1;
     g.beginPath(); g.moveTo(0, Math.round(mid)+0.5); g.lineTo(w, Math.round(mid)+0.5); g.stroke();
-
     var off = reduce ? 0 : (t * opt.speed) % 1e7;
     g.strokeStyle = opt.color; g.lineWidth = opt.weight;
     g.lineJoin = "round"; g.lineCap = "round";
@@ -1285,7 +1536,6 @@
       if(x === 0) g.moveTo(x,y); else g.lineTo(x,y);
     }
     g.stroke();
-
     if(!opt.flat){
       var pe = ((((w + off) / opt.period) % 1) + 1) % 1;
       g.fillStyle = opt.color;
@@ -1299,12 +1549,13 @@
     doomed: function(){ return {color:css("--ember"), period:62,  speed:0,     weight:1.6, flat:true}; },
     out:    function(){ return {color:css("--dead"),  period:62,  speed:0,     weight:1.4, flat:true}; }
   };
-
   function tick(t){
-    if(!S.me){
+    if(VIEW === "landing"){
+      drawWave($("heroEcg"), WAVE.edge(), t);
+    }else if(VIEW === "gate"){
       drawWave($("gateEcg"), WAVE.edge(), t);
-    }else{
-      var stats = S.members.map(function(m){ return stateOf(m.id); });
+    }else if(VIEW === "app" && R){
+      var stats = R.members.map(function(m){ return stateOf(m.id); });
       var worst = "open";
       if(stats.length){
         if(stats.some(function(s){ return s.state === "doomed" || s.state === "out" || s.state === "edge"; })) worst = "edge";
@@ -1316,111 +1567,168 @@
     }
     requestAnimationFrame(tick);
   }
-  requestAnimationFrame(tick);
 
-  /* ── 렌더 ───────────────────────────── */
+  /* ══ 렌더 ═════════════════════════════ */
+  var VIEW = "landing";
+  var forceCreate = false;   // 방이 있어도 '새 모임 만들기'를 눌렀을 때
+
   function render(){
     save();
-    if(!S.me){ renderGate(); $("gate").classList.remove("hidden"); $("app").classList.add("hidden"); return; }
-    $("gate").classList.add("hidden"); $("app").classList.remove("hidden");
+    R = DB.rooms[DB.cur] || null;
+    if(forceCreate || !R){
+      VIEW = "landing";
+      show("landing"); hide("gate"); hide("app");
+      $("createBox").classList.toggle("hidden", !forceCreate && roomCount() > 0 ? false : !forceCreate);
+      // 방이 하나도 없으면 CTA로 열게 두고, forceCreate면 바로 펼친다
+      if(forceCreate) $("createBox").classList.remove("hidden");
+      return;
+    }
+    if(!R.me){
+      VIEW = "gate";
+      hide("landing"); show("gate"); hide("app");
+      renderGate();
+      return;
+    }
+    VIEW = "app";
+    hide("landing"); hide("gate"); show("app");
+    renderMain();
+  }
+  function show(id){ $(id).classList.remove("hidden"); }
+  function hide(id){ $(id).classList.add("hidden"); }
 
+  function renderGate(){
+    $("gateTitle").textContent = R.name;
+    $("gTarget").textContent = R.target + "회";
+    $("gFine").textContent = won(R.fine) + "원";
+    $("gLives").textContent = R.lives + "개";
+    if(R.season){
+      $("gSeasonLi").classList.remove("hidden");
+      $("gSeason").textContent = R.season + "주 시즌 — 끝까지 살아남으면 POT의 주인";
+    }else{
+      $("gSeasonLi").classList.add("hidden");
+    }
+    var box = $("whoList");
+    box.innerHTML = "";
+    if(R.members.length){
+      $("gateExisting").classList.remove("hidden");
+      R.members.forEach(function(m){
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "who-chip";
+        b.innerHTML = avatarSvg(avOf(m), "open", 18);
+        b.appendChild(document.createTextNode(m.name));
+        b.onclick = function(){ R.me = m.id; render(); };
+        box.appendChild(b);
+      });
+    }else{
+      $("gateExisting").classList.add("hidden");
+    }
+    $("gateBack").classList.toggle("hidden", roomCount() <= 1);
+  }
+
+  function renderMain(){
+    var over = seasonOver();
     var cw = curWeek(), ds = weekDates(cw), left = daysLeft();
-    var stats = S.members.map(function(m){ return stateOf(m.id); });
+    var stats = R.members.map(function(m){ return stateOf(m.id); });
 
-    $("ebRule").textContent = "주 " + S.target + "회 · 미달성 시 " + won(S.fine) + "원";
-    $("meName").textContent = nameOf(S.me);
-    $("meAv").innerHTML = avatarSvg(avOf(byId(S.me)), stateOf(S.me).state, 24);
-    $("sfxBtn").textContent = S.sfx ? "🔊" : "🔇";
-    $("sfxBtn").className = "icon-btn" + (S.sfx ? "" : " off");
+    $("roomTitle").textContent = R.name;
+    $("ebRule").textContent = "주 " + R.target + "회 · 미달성 시 " + won(R.fine) + "원";
+    $("seasonChip").textContent = R.season
+      ? (over ? "시즌 종료" : "시즌 " + cw + "/" + R.season + "주")
+      : "무한 시즌";
+    $("meName").textContent = nameOf(R.me);
+    $("meAv").innerHTML = avatarSvg(avOf(byId(R.me)), stateOf(R.me).state, 24);
+    $("sfxBtn").textContent = DB.sfx ? "🔊" : "🔇";
+    $("sfxBtn").className = "icon-btn" + (DB.sfx ? "" : " off");
 
-    $("stWeek").textContent = cw + "주차";
+    // 방 스위처
+    var sel = $("roomSel");
+    var ids = Object.keys(DB.rooms);
+    if(ids.length > 1){
+      sel.classList.remove("hidden");
+      sel.innerHTML = "";
+      ids.forEach(function(id){
+        var o = document.createElement("option");
+        o.value = id; o.textContent = DB.rooms[id].name;
+        if(id === DB.cur) o.selected = true;
+        sel.appendChild(o);
+      });
+    }else sel.classList.add("hidden");
+
+    // 시즌 결산
+    if(over){ show("seasonFinal"); renderSeasonFinal(); }
+    else hide("seasonFinal");
+
+    // 모니터
+    $("stWeek").textContent = over ? "종료" : cw + "주차";
     $("stRange").textContent = md(ds[0]) + " ~ " + md(ds[6]);
-    $("stDday").textContent = left <= 1 ? "오늘까지" : "D-" + (left-1);
-    $("stDeadline").textContent = md(ds[6]) + "(일) 자정";
-
+    $("stDday").textContent = over ? "🏁" : (left <= 1 ? "오늘까지" : "D-" + (left-1));
+    $("stDeadline").textContent = over ? "시즌 끝" : md(ds[6]) + "(일) 자정";
     var alive = stats.filter(function(s){ return !s.knocked; }).length;
-    $("stAlive").textContent = alive + " / " + S.members.length;
-    $("stAliveSub").textContent = "이번 주 " + stats.filter(function(s){ return s.state === "safe"; }).length + "명 통과";
-
+    $("stAlive").textContent = alive + " / " + R.members.length;
+    $("stAliveSub").textContent = over ? "최종 생존" : "이번 주 " + stats.filter(function(s){ return s.state === "safe"; }).length + "명 통과";
     var pot = stats.reduce(function(a,s){ return a + s.confirmed; }, 0);
     var pend = stats.reduce(function(a,s){ return a + (s.fine - s.confirmed); }, 0);
     $("stPot").textContent = won(pot) + "원";
-    $("stPotSub").textContent = pend > 0 ? "이번 주 " + won(pend) + "원 확정 대기" : (pot ? "정산 대상" : "아직 아무도 안 냈다");
+    $("stPotSub").textContent = over ? "생존자의 것"
+      : pend > 0 ? "이번 주 " + won(pend) + "원 확정 대기" : (pot ? "정산 대상" : "아직 아무도 안 냈다");
 
-    $("rosterTitle").textContent = cw + "주차 생존 현황";
-    $("rosterHint").textContent = S.host ? "총무 모드 — 날짜를 눌러 바로 고친다" : "내 칸만 누를 수 있다";
+    $("rosterTitle").textContent = over ? "최종 생존 현황" : cw + "주차 생존 현황";
+    $("rosterHint").textContent = R.host ? "총무 모드 — 날짜를 눌러 바로 고친다" : "내 칸만 누를 수 있다";
 
-    renderMePanel(cw, ds, left);
+    renderMePanel(cw, ds, left, over);
     renderRoster(stats, cw, ds);
     renderLedger();
     renderMemList();
     syncSettings();
   }
 
-  function renderGate(){
-    $("gTarget").textContent = S.target + "회";
-    $("gFine").textContent = won(S.fine) + "원";
-    $("gLives").textContent = S.lives + "개";
-    var box = $("whoList");
-    box.innerHTML = "";
-    if(S.members.length){
-      $("gateExisting").classList.remove("hidden");
-      S.members.forEach(function(m){
-        var b = document.createElement("button");
-        b.type = "button"; b.className = "who-chip";
-        b.innerHTML = avatarSvg(avOf(m), "open", 18);
-        b.appendChild(document.createTextNode(m.name));
-        b.onclick = function(){ S.me = m.id; render(); };
-        box.appendChild(b);
-      });
-    }else{
-      $("gateExisting").classList.add("hidden");
-    }
-  }
-
-  /* 이번 주 내 기록 패널 */
-  function renderMePanel(cw, ds, left){
-    var s = stateOf(S.me);
+  function renderMePanel(cw, ds, left, over){
+    var s = stateOf(R.me);
     var ti = todayIdx();
-    var onToday = !!(S.log[S.me] && S.log[S.me][ymd(ds[ti])]);
+    var onToday = !!(R.log[R.me] && R.log[R.me][ymd(ds[ti])]);
 
     $("meDone").textContent = s.done;
-    $("meTarget").textContent = S.target;
-    $("meLeft").textContent = s.state === "safe" ? (s.over > 0 ? "통과 · ⭐+" + s.over + " 초과" : "이번 주 통과 🎉")
-                            : s.state === "doomed" ? "벌금 확정 💸"
-                            : (s.need + "회 남음 · " + left + "일 남음");
+    $("meTarget").textContent = R.target;
+    $("meLeft").textContent = over ? "시즌 종료"
+      : s.state === "safe" ? (s.over > 0 ? "통과 · ⭐+" + s.over + " 초과" : "이번 주 통과 🎉")
+      : s.state === "doomed" ? "벌금 확정 💸"
+      : (s.need + "회 남음 · " + left + "일 남음");
 
     var tb = $("todayBtn");
-    tb.className = "today-btn" + (onToday ? " done" : "");
-    tb.innerHTML = onToday
-      ? '오늘 완료 ✅ <small>(눌러서 취소)</small>'
-      : '오늘 운동 완료 <small>' + DOW[ti] + '요일 ' + md(ds[ti]) + '</small>';
+    if(over){
+      tb.disabled = true;
+      tb.className = "today-btn done";
+      tb.innerHTML = "시즌 종료 🏁 <small>결산을 확인하세요</small>";
+    }else{
+      tb.disabled = false;
+      tb.className = "today-btn" + (onToday ? " done" : "");
+      tb.innerHTML = onToday
+        ? '오늘 완료 ✅ <small>(눌러서 취소)</small>'
+        : '오늘 운동 완료 <small>' + DOW[ti] + '요일 ' + md(ds[ti]) + '</small>';
+    }
 
-    // 요일 칸
     var box = $("meDays");
     box.innerHTML = "";
-    var flags = dowFlags(S.me, cw);
+    var flags = dowFlags(R.me, cw);
     for(var i=0;i<7;i++){
       (function(i){
         var b = document.createElement("button");
         b.type = "button";
-        b.className = "day tap" + (flags[i] ? " on" : "") + (i === ti ? " today" : "") +
+        b.className = "day" + (over ? "" : " tap") + (flags[i] ? " on" : "") + (i === ti && !over ? " today" : "") +
                       ((ds[i] > today() && !flags[i]) ? " future" : "");
         b.innerHTML = '<span>' + DOW[i] + '</span><span class="dot"></span>';
         b.setAttribute("aria-label", DOW[i] + "요일 " + md(ds[i]));
-        b.onclick = function(){ doCheck(S.me, ds[i], b); };
+        if(over) b.disabled = true;
+        else b.onclick = function(){ doCheck(R.me, ds[i], b); };
         box.appendChild(b);
       })(i);
     }
 
-    // 레벨
     var tr = tierOf(s.total);
     $("meTier").textContent = "LV." + tr.lv + " " + tr.emoji + " " + tr.name;
     $("meXp").style.width = tr.pct + "%";
     $("meTot").textContent = tr.next ? ("누적 " + s.total + "회 · 다음까지 " + tr.next + "회")
                                      : ("누적 " + s.total + "회 · 만렙");
-
-    // 배지
     var ch = $("meChips");
     ch.innerHTML = "";
     badgesOf(s, cw).forEach(function(b){
@@ -1430,51 +1738,29 @@
     });
   }
 
-  function badgesOf(s, cw){
-    var out = [];
-    if(s.state === "safe") out.push({t:"✅ 이번 주 통과", c:"green"});
-    if(s.over > 0) out.push({t:"⭐ +" + s.over + " 초과", c:"gold"});
-    if(s.streak >= 2) out.push({t:"🔥 " + s.streak + "주 연속", c:"hot"});
-    if(s.done >= 7) out.push({t:"💯 퍼펙트 주간", c:"gold"});
-    if(cw > joinWeek(s.id) && s.fails === 0) out.push({t:"🛡️ 무패", c:"green"});
-    if(s.fails > 0) out.push({t:"💸 실패 " + s.fails + "주", c:""});
-    if(s.state === "edge") out.push({t:"⚡ 벼랑끝", c:"hot"});
-    if(s.knocked) out.push({t:"💀 탈락", c:""});
-    if(!out.length) out.push({t:"🎯 이번 주 " + s.need + "회 남음", c:""});
-    return out;
-  }
-
   function renderRoster(stats, cw, ds){
     var box = $("roster");
     box.innerHTML = "";
-    // 리더보드 순서로 그린다 — 순위가 눈에 보여야 게임이 된다.
-    var order = stats.slice().sort(function(a,b){
-      return (b.lives - a.lives) || (b.done - a.done) || (b.streak - a.streak) ||
-             (b.total - a.total) || (a.fine - b.fine);
-    });
+    var order = standings();
     var MEDAL = ["🥇","🥈","🥉"];
     var ti = todayIdx();
+    var over = seasonOver();
 
-    order.forEach(function(s, idx){
-      var m = S.members.filter(function(x){ return x.id === s.id; })[0];
-      if(!m) return;
+    order.forEach(function(row, idx){
+      var m = row.m, s = row.s;
       var flags = dowFlags(m.id, cw);
-      var mine = (m.id === S.me);
+      var mine = (m.id === R.me);
 
       var card = document.createElement("div");
       card.className = "card s-" + s.state + (mine ? " mine" : "");
-      card.dataset.mid = m.id;
 
       var top = document.createElement("div");
       top.className = "card-top";
       var who = document.createElement("div");
       who.className = "who";
-
       var rk = document.createElement("span");
-      rk.className = "rank";
-      rk.textContent = MEDAL[idx] || ("#" + (idx+1));
+      rk.className = "rank"; rk.textContent = MEDAL[idx] || ("#" + (idx+1));
       who.appendChild(rk);
-
       var fc = document.createElement("span");
       fc.className = "face"; fc.innerHTML = avatarSvg(avOf(m), s.state, 34);
       who.appendChild(fc);
@@ -1487,7 +1773,7 @@
         who.appendChild(tm);
       }
       var lv = "";
-      for(var j=0;j<S.lives;j++) lv += (j < Math.max(0,s.lives) ? "♥" : '<span class="gone">♡</span>');
+      for(var j=0;j<R.lives;j++) lv += (j < Math.max(0,s.lives) ? "♥" : '<span class="gone">♡</span>');
       var lvEl = document.createElement("div");
       lvEl.className = "lives"; lvEl.innerHTML = lv;
       who.appendChild(lvEl);
@@ -1513,13 +1799,13 @@
 
       var days = document.createElement("div");
       days.className = "days";
-      var editable = S.host || mine;
+      var editable = !over && (R.host || mine);
       for(var i=0;i<7;i++){
         (function(i){
           var d = document.createElement("button");
           d.type = "button";
           var future = ds[i] > today();
-          d.className = "day" + (flags[i] ? " on" : "") + (i === ti ? " today" : "") +
+          d.className = "day" + (flags[i] ? " on" : "") + (i === ti && !over ? " today" : "") +
                         ((future && !flags[i]) ? " future" : "") + (editable ? " tap" : "");
           d.innerHTML = '<span>' + DOW[i] + '</span><span class="dot"></span>';
           d.setAttribute("aria-label", m.name + " " + DOW[i] + "요일 " + (flags[i] ? "완료" : "미완료"));
@@ -1530,22 +1816,24 @@
       }
       card.appendChild(days);
 
-      // 주차 도장 — 지난 주를 눈으로 확인한다.
       var jw = joinWeek(m.id);
-      if(cw > jw){
+      var upto = judgedUpto();
+      if(upto >= jw || cw > jw){
         var hist = document.createElement("div");
         hist.className = "hist";
-        var from = Math.max(jw, cw - 9);
+        var histEnd = over ? R.season : cw;
+        var from = Math.max(jw, histEnd - 9);
         if(from > jw){
-          var el = document.createElement("span");
-          el.textContent = "…"; hist.appendChild(el);
+          var el0 = document.createElement("span");
+          el0.textContent = "…"; hist.appendChild(el0);
         }
-        for(var w=from; w<=cw; w++){
+        for(var w=from; w<=histEnd; w++){
           var st = document.createElement("span");
-          var pass = doneIn(m.id, w) >= S.target;
-          st.className = "st " + (w === cw ? "now" : (pass ? "pass" : "fail"));
-          st.textContent = (w === cw) ? "?" : (pass ? "✓" : "✕");
-          st.title = w + "주차 " + doneIn(m.id, w) + "/" + S.target;
+          var pass = doneIn(m.id, w) >= R.target;
+          var isCur = (!over && w === cw);
+          st.className = "st " + (isCur ? "now" : (pass ? "pass" : "fail"));
+          st.textContent = isCur ? "?" : (pass ? "✓" : "✕");
+          st.title = w + "주차 " + doneIn(m.id, w) + "/" + R.target;
           hist.appendChild(st);
         }
         var bg = document.createElement("span");
@@ -1556,13 +1844,13 @@
       }
 
       var msg = s.state === "safe" ? ("이번 주 통과" + (s.over ? " · ⭐+" + s.over : ""))
-              : s.state === "doomed" ? "산술적으로 불가"
+              : s.state === "doomed" ? (over ? "최종 미달성" : "산술적으로 불가")
               : s.state === "edge" ? ("남은 " + s.left + "일 전부 해야 함")
               : s.state === "out" ? "목숨 소진 · 벌금은 계속"
               : (s.need + "회 더 · " + s.left + "일 남음");
       var foot = document.createElement("div");
       foot.className = "card-foot";
-      foot.innerHTML = '<span><span class="count">' + s.done + "/" + S.target + '</span> · ' + msg + '</span>' +
+      foot.innerHTML = '<span><span class="count">' + s.done + "/" + R.target + '</span> · ' + msg + '</span>' +
                        '<span class="money' + (s.fine ? " hit" : "") + '">' + won(s.fine) + '원</span>';
       card.appendChild(foot);
 
@@ -1570,47 +1858,81 @@
     });
   }
 
-  function toggle(mid, d){
-    var k = ymd(d);
-    if(!S.log[mid]) S.log[mid] = {};
-    if(S.log[mid][k]) delete S.log[mid][k];
-    else S.log[mid][k] = true;
-    touch(mid);   // 직접 만진 기록이 링크로 들어오는 옛 기록에 안 밀리게
+  function renderSeasonFinal(){
+    var st = standings();
+    var champBox = $("sfChamp");
+    champBox.innerHTML = "";
+    if(st.length){
+      var c = st[0];
+      var av = document.createElement("span");
+      av.innerHTML = avatarSvg(avOf(c.m), "safe", 84);
+      champBox.appendChild(av);
+      var cn = document.createElement("span");
+      cn.className = "cn"; cn.textContent = "🏆 " + c.m.name;
+      champBox.appendChild(cn);
+      var cs = document.createElement("span");
+      cs.className = "cs";
+      cs.textContent = "통과 " + c.s.passes + "주 · 목숨 " + Math.max(0, c.s.lives) + "개 · 누적 " + c.s.total + "회";
+      champBox.appendChild(cs);
+    }
+    var rows = $("sfRows");
+    rows.innerHTML = "";
+    st.forEach(function(r, idx){
+      var el = document.createElement("div");
+      el.className = "sf-row" + (idx === 0 ? " win" : "");
+      var rk = document.createElement("span");
+      rk.className = "rk"; rk.textContent = ["🏆","🥈","🥉"][idx] || ("#" + (idx+1));
+      var av = document.createElement("span");
+      av.style.lineHeight = "0";
+      av.innerHTML = avatarSvg(avOf(r.m), r.s.knocked ? "out" : "safe", 26);
+      var nm = document.createElement("span");
+      nm.className = "nm"; nm.textContent = r.m.name;
+      var stt = document.createElement("span");
+      stt.className = "st";
+      stt.textContent = "통과 " + r.s.passes + "주" + (r.s.knocked ? " · 💀탈락" : "");
+      var mn = document.createElement("span");
+      mn.className = "mn" + (r.s.confirmed ? " hit" : "");
+      mn.textContent = won(r.s.confirmed) + "원";
+      el.appendChild(rk); el.appendChild(av); el.appendChild(nm); el.appendChild(stt); el.appendChild(mn);
+      rows.appendChild(el);
+    });
+    $("sfPot").textContent = won(R.members.reduce(function(a,m){ return a + stateOf(m.id).confirmed; }, 0)) + "원";
   }
 
-  // 체크 한 번에 붙는 연출을 여기 몰아둔다.
   function doCheck(mid, d, el){
     var cw = curWeek();
-    var turningOn = !(S.log[mid] && S.log[mid][ymd(d)]);
+    var turningOn = !(R.log[mid] && R.log[mid][ymd(d)]);
     var before = doneIn(mid, cw);
-    toggle(mid, d);
+    var k = ymd(d);
+    if(!R.log[mid]) R.log[mid] = {};
+    if(R.log[mid][k]) delete R.log[mid][k];
+    else R.log[mid][k] = true;
+    touch(mid);
     var after = doneIn(mid, cw);
-
     if(turningOn){
       sfxOn();
       popAt(el, "+1");
-      if(before < S.target && after >= S.target) celebrate(mid);
+      if(before < R.target && after >= R.target) celebrate(mid);
     }else{
       sfxOff();
     }
     render();
   }
 
-  // 주차 장부 — 지난 주가 도장처럼 쌓이고, 모인 벌금이 여기 남는다.
   function renderLedger(){
     var box = $("ledger"), sum = $("ledgerSum");
-    var cw = curWeek();
     box.innerHTML = "";
+    var upto = judgedUpto();
     var rows = [], cum = 0, failsTotal = 0;
-    for(var w = 1; w < cw; w++){
+    for(var w = 1; w <= upto; w++){
       var ds = weekDates(w), pass = [], fail = [];
-      S.members.forEach(function(m){
+      R.members.forEach(function(m){
         if(joinWeek(m.id) > w) return;
         var d = doneIn(m.id, w);
-        (d >= S.target ? pass : fail).push({ m:m, d:d });
+        (d >= R.target ? pass : fail).push({ m:m, d:d });
       });
       if(!pass.length && !fail.length) continue;
-      var add = fail.length * S.fine;
+      var add = fail.length * R.fine;
       cum += add; failsTotal += fail.length;
       rows.push({ w:w, ds:ds, pass:pass, fail:fail, add:add, cum:cum });
     }
@@ -1633,13 +1955,13 @@
       body.className = "wk-body";
       var pl = document.createElement("div");
       pl.textContent = "✅ 통과 — " + (r.pass.length
-        ? r.pass.map(function(x){ return x.m.name + " " + x.d + "회" + (x.d > S.target ? "⭐" : ""); }).join(", ")
+        ? r.pass.map(function(x){ return x.m.name + " " + x.d + "회" + (x.d > R.target ? "⭐" : ""); }).join(", ")
         : "없음");
       body.appendChild(pl);
       if(r.fail.length){
         var fl = document.createElement("div");
         fl.textContent = "❌ 실패 — " + r.fail.map(function(x){ return x.m.name + " " + x.d + "회"; }).join(", ") +
-                         " (1인 −" + won(S.fine) + "원)";
+                         " (1인 −" + won(R.fine) + "원)";
         body.appendChild(fl);
       }
       el.appendChild(body);
@@ -1650,93 +1972,130 @@
   function renderMemList(){
     var box = $("memList");
     box.innerHTML = "";
-    S.members.forEach(function(m){
+    R.members.forEach(function(m){
       var s = stateOf(m.id);
       var row = document.createElement("div");
       row.className = "memrow";
+      var av = document.createElement("span");
+      av.style.lineHeight = "0";
+      av.innerHTML = avatarSvg(avOf(m), "open", 22);
       var nm = document.createElement("span");
-      nm.className = "nm"; nm.textContent = m.name + (m.id === S.me ? " (나)" : "");
+      nm.className = "nm"; nm.textContent = m.name + (m.id === R.me ? " (나)" : "");
       var tg = document.createElement("span");
       tg.className = "tag"; tg.textContent = "실패 " + s.fails + "주 · " + won(s.confirmed) + "원";
       var del = document.createElement("button");
       del.className = "link-btn"; del.type = "button"; del.textContent = "삭제";
       del.onclick = function(){
         if(!confirm(m.name + " 님을 명단에서 뺄까요? 기록도 같이 지워집니다.")) return;
-        S.members = S.members.filter(function(x){ return x.id !== m.id; });
-        delete S.log[m.id];
-        if(S.me === m.id) S.me = "";
+        R.members = R.members.filter(function(x){ return x.id !== m.id; });
+        delete R.log[m.id];
+        if(R.me === m.id) R.me = "";
         render();
       };
-      row.appendChild(nm); row.appendChild(tg); row.appendChild(del);
+      row.appendChild(av); row.appendChild(nm); row.appendChild(tg); row.appendChild(del);
       box.appendChild(row);
     });
   }
 
   function syncSettings(){
-    $("setStart").value = S.start;
-    $("setTarget").value = S.target;
-    $("setFine").value = S.fine;
-    $("setLives").value = S.lives;
-    $("hostMode").checked = !!S.host;
+    $("setName").value = R.name;
+    $("setStart").value = R.start;
+    $("setSeason").value = String(R.season || 0);
+    $("setTarget").value = R.target;
+    $("setFine").value = R.fine;
+    $("setLives").value = R.lives;
+    $("hostMode").checked = !!R.host;
   }
 
-  /* ── 이벤트 ─────────────────────────── */
+  /* ══ 이벤트 ═══════════════════════════ */
+  // ── 랜딩 · 모임 만들기 ──
+  var createAv = randomAv((Math.random() * 1e9) | 0);
+  mountAvatarEditor($("cAvEd"), $("cAvPrev"),
+    function(){ return createAv; }, function(av){ createAv = av; });
+
+  $("goCreate").onclick = function(){
+    $("createBox").classList.remove("hidden");
+    $("cName").focus();
+  };
+  $("cGo").onclick = function(){
+    var name = $("cName").value.trim() || "운동 생존전";
+    var nick = $("cNick").value.trim();
+    if(!nick){ flash($("cToast"), "닉네임을 적어주세요.", "bad"); shake($("cNick")); return; }
+    var startVal = $("cStart").value || ymd(mondayOf(today()));
+    var id = newRoomId();
+    var room = makeRoom(id, name, ymd(mondayOf(parseYmd(startVal))),
+                        parseInt($("cTarget").value,10), parseInt($("cFine").value,10),
+                        parseInt($("cLives").value,10), parseInt($("cSeason").value,10));
+    DB.rooms[id] = room;
+    setCur(id);
+    var mem = addMember(nick);
+    mem.av = createAv.slice();
+    mem.ts = Date.now();
+    room.me = mem.id;
+    room.host = true;   // 만든 사람이 총무
+    forceCreate = false;
+    sfxOn();
+    render();
+    flash($("syncToast"), "모임 완성! 이제 [초대글 올리기]로 멤버를 부르세요.", "ok");
+  };
+  $("cNick").onkeydown = function(e){ if(e.key === "Enter"){ e.preventDefault(); $("cGo").click(); } };
+
+  $("lJoinBtn").onclick = function(){
+    var r = applyText($("lJoin").value);
+    if((r.kind === "sync" || r.kind === "member") && r.ok){
+      $("lJoin").value = "";
+      forceCreate = false;
+      render();
+    }else{
+      flash($("lToast"), "링크나 코드를 못 읽었어요. 통째로 복사했는지 확인하세요.", "bad");
+    }
+  };
+
+  // ── 게이트 ──
+  var gateAv = randomAv((Math.random() * 1e9) | 0);
+  mountAvatarEditor($("gAvEd"), $("gAvPrev"),
+    function(){ return gateAv; }, function(av){ gateAv = av; });
+
   function join(){
     var v = $("nick").value.trim();
     if(!v){ flash($("gateToast"), "닉네임을 적어주세요.", "bad"); shake($("nick")); return; }
-    var dup = byName(v);
-    if(dup){ flash($("gateToast"), "같은 닉네임이 이미 있어요. 그 사람이면 아래에서 고르세요.", "bad"); return; }
+    if(byName(v)){ flash($("gateToast"), "같은 닉네임이 이미 있어요. 그 사람이면 아래에서 고르세요.", "bad"); return; }
     var mem = addMember(v);
-    mem.av = gateAv.slice();      // 게이트에서 만든 캐릭터를 그대로 입고 들어간다
+    mem.av = gateAv.slice();
     mem.ts = Date.now();
-    S.me = mem.id;
+    R.me = mem.id;
     $("nick").value = "";
     sfxOn();
     render();
   }
   $("joinBtn").onclick = join;
   $("nick").onkeydown = function(e){ if(e.key === "Enter"){ e.preventDefault(); join(); } };
+  $("gateBack").onclick = function(){ forceCreate = false; DB.cur = ""; render(); };
 
-  $("gateLoad").onclick = function(){
-    var t = $("gateInbox").value;
-    var r = applyText(t);
-    if(r.kind === "sync" && r.ok){
-      $("gateInbox").value = "";
-      flash($("gateToast"), "모임을 불러왔어요. 닉네임을 고르거나 새로 만드세요.", "ok");
-      render();
-    }else{
-      flash($("gateToast"), "모임 코드를 못 읽었어요. [운동모임] 로 시작하는 줄이나 초대 링크를 통째로 복사했는지 확인하세요.", "bad");
-    }
-  };
-
-  $("switchMe").onclick = function(){ S.me = ""; render(); };
-  $("sfxBtn").onclick = function(){ S.sfx = !S.sfx; if(S.sfx) sfxOn(); render(); };
-
-  /* ── 캐릭터 편집 ─────────────────────── */
-  var gateAv = randomAv((Math.random() * 1e9) | 0);
-  mountAvatarEditor($("gateAvEd"), $("gateAvPrev"),
-    function(){ return gateAv; }, function(av){ gateAv = av; });
+  // ── 메인 ──
+  $("switchMe").onclick = function(){ R.me = ""; render(); };
+  $("sfxBtn").onclick = function(){ DB.sfx = !DB.sfx; if(DB.sfx) sfxOn(); render(); };
+  $("roomSel").onchange = function(){ setCur(this.value); render(); };
 
   $("editAv").onclick = function(){
     var box = $("meAvBuild");
     var opened = !box.classList.toggle("hidden");
     if(opened){
-      var m = byId(S.me);
+      var m = byId(R.me);
       if(!m) return;
       if(!m.av) m.av = randomAv(m.name);
       mountAvatarEditor($("meAvEd"), $("meAvPrev"),
-        function(){ return byId(S.me).av; },
-        function(av){ var mm = byId(S.me); if(mm){ mm.av = av; mm.ts = Date.now(); render(); } });
+        function(){ return byId(R.me).av; },
+        function(av){ var mm = byId(R.me); if(mm){ mm.av = av; mm.ts = Date.now(); render(); } });
     }
   };
 
   $("todayBtn").onclick = function(){
     var ds = weekDates(curWeek());
-    doCheck(S.me, ds[todayIdx()], this);
+    doCheck(R.me, ds[todayIdx()], this);
   };
-
   $("shareMine").onclick = function(){
-    touch(S.me);
+    touch(R.me);
     save();
     shareOrCopy(myShareText(), $("meToast"),
       "공유창에서 카톡방을 고르면 끝!",
@@ -1744,51 +2103,16 @@
   };
   $("clearMine").onclick = function(){
     var ds = weekDates(curWeek());
-    if(!S.log[S.me]) S.log[S.me] = {};
-    for(var i=0;i<7;i++) delete S.log[S.me][ymd(ds[i])];
-    touch(S.me);
+    if(!R.log[R.me]) R.log[R.me] = {};
+    for(var i=0;i<7;i++) delete R.log[R.me][ymd(ds[i])];
+    touch(R.me);
     render();
     flash($("meToast"), "이번 주 기록을 비웠어요.", "");
   };
 
-  $("applyCodes").onclick = function(){
-    var txt = $("inbox").value;
-    if(!txt.trim()){ flash($("hostToast"), "붙여넣은 코드가 없어요.", "bad"); return; }
-    var r = applyText(txt);
-    render();
-    if(r.kind === "member"){
-      if(r.ok){
-        $("inbox").value = "";
-        flash($("hostToast"), r.name + " 님 기록 반영" + (r.skipped ? " — 이미 최신이라 그대로 뒀어요" : "") + ".", "ok");
-      }else{
-        flash($("hostToast"), "기록 링크가 깨졌어요. 다시 올려 달라고 하세요.", "bad");
-      }
-      return;
-    }
-    if(r.kind === "sync"){
-      if(r.ok){
-        $("inbox").value = "";
-        flash($("hostToast"), "모임 코드 반영 — 멤버 " + r.count + "명 현황을 받아왔어요." + (r.kept ? "" : " (내 닉네임이 명단에 없어 다시 골라야 합니다)"), "ok");
-      }else{
-        flash($("hostToast"), "모임 코드가 깨졌어요. 총무에게 다시 발행해 달라고 하세요.", "bad");
-      }
-      return;
-    }
-    if(r.ok === 0){
-      flash($("hostToast"), "반영된 코드가 없어요. 코드가 잘렸거나 손으로 고쳐진 것 같습니다 — 다시 복사해 달라고 하세요.", "bad");
-      return;
-    }
-    var msg = r.ok + "명 반영 (" + r.names.join(", ") + ")";
-    if(r.added.length) msg += " · 새 멤버 " + r.added.join(", ") + " 자동 등록";
-    if(r.bad) msg += " · " + r.bad + "건은 코드가 깨져서 무시";
-    flash($("hostToast"), msg, r.bad ? "bad" : "ok");
-    $("inbox").value = "";
-  };
-
   $("copyInvite").onclick = function(){
-    if(!S.members.length){ flash($("syncToast"), "멤버가 없어요. 먼저 참가하거나 명단을 채우세요.", "bad"); return; }
     var link = inviteLink();
-    $("syncBox").className = "codebox long";
+    $("syncBox").className = "codebox";
     $("syncBox").textContent = link;
     shareOrCopy(inviteText(), $("syncToast"),
       "공유창에서 카톡방을 고르면 끝!",
@@ -1799,14 +2123,59 @@
       "공유창에서 카톡방을 고르면 끝!",
       "현황을 복사했어요. 단톡방에 붙여넣으세요.");
   };
-  $("makeSync").onclick = function(){
-    var code = makeSync();
-    $("syncBox").className = "codebox long";
-    $("syncBox").textContent = code;
-    copy(code, $("syncToast"), "모임 코드를 복사했어요. 링크가 안 먹힐 때 쓰는 예비 수단입니다.");
+
+  // ── 시즌 결산 ──
+  $("sfShare").onclick = function(){
+    shareOrCopy(seasonReportText(), $("sfToast"),
+      "공유창에서 카톡방을 고르면 끝!",
+      "결산을 복사했어요. 단톡방에 붙여넣으세요.");
+  };
+  $("sfNew").onclick = function(){
+    if(!confirm("새 시즌을 시작할까요? 다음 주 월요일부터 목숨과 벌금이 리셋됩니다. 레벨(누적 횟수)은 유지돼요.")) return;
+    var t = today();
+    var nextMon = mondayOf(new Date(t.getFullYear(), t.getMonth(), t.getDate() + 7));
+    R.start = ymd(nextMon);
+    R.members.forEach(function(m){ m.jd = R.start; m.ts = Date.now(); });
+    R.seen = "";
+    render();
+    flash($("syncToast"), "새 시즌 준비 완료 — [초대글 올리기]로 방에 알리세요.", "ok");
   };
 
-  $("hostMode").onchange = function(){ S.host = this.checked; render(); };
+  // ── 설정 ──
+  $("applyCodes").onclick = function(){
+    var txt = $("inbox").value;
+    if(!txt.trim()){ flash($("hostToast"), "붙여넣은 내용이 없어요.", "bad"); return; }
+    var r = applyText(txt);
+    render();
+    if(r.kind === "member"){
+      if(r.ok){
+        $("inbox").value = "";
+        flash($("hostToast"), r.name + " 님 기록 반영" + (r.skipped ? " — 이미 최신이라 그대로 뒀어요" : "") + ".", "ok");
+      }else flash($("hostToast"), "기록 링크가 깨졌어요. 다시 올려 달라고 하세요.", "bad");
+      return;
+    }
+    if(r.kind === "sync"){
+      if(r.ok){ $("inbox").value = ""; flash($("hostToast"), "모임 현황을 받아왔어요.", "ok"); }
+      else flash($("hostToast"), "모임 코드가 깨졌어요. 다시 발행해 달라고 하세요.", "bad");
+      return;
+    }
+    if(r.kind === "check"){
+      if(r.ok === 0){ flash($("hostToast"), "반영된 코드가 없어요. 잘렸거나 손으로 고쳐진 것 같습니다.", "bad"); return; }
+      var msg = r.ok + "명 반영 (" + r.names.join(", ") + ")";
+      if(r.added.length) msg += " · 새 멤버 " + r.added.join(", ") + " 자동 등록";
+      if(r.bad) msg += " · " + r.bad + "건은 코드가 깨져서 무시";
+      flash($("hostToast"), msg, r.bad ? "bad" : "ok");
+      $("inbox").value = "";
+      return;
+    }
+    flash($("hostToast"), "읽을 수 있는 링크·코드가 없어요.", "bad");
+  };
+  $("makeSync").onclick = function(){
+    var code = makeSyncCode();
+    $("syncBox").className = "codebox";
+    $("syncBox").textContent = code;
+    copy(code, $("hostToast"), "모임 코드를 복사했어요. 링크가 안 먹힐 때 쓰는 예비 수단입니다.");
+  };
 
   $("addMem").onclick = function(){
     var v = $("newName").value.trim();
@@ -1818,48 +2187,50 @@
   };
   $("newName").onkeydown = function(e){ if(e.key === "Enter"){ e.preventDefault(); $("addMem").click(); } };
 
-  $("setStart").onchange = function(){ if(this.value){ S.start = this.value; render(); } };
-  $("setTarget").onchange = function(){ S.target = Math.min(7, Math.max(1, parseInt(this.value,10) || 3)); render(); };
-  $("setFine").onchange   = function(){ S.fine   = Math.max(0, parseInt(this.value,10) || 0); render(); };
-  $("setLives").onchange  = function(){ S.lives  = Math.min(9, Math.max(1, parseInt(this.value,10) || 3)); render(); };
+  $("setName").onchange   = function(){ if(this.value.trim()) R.name = this.value.trim(); render(); };
+  $("setStart").onchange  = function(){ if(this.value){ R.start = ymd(mondayOf(parseYmd(this.value))); render(); } };
+  $("setSeason").onchange = function(){ R.season = parseInt(this.value,10) || 0; render(); };
+  $("setTarget").onchange = function(){ R.target = Math.min(7, Math.max(1, parseInt(this.value,10) || 3)); render(); };
+  $("setFine").onchange   = function(){ R.fine   = Math.max(0, parseInt(this.value,10) || 0); render(); };
+  $("setLives").onchange  = function(){ R.lives  = Math.min(9, Math.max(1, parseInt(this.value,10) || 3)); render(); };
+  $("hostMode").onchange  = function(){ R.host = this.checked; render(); };
 
-  $("resetAll").onclick = function(){
-    if(!confirm("모든 멤버와 기록을 지웁니다. 되돌릴 수 없어요. 진행할까요?")) return;
-    S = defaults();
+  $("newRoom").onclick = function(){ forceCreate = true; render(); window.scrollTo(0,0); };
+  $("delRoom").onclick = function(){
+    if(!confirm("「" + R.name + "」 모임과 기록을 이 기기에서 지웁니다. 되돌릴 수 없어요. 진행할까요?")) return;
+    delete DB.rooms[DB.cur];
+    var ids = Object.keys(DB.rooms);
+    DB.cur = ids.length ? ids[0] : "";
     render();
   };
 
-  /* ── 링크로 들어온 경우 ──────────────── */
+  /* ══ 부팅 ═════════════════════════════ */
+  migrateV1();
   (function bootFromLink(){
     var h = location.hash || "";
-    // 개인 기록 링크 — 누르기만 하면 그 사람 기록이 합쳐진다.
-    var pm = RE_MLINK.exec(h);
-    if(pm){
-      var mr = mergeMember(urlBack(pm[1]), pm[2]);
-      if(mr){
-        save();
-        setTimeout(function(){
-          var el = S.me ? $("meToast") : $("gateToast");
-          flash(el, mr.skipped ? (mr.name + " 님 기록은 이미 최신이에요.")
-                               : (mr.name + " 님의 기록을 받아왔어요."), "ok");
-        }, 60);
+    var msg = null, m;
+    if((m = h.match(RE_P)) || (m = h.match(RE_R)) || (m = h.match(RE_M1)) || (m = h.match(RE_G1))){
+      var r = applyText(h);
+      if(r && r.ok){
+        msg = r.kind === "member"
+          ? (r.skipped ? r.name + " 님 기록은 이미 최신이에요." : r.name + " 님의 기록을 받아왔어요.")
+          : "링크에서 모임 현황을 받아왔어요. (" + r.count + "명)";
+      }else if(r && !r.ok){
+        msg = "링크가 깨져 있어요. 다시 올려 달라고 하세요.";
       }
-      return;
+      try{ history.replaceState(null, "", location.pathname + location.search); }catch(e){}
     }
-    // 초대 링크 — 규칙·명단·전원 기록을 받아온다.
-    var hm = RE_LINK.exec(h);
-    if(!hm) return;
-    if(S.seenSync === hm[2]) return;          // 같은 링크를 다시 열었을 뿐이면 건드리지 않는다
-    var r = mergeSync(urlBack(hm[1]), hm[2]);
-    if(!r) return;
-    S.seenSync = hm[2];
-    setTimeout(function(){
-      var el = S.me ? $("meToast") : $("gateToast");
-      flash(el, "초대 링크에서 규칙과 멤버 " + r.count + "명을 받아왔어요.", "ok");
-    }, 60);
+    save();
+    if(msg){
+      setTimeout(function(){
+        var el = (R && R.me) ? $("meToast") : (R ? $("gateToast") : $("lToast"));
+        flash(el, msg, msg.indexOf("깨져") >= 0 ? "bad" : "ok");
+      }, 80);
+    }
   })();
 
   render();
+  requestAnimationFrame(tick);
 })();
 </script>
 </body>

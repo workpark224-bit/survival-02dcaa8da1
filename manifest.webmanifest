@@ -1,0 +1,14 @@
+{
+  "name": "주3회 생존전",
+  "short_name": "생존전",
+  "description": "뛰거나, 내거나. 카톡 운동모임을 벌금 서바이벌 게임으로.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#0F141A",
+  "theme_color": "#0F141A",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
